@@ -1,1 +1,1 @@
-//export {default as } from "@components"
+export { default as ForgotPasswordModal } from "@components/Login/ForgotPasswordModal";

@@ -7,6 +7,8 @@
       "@root/*": ["*"],
       "@components/*": ["app/components/*"],
       "@screens/*": ["app/screens/*"],
+      "@interface/*": ["app/interface/*"],
+      "@stylesheets/*": ["app/stylesheets/*"]
     }
   }
 }
