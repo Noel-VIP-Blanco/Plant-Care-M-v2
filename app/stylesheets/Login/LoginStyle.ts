@@ -10,7 +10,7 @@ export const LoginStyle = StyleSheet.create({
   },
   titleSubText: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: Math.round(PixelRatio.roundToNearestPixel(15 * scale)),
     fontWeight: "bold",
     marginBottom: 30,
   },
