@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.noel.vip.blanco.plantcaremv2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fa951450-f257-442a-a6a4-149f1498116c"
+      }
+    },
+    "owner": "noel.vip.blanco"
   }
 }
