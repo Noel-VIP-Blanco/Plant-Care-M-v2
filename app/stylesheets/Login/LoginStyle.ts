@@ -1,16 +1,15 @@
-import { StyleSheet, PixelRatio } from "react-native";
+import { StyleSheet } from "react-native";
 
-const scale = PixelRatio.get();
 export const LoginStyle = StyleSheet.create({
   titleText: {
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(33 * scale)),
+    fontSize: 80,
     fontWeight: "bold",
     color: "#36d436",
     textAlign: "center",
   },
   titleSubText: {
     textAlign: "center",
-    fontSize: Math.round(PixelRatio.roundToNearestPixel(15 * scale)),
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 30,
   },

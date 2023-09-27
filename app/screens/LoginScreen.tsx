@@ -51,8 +51,8 @@ const LoginScreen = ({ navigation }: any) => {
           <Image
             source={require(plantCareLogo)}
             style={{
-              height: 200,
-              width: 200,
+              maxHeight: 200,
+              maxWidth: 200,
               borderRadius: 100,
             }}
           />
@@ -145,6 +145,7 @@ const LoginScreen = ({ navigation }: any) => {
             onPress={() => {
               // signIn();
             }}
+            style={LoginStyle.logInButton}
             labelStyle={{ fontSize: 20 }}
             contentStyle={{ height: 50 }}
           >
