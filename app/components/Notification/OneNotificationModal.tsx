@@ -1,0 +1,55 @@
+import { View } from "react-native";
+import { Text, Portal, Modal, Button } from "react-native-paper";
+import { FC } from "react";
+
+//types
+import { OneNotificationModalProps } from "@interface/index";
+
+//stylesheets
+import { OneNotificationModalStyle } from "@stylesheets/index";
+
+const OneNotificationModal: FC<OneNotificationModalProps> = ({
+  visible,
+  onClose,
+  item,
+}) => {
+  //format date to string
+  const date = new Date(item.notifDate);
+  const formattedDate = date.toISOString().split("T")[0];
+  return (
+    <Portal>
+      <Modal visible={visible} onDismiss={onClose}>
+        <View style={OneNotificationModalStyle.modalMainContainer}>
+          <Text style={OneNotificationModalStyle.notificationText}>
+            Notification
+          </Text>
+
+          <View style={OneNotificationModalStyle.contentContainer}>
+            <Text style={OneNotificationModalStyle.title}>
+              {item.notifTitle}
+            </Text>
+            <Text style={OneNotificationModalStyle.subTitle}>
+              {item.notifSubTitle}
+            </Text>
+            <Text style={OneNotificationModalStyle.date}>{formattedDate}</Text>
+          </View>
+
+          <Button
+            mode="elevated"
+            onPress={() => {
+              onClose();
+            }}
+            textColor="black"
+            labelStyle={{ fontSize: 20 }}
+            contentStyle={{ backgroundColor: "#44f321", padding: 5 }}
+            style={{ margin: 5 }}
+          >
+            Close
+          </Button>
+        </View>
+      </Modal>
+    </Portal>
+  );
+};
+
+export default OneNotificationModal;

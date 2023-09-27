@@ -5,7 +5,7 @@ import StackContainer from './navigations/StackContainer';
 
 
 const Index = () => {
-    const user = null
+    const user = {}
   return (
     <NavigationContainer>
         <StackContainer initialRoute={user ? "BottomTabContainer" : "Login"}/>
