@@ -6,7 +6,7 @@
     "paths": {
       "@root/*": ["*"],
       "@components/*": ["app/components/*"],
-      "@pages/*": ["app/pages/*"]
+      "@screens/*": ["app/screens/*"],
     }
   }
 }

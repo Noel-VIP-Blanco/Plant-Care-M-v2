@@ -1,10 +1,15 @@
 import { Text } from 'react-native-paper';
 import React from 'react'
 import { NavigationContainer } from "@react-navigation/native";
+import StackContainer from './navigations/StackContainer';
+
+
 const Index = () => {
-    const user = {}
+    const user = null
   return (
-    <Text>{user ? "Has user":"No user"}</Text>
+    <NavigationContainer>
+        <StackContainer initialRoute={user ? "BottomTabContainer" : "Login"}/>
+    </NavigationContainer>
   )
 }
 
