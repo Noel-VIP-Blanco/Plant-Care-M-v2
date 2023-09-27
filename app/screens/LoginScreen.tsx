@@ -9,7 +9,6 @@ import {
 } from "react-native-paper";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "@root/utilities/shared/Colors";
 
 //components
 import { ForgotPasswordModal } from "@components/index";
@@ -27,49 +26,15 @@ const LoginScreen = ({ navigation }: any) => {
   const openForgotPassModal = () => setForgotPassModalVisible(true);
   const closeForgotPassModal = () => setForgotPassModalVisible(false);
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        backgroundColor: "white",
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: COLORS.BACKGROUNDCOLOR,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View
-          style={{
-            padding: 15,
-            borderRadius: 70,
-          }}
-        >
-          <Image
-            source={require(plantCareLogo)}
-            style={{
-              maxHeight: 200,
-              maxWidth: 200,
-              borderRadius: 100,
-            }}
-          />
+    <SafeAreaView style={LoginStyle.safeAreaView}>
+      <View style={LoginStyle.mainContainer}>
+        <View style={LoginStyle.logoContainer}>
+          <Image source={require(plantCareLogo)} style={LoginStyle.logoImage} />
         </View>
       </View>
 
       <View style={{ flex: 1 }}>
-        <Surface
-          elevation={5}
-          style={{
-            marginTop: -150,
-            padding: 7,
-            borderRadius: 20,
-            paddingHorizontal: 10,
-            marginHorizontal: 25,
-          }}
-        >
+        <Surface elevation={5} style={LoginStyle.contentContainer}>
           <Text style={LoginStyle.titleText}>Plant-Care</Text>
           <Text style={LoginStyle.titleSubText}>Good to see you back.</Text>
           <TextInput
@@ -78,8 +43,8 @@ const LoginScreen = ({ navigation }: any) => {
                 icon={() => <Ionicons name="person" size={25} />}
               />
             }
-            outlineStyle={{ borderRadius: 30, borderColor: "#3dff3d" }}
-            style={{ fontSize: 20, margin: 5 }}
+            outlineStyle={LoginStyle.textInputOutline}
+            style={LoginStyle.textInputStyle}
             mode="outlined"
             label="Email"
             value={email}
@@ -87,34 +52,17 @@ const LoginScreen = ({ navigation }: any) => {
           />
           <TextInput
             left={<TextInput.Icon icon="lock" />}
-            outlineStyle={{ borderRadius: 30, borderColor: "#3dff3d" }}
-            style={{ fontSize: 20, margin: 5 }}
+            outlineStyle={LoginStyle.textInputOutline}
+            style={LoginStyle.textInputStyle}
             mode="outlined"
             label="Password"
             secureTextEntry
             value={password}
             onChangeText={(value) => setPassword(value)}
           />
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-
-                marginTop: 10,
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  marginLeft: 10,
-                  marginRight: 5,
-                  fontSize: 20,
-                }}
-              >
-                Remember Me
-              </Text>
+          <View style={LoginStyle.utilitiesContainer}>
+            <View style={LoginStyle.rememberMeContainer}>
+              <Text style={LoginStyle.rememberMeText}>Remember Me</Text>
               <Checkbox
                 onPress={() => {
                   setRememberMe((prev) => !prev);
@@ -122,18 +70,13 @@ const LoginScreen = ({ navigation }: any) => {
                 status={rememberMe ? "checked" : "unchecked"}
               />
             </View>
-            <View style={{ marginTop: 17, alignItems: "center" }}>
+            <View style={LoginStyle.forgotPasswordContainer}>
               <TouchableRipple
                 onPress={() => {
                   openForgotPassModal();
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: "green",
-                  }}
-                >
+                <Text style={LoginStyle.forgotPasswordText}>
                   Forgot Password?
                 </Text>
               </TouchableRipple>
