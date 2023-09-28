@@ -3,7 +3,7 @@ import { Modal, Portal, Button, Text, TextInput } from "react-native-paper";
 import React, { useState } from "react";
 
 //interface
-import { ModalType } from "@root/app/interface";
+import { ModalType } from "@interface/Modals/ModalType";
 
 const ForgotPasswordModal: React.FC<ModalType> = ({ visible, onClose }) => {
   const [email, setEmail] = useState("");

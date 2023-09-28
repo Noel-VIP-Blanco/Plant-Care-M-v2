@@ -3,10 +3,10 @@ import { Text, Portal, Modal, Button } from "react-native-paper";
 import { FC } from "react";
 
 //types
-import { OneNotificationModalProps } from "@interface/index";
+import { OneNotificationModalProps } from "@interface/Notification/OneNotificationModalProps";
 
 //stylesheets
-import { OneNotificationModalStyle } from "@stylesheets/index";
+import { OneNotificationModalStyle } from "@stylesheets/NotificationItem/OneNotificationModalStyle";
 
 const OneNotificationModal: FC<OneNotificationModalProps> = ({
   visible,

@@ -10,4 +10,13 @@ export const HomeStyle = StyleSheet.create({
     marginTop: "10%",
     alignItems: "flex-end",
   },
+  bottomMainContainer:{
+    backgroundColor: "#fff",
+    flex: 1,
+    marginTop: 100,
+    height: "100%",
+    borderTopLeftRadius: 80,
+    borderTopRightRadius: 80,
+    alignItems: "center",
+  }
 });

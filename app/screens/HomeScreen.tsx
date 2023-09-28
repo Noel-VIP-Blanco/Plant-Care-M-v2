@@ -16,15 +16,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@root/utilities/shared/Colors";
 
 //components
-import {
-  CalendarEvents,
-  HomeItems,
-  NotificationItem,
-  EventsModal,
-} from "@components/index";
+import CalendarEvents from "@components/Home/CalendarEvents";
+import HomeItems from "@components/Home/HomeItems";
+import EventsModal from "@components/Home/EventsModal";
+import NotificationItem from "@components/Notification/NotificationItem";
 
 //stylesheets
-import { HomeStyle, HeaderRightIconStyle } from "@stylesheets/index";
+import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightIconStyle";
+import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
 
@@ -47,6 +46,12 @@ const HomeScreen = ({ navigation }: any) => {
   const openMenu = () => {
     setNotifMenuVisible(true);
   };
+
+  //open event modal
+  const [eventModalVisible, setEventModalVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const openeventModal = () => setEventModalVisible(true);
+  const closeEventModal = () => setEventModalVisible(false);
 
   return (
     <View style={HomeStyle.pageContainer}>
@@ -106,6 +111,13 @@ const HomeScreen = ({ navigation }: any) => {
               </TouchableRipple>
             </Surface>
           </Menu>
+        </View>
+
+        <View style={HomeStyle.bottomMainContainer}>
+          <CalendarEvents
+            openEventModal={openeventModal}
+            setSelectedDate={setSelectedDate}
+          />
         </View>
       </LinearGradient>
     </View>

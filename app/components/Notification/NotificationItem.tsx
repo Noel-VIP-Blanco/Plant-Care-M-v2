@@ -3,13 +3,13 @@ import { Text, TouchableRipple } from "react-native-paper";
 import { useState } from "react";
 
 //style
-import { NotificationItemStyle } from "@stylesheets/index";
+import { NotificationItemStyle } from "@stylesheets/NotificationItem/NotificationItemStyle";
 
 //component
-import { OneNotificationModal } from "@components/index";
+import OneNotificationModal from "@components/Notification/OneNotificationModal";
 
 //interface
-import { NotificationItemProps } from "@interface/index";
+import { NotificationItemProps } from "@interface/Notification/NotificationProps";
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,

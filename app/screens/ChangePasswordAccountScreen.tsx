@@ -6,7 +6,8 @@ import { COLORS } from "@root/utilities/shared/Colors";
 import { Ionicons } from "@expo/vector-icons";
 
 //stylesheets
-import { ChangePasswordAccountStyle, LoginStyle } from "@stylesheets/index";
+import { ChangePasswordAccountStyle } from "@stylesheets/ChangePasswordAccount/ChangePasswordAccountStyle";
+import { LoginStyle } from "@stylesheets/Login/LoginStyle";
 
 const ChangePasswordAccountScreen = ({ navigation }: any) => {
   const [oldPassword, setOldPassword] = useState("");

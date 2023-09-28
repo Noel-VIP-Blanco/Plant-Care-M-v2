@@ -11,9 +11,9 @@ import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 //components
-import { ForgotPasswordModal } from "@components/index";
+import ForgotPasswordModal from "@components/Login/ForgotPasswordModal";
 //stylesheets
-import { LoginStyle } from "@stylesheets/index";
+import { LoginStyle } from "@stylesheets/Login/LoginStyle";
 
 const LoginScreen = ({ navigation }: any) => {
   const plantCareLogo = "../../assets/PlantCareImages/PlantCareLogo.png";

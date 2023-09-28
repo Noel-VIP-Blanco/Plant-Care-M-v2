@@ -1,14 +1,19 @@
-import React from 'react'
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { HomeScreen, SettingScreen, TaskScreen } from '@screens/index';
+
+//screens
+import HomeScreen from "@screens/HomeScreen";
+import SettingScreen from "@screens/SettingScreen";
+import TaskScreen from "@screens/TaskScreen";
+
 const BottomTabContainer = () => {
-    const homeName = "Home";
-    const settingName = "Setting";
-    const taskName = "Task";
-    const Tab = createBottomTabNavigator();
+  const homeName = "Home";
+  const settingName = "Setting";
+  const taskName = "Task";
+  const Tab = createBottomTabNavigator();
   return (
-<Tab.Navigator
+    <Tab.Navigator
       initialRouteName={homeName}
       screenOptions={({ route }) => ({
         headerTitleAlign: "center",
@@ -59,7 +64,7 @@ const BottomTabContainer = () => {
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
-  )
-}
+  );
+};
 
-export default BottomTabContainer
+export default BottomTabContainer;
