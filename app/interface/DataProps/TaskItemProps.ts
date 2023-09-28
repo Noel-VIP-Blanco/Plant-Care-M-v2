@@ -2,7 +2,7 @@ export enum PlantStatus {
   Grow = "Growing",
   Harvest = "Harvesting",
 }
-export type ITaskItem = {
+export type TaskItemProps = {
   taskId: string;
   plantId: string;
   contId: string;
@@ -12,8 +12,8 @@ export type ITaskItem = {
   farmerName: string;
 };
 
-export type ITaskItemSerializable = Omit<
-  ITaskItem,
+export type TaskItemSerializableProps = Omit<
+  TaskItemProps,
   "datePlanted" | "dateExpectedHarvest"
 > & {
   datePlanted: string;

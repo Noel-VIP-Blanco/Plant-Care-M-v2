@@ -83,7 +83,7 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
               mode="elevated"
               rippleColor={COLORS.BACKGROUNDCOLORSECONDARY}
               onPress={() => {
-                navigation.navigate("Containers");
+                navigation.navigate("ContainersScreen");
               }}
             >
               View All
@@ -113,7 +113,7 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
               mode="elevated"
               rippleColor={COLORS.BACKGROUNDCOLORSECONDARY}
               onPress={() => {
-                navigation.navigate("HarvestLog");
+                navigation.navigate("HarvestLogScreen");
               }}
             >
               View All

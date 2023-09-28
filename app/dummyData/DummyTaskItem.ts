@@ -1,6 +1,6 @@
 //interface
-import { PlantStatus, ITaskItem } from "@interface/Task/TaskItemProps";
-export const DummyTaskItem: ITaskItem[] = [
+import { PlantStatus, TaskItemProps } from "@interface/DataProps/TaskItemProps";
+export const DummyTaskItem: TaskItemProps[] = [
   {
     taskId: "task1",
     plantId: "plant1",

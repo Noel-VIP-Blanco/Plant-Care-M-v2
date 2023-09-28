@@ -4,11 +4,11 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@root/*": ["*"],
       "@components/*": ["app/components/*"],
       "@screens/*": ["app/screens/*"],
       "@interface/*": ["app/interface/*"],
-      "@stylesheets/*": ["app/stylesheets/*"]
+      "@stylesheets/*": ["app/stylesheets/*"],
+      "@root/*": ["*"]
     }
   }
 }
