@@ -11,6 +11,7 @@ module.exports = function (api) {
             "@screens": "./app/screens",
             "@interface": "./app/interface",
             "@stylesheets": "./app/stylesheets",
+            "@reduxToolkit": "./app/redux",
             "@root": "./",
           },
         },

@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import containerReducer from "./features/ContainerSlice";
+import containerReducer from "./Features/ContainerSlice";
 import taskReducer from "./Features/TaskSlice";
 // import harvestLog from "./features/HarvestLogSlice";
 // import user from "./features/UserSlice";
 export const store = configureStore({
   reducer: {
-    // containers: containerReducer,
+    containers: containerReducer,
     tasks: taskReducer,
     // harvestLog: harvestLog,
     // user: user,
