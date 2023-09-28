@@ -118,6 +118,10 @@ const HomeScreen = ({ navigation }: any) => {
             openEventModal={openeventModal}
             setSelectedDate={setSelectedDate}
           />
+
+          <ScrollView>
+            <HomeItems navigation={navigation} />
+          </ScrollView>
         </View>
       </LinearGradient>
     </View>
