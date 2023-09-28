@@ -123,6 +123,13 @@ const HomeScreen = ({ navigation }: any) => {
             <HomeItems navigation={navigation} />
           </ScrollView>
         </View>
+
+        {/* Modals */}
+        <EventsModal
+          visible={eventModalVisible}
+          onClose={closeEventModal}
+          selectedDate={selectedDate}
+        />
       </LinearGradient>
     </View>
   );

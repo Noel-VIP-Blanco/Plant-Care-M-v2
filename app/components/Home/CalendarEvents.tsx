@@ -9,7 +9,7 @@ import {
 } from "@interface/CalendarEvents/CalendarEventsProps";
 
 //dummy local data
-import { DummyTaskItem } from "@root/app/dummyData/DummyTaskItem";
+import { dummyTaskItem } from "@root/app/dummyData/DummyTaskItem";
 
 const CalendarEvents: React.FC<CalendarEventsProps> = ({
   openEventModal,
@@ -17,7 +17,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
 }) => {
   const markedDates: Record<string, MarkedDate> = {};
 
-  for (const item of DummyTaskItem) {
+  for (const item of dummyTaskItem) {
     const date = new Date(item.dateExpectedHarvest);
     const formattedDate = date.toISOString().split("T")[0];
 
