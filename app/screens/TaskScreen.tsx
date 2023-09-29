@@ -14,6 +14,9 @@ import { TaskScreeenStyle } from "@stylesheets/Task/TaskScreeenStyle";
 import CustomSearchBar from "@components/Shared/CustomSearchBar";
 import FilteredTasks from "@components/TaskScreen/FilteredTasks";
 import TaskCardList from "@components/TaskScreen/TaskCardList";
+import AddTaskModal from "@components/TasksModal/AddTaskModal";
+import AddContainerModal from "@components/TasksModal/AddContainerModal";
+import HarvestTaskModal from "@components/TasksModal/HarvestTaskModal";
 
 //redux
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
@@ -140,6 +143,18 @@ const TaskScreen = () => {
           filteredData={filteredTask}
         />
       </View>
+
+      {/* Modals */}
+      <AddTaskModal visible={addTaskModalVisible} onClose={closeAddTaskModal} />
+      {/* <AddContainerModal
+        visible={addContainerModalVisible}
+        onClose={closeAddContainerModal}
+      />
+      <HarvestTaskModal
+        visible={harvestTaskModalVisible}
+        onClose={closeHarvestTaskModal}
+        harvestTasksID={harvestTasksID}
+      /> */}
     </View>
   );
 };
