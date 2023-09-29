@@ -155,6 +155,58 @@ const TaskScreen = () => {
         onClose={closeHarvestTaskModal}
         harvestTasksID={harvestTasksID}
       />
+
+      {/* CheckButton to havest */}
+      {!checkboxVisible ? (
+        <FAB
+          icon="check"
+          style={{
+            position: "absolute",
+            margin: 16,
+            right: 0,
+            bottom: 0,
+          }}
+          onPress={() => showCheckbox()}
+        />
+      ) : (
+        <View
+          style={{
+            position: "absolute",
+            margin: 16,
+            bottom: 0,
+            width: "100%",
+            //right: "30%",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            mode="elevated"
+            elevation={2}
+            labelStyle={{ fontSize: 20 }}
+            contentStyle={{ height: 50 }}
+            style={{ marginHorizontal: 20 }}
+            onPress={() => {
+              hideCheckbox();
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            mode="elevated"
+            elevation={2}
+            textColor="black"
+            labelStyle={{ fontSize: 20 }}
+            contentStyle={{ backgroundColor: "#44f321", height: 50 }}
+            style={{ marginHorizontal: 20 }}
+            onPress={() => {
+              openAHarvestTaskModal();
+            }}
+          >
+            Harvest
+          </Button>
+        </View>
+      )}
     </View>
   );
 };
