@@ -146,7 +146,7 @@ const TaskScreen = () => {
 
       {/* Modals */}
       <AddTaskModal visible={addTaskModalVisible} onClose={closeAddTaskModal} />
-      {/* <AddContainerModal
+      <AddContainerModal
         visible={addContainerModalVisible}
         onClose={closeAddContainerModal}
       />
@@ -154,7 +154,7 @@ const TaskScreen = () => {
         visible={harvestTaskModalVisible}
         onClose={closeHarvestTaskModal}
         harvestTasksID={harvestTasksID}
-      /> */}
+      />
     </View>
   );
 };
