@@ -14,10 +14,13 @@ import { Ionicons } from "@expo/vector-icons";
 import ForgotPasswordModal from "@components/Login/ForgotPasswordModal";
 //stylesheets
 import { LoginStyle } from "@stylesheets/Login/LoginStyle";
+//backend
+import { Login } from "@backend/Auth/auth";
 
 const LoginScreen = ({ navigation }: any) => {
   const plantCareLogo = "../../assets/PlantCareImages/PlantCareLogo.png";
-  const [email, setEmail] = useState("");
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -43,18 +46,20 @@ const LoginScreen = ({ navigation }: any) => {
                 icon={() => <Ionicons name="person" size={25} />}
               />
             }
+            autoCapitalize="none"
             outlineStyle={LoginStyle.textInputOutline}
             style={LoginStyle.textInputStyle}
             mode="outlined"
-            label="Email"
-            value={email}
-            onChangeText={(value) => setEmail(value)}
+            label="Username"
+            value={username}
+            onChangeText={(value) => setUsername(value)}
           />
           <TextInput
             left={<TextInput.Icon icon="lock" />}
             outlineStyle={LoginStyle.textInputOutline}
             style={LoginStyle.textInputStyle}
             mode="outlined"
+            autoCapitalize="none"
             label="Password"
             secureTextEntry
             value={password}
@@ -86,7 +91,7 @@ const LoginScreen = ({ navigation }: any) => {
           <Button
             mode="contained"
             onPress={() => {
-              // signIn();
+              Login({ username, password, rememberMe, navigation });
             }}
             style={LoginStyle.logInButton}
             labelStyle={{ fontSize: 20 }}

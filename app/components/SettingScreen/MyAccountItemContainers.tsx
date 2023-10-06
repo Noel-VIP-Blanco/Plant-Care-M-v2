@@ -95,7 +95,11 @@ const MyAccountItemContainers = ({ navigation }: any) => {
                 // logout().then(() => {
                 //   navigation.navigate("Login");
                 // });
-                navigation.navigate("LoginScreen");
+                //navigation.navigate("LoginScreen");
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "LoginScreen" }],
+                });
                 // signOut(auth).then(() => {
                 //   navigation.navigate("Login");
                 // });

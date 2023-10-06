@@ -1,16 +1,15 @@
-import { Text } from 'react-native-paper';
-import React from 'react'
+import { Text } from "react-native-paper";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import StackContainer from './navigations/StackContainer';
-
+import StackContainer from "./navigations/StackContainer";
 
 const Index = () => {
-    const user = {}
+  const user = {};
   return (
     <NavigationContainer>
-        <StackContainer initialRoute={user ? "BottomTabContainer" : "Login"}/>
+      <StackContainer initialRoute={user ? "BottomTabContainer" : "Login"} />
     </NavigationContainer>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

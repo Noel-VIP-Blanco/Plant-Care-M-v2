@@ -12,6 +12,7 @@ module.exports = function (api) {
             "@interface": "./app/interface",
             "@stylesheets": "./app/stylesheets",
             "@reduxToolkit": "./app/redux",
+            "@backend": "./app/backend",
             "@root": "./",
           },
         },
