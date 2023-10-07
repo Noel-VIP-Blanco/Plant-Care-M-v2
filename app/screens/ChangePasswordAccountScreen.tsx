@@ -83,6 +83,7 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
               mode="contained"
               onPress={() => {
                 // handleChangePassword();
+                navigation.navigate("BottomTabContainer");
               }}
               style={LoginStyle.logInButton}
               labelStyle={{ fontSize: 20 }}

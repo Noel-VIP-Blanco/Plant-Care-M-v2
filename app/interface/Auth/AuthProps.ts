@@ -1,6 +1,6 @@
 export type loginProps = {
   username: String;
   password: String;
-  rememberMe: Boolean;
+  rememberMe: boolean;
   navigation: any;
 };

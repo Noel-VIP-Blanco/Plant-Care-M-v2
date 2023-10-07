@@ -16,9 +16,23 @@ import { selectUser } from "@reduxToolkit/Features/UserSlice";
 import UserImage from "@components/SettingScreen/UserImage";
 import MyFarmItem from "@components/SettingScreen/MyFarmItem";
 import MyAccountItemContainers from "@components/SettingScreen/MyAccountItemContainers";
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import { getCurrentUser } from "@root/utilities/shared/LocalStorage";
 
 const SettingScreen = ({ navigation }: any) => {
   const userImage = "../../../assets/PlantCareImages/PlantCareLogo.png";
+  const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
+    null
+  );
+  React.useEffect(() => {
+    getCurrentUser()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((error) => {
+        console.log("Error getting current user:", error);
+      });
+  }, []);
   return (
     <View style={{ backgroundColor: COLORS.BACKGROUNDCOLOR, flex: 1 }}>
       <View style={{ flex: 1 }}></View>
@@ -32,7 +46,9 @@ const SettingScreen = ({ navigation }: any) => {
       >
         <View style={{ alignItems: "center" }}>
           <UserImage photoURL={userImage} />
-          <Text style={{ fontSize: 20 }}>Admin</Text>
+          <Text style={{ fontSize: 20 }}>
+            {currentUser?.role === "ROLE_FARMER" ? "FARMER" : "ADMIN"}
+          </Text>
         </View>
 
         <View style={SettingScreenStyle.accountTextContainer}>

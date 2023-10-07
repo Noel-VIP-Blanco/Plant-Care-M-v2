@@ -5,8 +5,51 @@ import { Ionicons } from "@expo/vector-icons";
 
 //stylesheets
 import { SettingScreenStyle } from "@stylesheets/Setting/SettingScreenStyle";
+import {
+  getCurrentUser,
+  getRememberMe,
+  getToken,
+} from "@root/utilities/shared/LocalStorage";
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 
 const MyAccountItemContainers = ({ navigation }: any) => {
+  const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
+    null
+  );
+
+  //for testing purposes
+  const [token, setToken] = React.useState<string>();
+  const [rememberMe, setRememberMe] = React.useState<boolean>();
+  React.useEffect(() => {
+    getCurrentUser()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((error) => {
+        console.log("Error getting current user:", error);
+      });
+
+    getToken()
+      .then((tokenFromLocal) => {
+        if (tokenFromLocal) {
+          setToken(tokenFromLocal);
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting current user:", error);
+      });
+
+    getRememberMe()
+      .then((rememberMeFromLocal) => {
+        setRememberMe(rememberMeFromLocal);
+      })
+      .catch((error) => {
+        console.log("Error getting current user:", error);
+      });
+  }, []);
+  currentUser === null ? console.log("Null") : console.log(currentUser.email);
+  console.log(token === undefined ? "Undefined" : token);
+  console.log(rememberMe === undefined ? "Undefined" : rememberMe);
   return (
     <>
       <View style={SettingScreenStyle.itemContainer}>
@@ -16,7 +59,7 @@ const MyAccountItemContainers = ({ navigation }: any) => {
         </View>
         <View style={SettingScreenStyle.accountBox2}>
           <View style={SettingScreenStyle.acountBox2Items}>
-            <Text>Michael Angelo Duran</Text>
+            <Text>{currentUser?.firstName}</Text>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("ProfileScreen");
@@ -92,17 +135,10 @@ const MyAccountItemContainers = ({ navigation }: any) => {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
-                // logout().then(() => {
-                //   navigation.navigate("Login");
-                // });
-                //navigation.navigate("LoginScreen");
                 navigation.reset({
                   index: 0,
                   routes: [{ name: "LoginScreen" }],
                 });
-                // signOut(auth).then(() => {
-                //   navigation.navigate("Login");
-                // });
               }}
             >
               <Ionicons

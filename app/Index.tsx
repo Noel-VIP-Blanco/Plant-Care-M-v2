@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import StackContainer from "./navigations/StackContainer";
 
 const Index = () => {
-  const user = {};
+  const user = null;
   return (
     <NavigationContainer>
       <StackContainer initialRoute={user ? "BottomTabContainer" : "Login"} />
