@@ -27,7 +27,9 @@ import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightI
 import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
-import { getFarm } from "@root/utilities/shared/LocalStorage";
+import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
+import { useGetAllFarmsQuery } from "@backend/RTKQuery/Services/awsAPI";
+import { FarmsProps } from "@interface/Auth/AwsApiProps";
 
 const HomeScreen = ({ navigation }: any) => {
   //filtered notification that has not yet read
@@ -54,6 +56,42 @@ const HomeScreen = ({ navigation }: any) => {
   const [selectedDate, setSelectedDate] = useState("");
   const openeventModal = () => setEventModalVisible(true);
   const closeEventModal = () => setEventModalVisible(false);
+
+  //fetch all farms associated on farmer
+  //if null, save the first farmid
+  const [farmss, setFarmss] = useState<FarmsProps[] | undefined>();
+  const [farmFromLocalStorage, setFarmFromLocalStorage] = useState<
+    string | null
+  >("");
+  const fetchAllFarms = async () => {
+    try {
+      const { data: farms } = await useGetAllFarmsQuery();
+      return farms;
+    } catch (e) {
+      return undefined;
+    }
+  };
+  const fetchFarmFromLocal = async () => {
+    try {
+      const farmFromLocal = await getFarm();
+      return farmFromLocal;
+    } catch (e) {
+      return null;
+    }
+  };
+  fetchFarmFromLocal().then((farmFromLocall) => {
+    setFarmFromLocalStorage(farmFromLocall);
+  });
+  fetchAllFarms().then((farms) => {
+    setFarmss(farms);
+    if (farmFromLocalStorage === null) {
+      if (farms) {
+        setFarm(farms[0].id.toString());
+      }
+    } else {
+      setFarm(farmFromLocalStorage);
+    }
+  });
 
   return (
     <View style={HomeStyle.pageContainer}>
@@ -128,8 +166,12 @@ const HomeScreen = ({ navigation }: any) => {
         <Button
           onPress={() => {
             getFarm().then((farmFromLocalStorage) => {
-              console.log("HomeScreen line 33", farmFromLocalStorage);
+              console.log(
+                "HomeScreen line 145 farm local storage",
+                farmFromLocalStorage
+              );
             });
+            console.log("HomeScreen line 147 all farms", farmss);
           }}
         >
           Test only

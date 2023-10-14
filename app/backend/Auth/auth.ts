@@ -2,7 +2,9 @@ import { loginProps } from "@interface/Auth/AuthProps";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 import { baseURL } from "@root/utilities/shared/BaseURL";
 import {
+  getFarm,
   setCurrentUser,
+  setFarm,
   setRememberMe,
   setToken,
 } from "@root/utilities/shared/LocalStorage";
@@ -47,7 +49,7 @@ export const Login = ({
         Alert.alert("Bad Credentials", "User does not exist");
         return;
       }
-      console.log(data);
+      console.log("auth.ts line 60", data);
       //if user login successfully
       if (password === "pass123") {
         //save to local storage

@@ -7,7 +7,7 @@ import {
   Surface,
   TouchableRipple,
 } from "react-native-paper";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 //components
@@ -16,8 +16,6 @@ import ForgotPasswordModal from "@components/Login/ForgotPasswordModal";
 import { LoginStyle } from "@stylesheets/Login/LoginStyle";
 //backend
 import { Login } from "@backend/Auth/auth";
-import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
-import { useGetAllFarmsQuery } from "@backend/RTKQuery/Services/awsAPI";
 
 const LoginScreen = ({ navigation }: any) => {
   const plantCareLogo = "../../assets/PlantCareImages/PlantCareLogo.png";
@@ -25,17 +23,6 @@ const LoginScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [farm, setFarmState] = useState<string | null | undefined>();
-  getFarm().then((farmFromLocalStorage) => {
-    setFarmState(farmFromLocalStorage);
-  });
-  console.log("Login screen line 32", farm);
-  const { data: farms } = useGetAllFarmsQuery();
-  if (farm === null || farm === undefined) {
-    if (farms) {
-      setFarm(farms[0].id);
-    }
-  }
 
   //forgot password modal
   const [forgotPassModalVisible, setForgotPassModalVisible] = useState(false);
