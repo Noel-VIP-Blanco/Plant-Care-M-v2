@@ -17,6 +17,12 @@ export interface ContainersProps {
   plantDto: PlantProps;
   farmId: number;
 }
+export interface AddContainersProps {
+  name: string;
+  arduinoDto: { id: number }; // Replace 'any' with a more specific type if needed
+  plantDto: { id: number };
+  farmId: number;
+}
 export interface PlantProps {
   id: number;
   name: string;

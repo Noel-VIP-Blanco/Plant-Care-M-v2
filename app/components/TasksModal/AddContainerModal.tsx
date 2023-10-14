@@ -18,6 +18,15 @@ import ModalButtons from "@components/Shared/ModalButtons";
 //redux
 import { addContainer } from "@reduxToolkit/Features/ContainerSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
+import {
+  AddContainersProps,
+  ArduinoBoardProps,
+  ContainersProps,
+} from "@interface/Auth/AwsApiProps";
+import {
+  useAddContainerMutation,
+  useGetArduinoQuery,
+} from "@backend/RTKQuery/Services/awsAPI";
 
 const AddContainerModal = ({ visible, onClose }: ModalType) => {
   const dispatch = useAppDispatch();
@@ -26,13 +35,33 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
   const [selectArduinoBoard, setSelectArduinoBoard] = useState("");
   const [selectPlant, setSelectPlant] = useState("");
 
+  const [arduinoBoards, setArduinoBoards] = useState<ArduinoBoardProps[]>();
+  const fetchAllArduinoBoards = async () => {
+    try {
+      const { data: arduino } = await useGetArduinoQuery();
+      if (arduino) {
+        return arduino;
+      }
+    } catch (e) {
+      return undefined;
+    }
+  };
+  fetchAllArduinoBoards().then((allArduinoBoards) => {
+    setArduinoBoards(allArduinoBoards);
+  });
+
   //data for selectlists
-  const ardunoBoardData = dummyArduinoBoards
-    .filter((arduinoBoard) => arduinoBoard.arduinoBoardStatus === "IN")
-    .map((arduinoBoard) => ({
-      key: arduinoBoard.arduinoBoardId,
-      value: arduinoBoard.arduinoBoardId,
-    }));
+  let arduinoBoardData: {}[] = [{}];
+  if (arduinoBoards) {
+    arduinoBoardData = arduinoBoards
+      .filter(
+        (arduinoBoard: ArduinoBoardProps) => arduinoBoard.status === "INACTIVE"
+      )
+      .map((arduinoBoard: ArduinoBoardProps) => ({
+        key: arduinoBoard.id,
+        value: arduinoBoard.id,
+      }));
+  }
 
   const plantData = dummyPlantItem.map(({ plantID, plantName }) => ({
     key: plantID,
@@ -40,17 +69,24 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
   }));
 
   //function for adding container
-  const handleAddContainer = () => {
-    const newContainer: ContainerItemProps = {
-      contId: Math.random().toString(),
-      contName: containerName,
-      arduinoBoardId: selectArduinoBoard,
-    };
-    dispatch(addContainer(newContainer));
+  const [addContainers] = useAddContainerMutation();
+  const newContainer: AddContainersProps = {
+    name: containerName,
+    arduinoDto: {
+      id: parseInt(selectArduinoBoard),
+    },
+    plantDto: {
+      id: 1,
+    },
+    farmId: 1,
+  };
+  const addContainer = async () => {
+    await addContainers({ container: newContainer, farmId: "1" });
     Alert.alert("New Container", "You have successfully added the container ");
     reset();
     onClose();
   };
+  // dispatch(addContainer(newContainer));
 
   const reset = () => {
     setContainerName("");
@@ -109,7 +145,7 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
             >
               <SelectList
                 setSelected={(key: any) => setSelectArduinoBoard(key)}
-                data={ardunoBoardData}
+                data={arduinoBoardData}
                 search={true}
                 placeholder="Arduino Board"
                 save="key"
@@ -129,7 +165,7 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
           </View>
 
           <ModalButtons
-            onSave={handleAddContainer}
+            onSave={addContainer}
             onClose={onClose}
             labelForSave="Add Container"
           />

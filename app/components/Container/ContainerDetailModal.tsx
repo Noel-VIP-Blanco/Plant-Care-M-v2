@@ -5,7 +5,6 @@ import React, { useState } from "react";
 //data
 import { dummyArduinoBoards } from "@root/app/dummyData/dummyArduinoBoards";
 import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-import { dummyContainerItem } from "@root/app/dummyData/DummyContainerItem";
 
 //redux toolkit
 import { useAppSelector } from "@reduxToolkit/Hooks";
@@ -17,6 +16,14 @@ import EditContainerDetailModal from "./EditContainerDetailModal";
 
 //interface
 import { ContainerDetailModalProps } from "@interface/ContainerDetailModal/ContainerDetailModalProps";
+import {
+  ArduinoBoardProps,
+  ContainersProps,
+} from "@interface/Auth/AwsApiProps";
+import {
+  useGetArduinoQuery,
+  useGetContainersQuery,
+} from "@backend/RTKQuery/Services/awsAPI";
 
 const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
   visible,
@@ -24,7 +31,37 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
   containerItem,
 }) => {
   //data from redux
-  const containers = useAppSelector(selectContainer);
+  // const containers = useAppSelector(selectContainer);
+  const [containers, setContainers] = useState<ContainersProps[]>();
+  const [arduinoBoards, setArduinoBoards] = useState<ArduinoBoardProps[]>();
+
+  const fetchAllContainers = async () => {
+    try {
+      const { data: containerss } = await useGetContainersQuery(1);
+      if (containerss) {
+        return containerss;
+      }
+    } catch (e) {
+      return undefined;
+    }
+  };
+  fetchAllContainers().then((allContainers) => {
+    setContainers(allContainers);
+  });
+
+  const fetchAllArduinoBoards = async () => {
+    try {
+      const { data: arduino } = await useGetArduinoQuery();
+      if (arduino) {
+        return arduino;
+      }
+    } catch (e) {
+      return undefined;
+    }
+  };
+  fetchAllArduinoBoards().then((allArduinoBoards) => {
+    setArduinoBoards(allArduinoBoards);
+  });
 
   //handle edit button
   const handleEditButton = () => {
@@ -32,18 +69,26 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
   };
 
   //get the container name
-  const containerObj = containers.find(
-    (container) => container.contId === containerItem.contId
+  const containerObj = containers?.find(
+    (container) => container.id === containerItem.id
   );
   //get the arduino board object to know the connected plant
-  const arduinoBoardObj = dummyArduinoBoards.find(
-    (arduinoBoardItem) =>
-      arduinoBoardItem.arduinoBoardId === containerObj?.arduinoBoardId
+  const arduinoBoardObj = arduinoBoards?.find(
+    (arduinoBoardItem) => arduinoBoardItem.id === containerObj?.arduinoDto.id
   );
   //get the plant name by using the plant id from the arduino board
-  const plantObj = dummyPlantItem.find(
-    (plant) => plant.plantID === arduinoBoardObj?.plantId
-  );
+  // const plantObj = dummyPlantItem.find(
+  //   (plant) => plant.plantID === arduinoBoardObj?.plantId
+  // );
+  const plantObj = {
+    plantID: "plant1",
+    plantName: "Cabbage",
+    plantDay: 45,
+    plantMinpH: 20,
+    plantMinEc: 30,
+    plantMaxpH: 30,
+    plantMaxEc: 40,
+  };
 
   //opening edit container detail modal
   const [editContainerDetailModalVisible, setEditContainerDetailModalVisible] =
@@ -99,7 +144,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
                   Container Name
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {containerObj && containerObj.contName}
+                  {containerObj && containerObj.name}
                 </Text>
               </View>
 
@@ -115,7 +160,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
                   Arduino Board
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {containerObj && containerObj.arduinoBoardId}
+                  {containerObj && containerObj.arduinoDto.id}
                 </Text>
               </View>
 

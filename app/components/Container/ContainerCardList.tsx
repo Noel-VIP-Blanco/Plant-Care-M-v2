@@ -15,12 +15,12 @@ const ContainerCardList: React.FC<ContainerCardListProps> = ({
 }) => {
   return (
     <View style={{ height: "95%" }}>
-      {filteredData.length === 0 ? (
+      {filteredData?.length === 0 ? (
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
           <Text style={{ fontSize: 30, fontWeight: "bold" }}>
-            Container Not Found
+            Containers Not Found
           </Text>
         </View>
       ) : (
@@ -31,7 +31,7 @@ const ContainerCardList: React.FC<ContainerCardListProps> = ({
             { item } // Destructure 'item' from the 'renderItem' function argument
           ) => (
             <RenderContainerCard
-              item={item}
+              container={item}
               checkboxVisible={checkboxVisible}
               setRemoveContainerID={setRemoveContainerID}
             />

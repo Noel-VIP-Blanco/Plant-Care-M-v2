@@ -18,28 +18,43 @@ import { dummySensor } from "@root/app/dummyData/dummySensor";
 
 //components
 import ContainerDetailModal from "./ContainerDetailModal";
+import { useGetArduinoQuery } from "@backend/RTKQuery/Services/awsAPI";
+import { ArduinoBoardProps } from "@interface/Auth/AwsApiProps";
 const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
-  item,
+  container,
   checkboxVisible,
   setRemoveContainerID,
 }) => {
-  const { contId, contName, arduinoBoardId } = item;
+  const [arduinoBoards, setArduinoBoards] = useState<ArduinoBoardProps[]>();
+  const fetchAllArduinoBoards = async () => {
+    try {
+      const { data: arduino } = await useGetArduinoQuery();
+      if (arduino) {
+        return arduino;
+      }
+    } catch (e) {
+      return undefined;
+    }
+  };
+  fetchAllArduinoBoards().then((allArduinoBoards) => {
+    setArduinoBoards(allArduinoBoards);
+  });
 
   //get the sensor id from the arduinoboardID
-  const arduinoBoardObj = dummyArduinoBoards.find(
-    (arduino) => arduino.arduinoBoardId === arduinoBoardId
+  const arduinoBoardObj = arduinoBoards?.find(
+    (arduino) => arduino.id === container.arduinoDto.id
   );
 
   //get the sensor value for every sensor type connected on the arduino
-  const sensorWaterAcidityObj = dummySensor.find(
-    (sensor) => sensor.sensorID === arduinoBoardObj?.waterAcidity
-  );
-  const sensorWaterLevelObj = dummySensor.find(
-    (sensor) => sensor.sensorID === arduinoBoardObj?.waterLevel
-  );
-  const sensorWaterNutrientObj = dummySensor.find(
-    (sensor) => sensor.sensorID === arduinoBoardObj?.waterNutrient
-  );
+  // const sensorWaterAcidityObj = dummySensor.find(
+  //   (sensor) => sensor.sensorID === arduinoBoardObj?.waterAcidity
+  // );
+  // const sensorWaterLevelObj = dummySensor.find(
+  //   (sensor) => sensor.sensorID === arduinoBoardObj?.waterLevel
+  // );
+  // const sensorWaterNutrientObj = dummySensor.find(
+  //   (sensor) => sensor.sensorID === arduinoBoardObj?.waterNutrient
+  // );
 
   const [checkedContainer, setCheckedContainer] = useState(false);
 
@@ -48,11 +63,14 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
 
     if (!checkedContainer) {
       // If the checkbox was unchecked before, push the contId to the list
-      setRemoveContainerID((prevContainer) => [...prevContainer, contId]);
+      setRemoveContainerID((prevContainer) => [
+        ...prevContainer,
+        container.id.toString(),
+      ]);
     } else {
       // If the checkbox was checked before, remove the contId from the list
       setRemoveContainerID((prevContainer) =>
-        prevContainer.filter((id) => id !== contId)
+        prevContainer.filter((id) => id !== container.id.toString())
       );
     }
   };
@@ -70,6 +88,10 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
     }
   }, [checkboxVisible]);
 
+  //to be fetch in real time database firebase
+  const waterAcidity = 59;
+  const waterNutrient = 100;
+  const waterLevel = 299;
   return (
     <Surface elevation={4} style={ContainerCardStyle.surface}>
       <LinearGradient
@@ -105,7 +127,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
             onPress={openContainerDetailModal}
           >
             <Text style={{ fontSize: 35, margin: 3, fontWeight: "bold" }}>
-              {item.contName}
+              {container.name}
             </Text>
             <View style={{ width: "100%" }}>
               <View style={ContainerCardStyle.dataSurfaceContainer}>
@@ -117,7 +139,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   ]}
                 >
                   <Text style={ContainerCardStyle.itemTextDetails}>
-                    Acidity: {sensorWaterAcidityObj?.value} pH
+                    Acidity: {waterAcidity} pH
                   </Text>
                 </Surface>
                 <Surface
@@ -128,7 +150,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   ]}
                 >
                   <Text style={ContainerCardStyle.itemTextDetails}>
-                    Nutrient: {sensorWaterNutrientObj?.value}
+                    Nutrient: {waterNutrient}
                     ec
                   </Text>
                 </Surface>
@@ -147,14 +169,14 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   }}
                 >
                   <Text style={ContainerCardStyle.itemTextDetails}>
-                    Water Level: {sensorWaterLevelObj?.value} L
+                    Water Level: {waterLevel} L
                   </Text>
                 </Surface>
               </View>
 
               {/* Show the container detail when card is pressed */}
               <ContainerDetailModal
-                containerItem={item}
+                containerItem={container}
                 visible={containerDetailModalVisible}
                 onClose={closeContainerDetailModal}
               />

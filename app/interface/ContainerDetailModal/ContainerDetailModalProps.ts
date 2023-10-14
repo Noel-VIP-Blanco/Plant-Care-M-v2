@@ -1,8 +1,9 @@
 //inteface
-import { ContainerItemProps } from "@interface/DataProps/ContainerItemProps";
+import { ContainersProps } from "@interface/Auth/AwsApiProps";
+// import { ContainerItemProps } from "@interface/DataProps/ContainerItemProps";
 
 export type ContainerDetailModalProps = {
   visible: boolean;
   onClose: () => void;
-  containerItem: ContainerItemProps;
+  containerItem: ContainersProps;
 };

@@ -21,10 +21,10 @@ const Index = () => {
 
   // const { data: arduino } = useGetArduinoQuery();
   // const { data: farms } = useGetAllFarmsQuery();
-  // const { data: containers } = useGetContainersQuery(1);
+  const { data: containers } = useGetContainersQuery(1);
   // console.log("Index.tsx line 26 all arduino", arduino);
   // console.log("Index.tsx line 27 all farms", farms);
-  // console.log("Index.tsx line 28 all containers", containers);
+  console.log("Index.tsx line 28 all containers", containers);
 
   return (
     <NavigationContainer>

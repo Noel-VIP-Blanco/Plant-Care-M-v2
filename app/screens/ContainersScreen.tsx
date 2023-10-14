@@ -11,22 +11,40 @@ import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightI
 import { ContainerScreenStyle } from "@stylesheets/ContainerScreen/ContainerScreenStyle";
 
 //redux
-import { useAppSelector, useAppDispatch } from "@reduxToolkit/Hooks";
-import {
-  searchContainerByName,
-  removeContainers,
-  selectFilteredContainer,
-} from "@reduxToolkit/Features/ContainerSlice";
+// import { useAppSelector, useAppDispatch } from "@reduxToolkit/Hooks";
+// import {
+//   searchContainerByName,
+//   removeContainers,
+//   selectFilteredContainer,
+// } from "@reduxToolkit/Features/ContainerSlice";
 
 //components
 import CustomSearchBar from "@components/Shared/CustomSearchBar";
 import AddContainerModal from "@components/TasksModal/AddContainerModal";
 import ContainerCardList from "@components/Container/ContainerCardList";
 
+import { useGetContainersQuery } from "@backend/RTKQuery/Services/awsAPI";
+import { ContainersProps } from "@interface/Auth/AwsApiProps";
+
 const ContainersScreen = ({ navigation }: any) => {
   //redux
-  const filteredContainer = useAppSelector(selectFilteredContainer);
-  const dispatch = useAppDispatch();
+  // const filteredContainer = useAppSelector(selectFilteredContainer);
+  // const dispatch = useAppDispatch();
+
+  const [containers, setContainers] = useState<ContainersProps[]>();
+  const fetchAllContainer = async () => {
+    try {
+      const { data: containerss } = useGetContainersQuery(1);
+      if (containerss) {
+        return containerss;
+      }
+    } catch (e) {
+      return undefined;
+    }
+  };
+  fetchAllContainer().then((allContainer) => {
+    setContainers(allContainer);
+  });
 
   //removeContainer
   const [checkboxVisible, setCheckboxVisible] = useState(false);
@@ -36,10 +54,10 @@ const ContainersScreen = ({ navigation }: any) => {
     console.log(removeContainerID);
     setRemoveContainerID([]);
   };
-  const handleRemoveContainers = () => {
-    dispatch(removeContainers(removeContainerID));
-    hideCheckbox();
-  };
+  // const handleRemoveContainers = () => {
+  //   dispatch(removeContainers(removeContainerID));
+  //   hideCheckbox();
+  // };
   const [removeContainerID, setRemoveContainerID] = useState<string[]>([]);
 
   //add container modal
@@ -48,7 +66,7 @@ const ContainersScreen = ({ navigation }: any) => {
   const openAddContainerModal = () => setAddContainerModalVisible(true);
   const closeAddContainerModal = () => setAddContainerModalVisible(false);
   const onSearch = (text: string) => {
-    dispatch(searchContainerByName(text));
+    // dispatch(searchContainerByName(text));
   };
 
   return (
@@ -108,7 +126,8 @@ const ContainersScreen = ({ navigation }: any) => {
         </Text>
         {/* <Filter Containers /> */}
         <ContainerCardList
-          filteredData={filteredContainer}
+          // filteredData={filteredContainer}
+          filteredData={containers}
           checkboxVisible={checkboxVisible}
           setRemoveContainerID={setRemoveContainerID}
         />
@@ -147,7 +166,7 @@ const ContainersScreen = ({ navigation }: any) => {
                   "Container Remove",
                   "You have successfully removed the container"
                 );
-                handleRemoveContainers();
+                // handleRemoveContainers();
               }}
             >
               Remove
