@@ -7,8 +7,7 @@ import { onValue, ref } from "firebase/database";
 import {
   useGetAllFarmsQuery,
   useGetArduinoQuery,
-} from "@backend/RTKQuery/Services/farmAPI";
-import { getFarm } from "@root/utilities/shared/LocalStorage";
+} from "@backend/RTKQuery/Services/awsAPI";
 
 const Index = () => {
   const user = null;

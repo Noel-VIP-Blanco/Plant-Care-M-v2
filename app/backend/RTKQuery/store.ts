@@ -1,10 +1,10 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { farmAPI } from "./Services/farmAPI";
+import { awsAPI } from "./Services/awsAPI";
 
 export const store = configureStore({
   reducer: {
-    [farmAPI.reducerPath]: farmAPI.reducer,
+    [awsAPI.reducerPath]: awsAPI.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(farmAPI.middleware),
+    getDefaultMiddleware().concat(awsAPI.middleware),
 });

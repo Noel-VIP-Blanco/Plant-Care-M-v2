@@ -12,7 +12,7 @@ interface ArduinoBoard {
   sensorMappings: null | any[]; // Replace 'any' with a more specific type if needed
   status: string;
 }
-export const farmAPI = createApi({
+export const awsAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${baseURL}` }),
   endpoints: (builder) => ({
     getAllFarms: builder.query<FarmsProps[], void>({
@@ -24,4 +24,4 @@ export const farmAPI = createApi({
   }),
 });
 
-export const { useGetArduinoQuery, useGetAllFarmsQuery } = farmAPI;
+export const { useGetArduinoQuery, useGetAllFarmsQuery } = awsAPI;

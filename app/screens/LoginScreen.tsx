@@ -17,7 +17,7 @@ import { LoginStyle } from "@stylesheets/Login/LoginStyle";
 //backend
 import { Login } from "@backend/Auth/auth";
 import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
-import { useGetAllFarmsQuery } from "@backend/RTKQuery/Services/farmAPI";
+import { useGetAllFarmsQuery } from "@backend/RTKQuery/Services/awsAPI";
 
 const LoginScreen = ({ navigation }: any) => {
   const plantCareLogo = "../../assets/PlantCareImages/PlantCareLogo.png";
