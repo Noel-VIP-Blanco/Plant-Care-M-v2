@@ -14,7 +14,7 @@ const Index = () => {
   onValue(starCountRef, (snapshot) => {
     currentTDS = snapshot.val();
   });
-  console.log(currentTDS);
+  console.log("Current TDS", currentTDS);
 
   return (
     <NavigationContainer>
