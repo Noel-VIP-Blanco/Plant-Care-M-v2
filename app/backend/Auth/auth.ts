@@ -1,5 +1,6 @@
 import { loginProps } from "@interface/Auth/AuthProps";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import { baseURL } from "@root/utilities/shared/BaseURL";
 import {
   setCurrentUser,
   setRememberMe,
@@ -12,7 +13,6 @@ export const Login = ({
   rememberMe,
   navigation,
 }: loginProps) => {
-  const baseURL = "http://ec2-184-73-6-113.compute-1.amazonaws.com:80";
   const requestBody = {
     username: username,
     password: password,

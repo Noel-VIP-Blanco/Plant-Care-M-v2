@@ -7,6 +7,7 @@ import {
   Divider,
   Surface,
   TouchableRipple,
+  Button,
 } from "react-native-paper";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -26,6 +27,7 @@ import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightI
 import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const HomeScreen = ({ navigation }: any) => {
   //filtered notification that has not yet read
@@ -112,7 +114,6 @@ const HomeScreen = ({ navigation }: any) => {
             </Surface>
           </Menu>
         </View>
-
         <View style={HomeStyle.bottomMainContainer}>
           <CalendarEvents
             openEventModal={openeventModal}
@@ -123,7 +124,16 @@ const HomeScreen = ({ navigation }: any) => {
             <HomeItems navigation={navigation} />
           </ScrollView>
         </View>
-
+        {/* //TESTS */}
+        <Button
+          onPress={() => {
+            getFarm().then((farmFromLocalStorage) => {
+              console.log("HomeScreen line 33", farmFromLocalStorage);
+            });
+          }}
+        >
+          Test only
+        </Button>
         {/* Modals */}
         <EventsModal
           visible={eventModalVisible}

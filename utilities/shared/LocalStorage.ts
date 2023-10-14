@@ -55,3 +55,21 @@ export const getRememberMe = async () => {
     console.log("LocalStorage.ts line 37 error", e);
   }
 };
+
+//handle farm of farmer/admin
+export const setFarm = async (farmid: number) => {
+  try {
+    await AsyncStorage.setItem("ASYNC_FARM", farmid.toString());
+  } catch (e) {
+    console.log("LocalStorage.ts line 64 error", e);
+  }
+};
+
+export const getFarm = async () => {
+  try {
+    const token = await AsyncStorage.getItem("ASYNC_FARM");
+    return token;
+  } catch (e) {
+    console.log("LocalStorage.ts line 37 error", e);
+  }
+};
