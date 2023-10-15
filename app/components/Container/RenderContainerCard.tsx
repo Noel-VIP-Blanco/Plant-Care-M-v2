@@ -18,28 +18,25 @@ import { dummySensor } from "@root/app/dummyData/dummySensor";
 
 //components
 import ContainerDetailModal from "./ContainerDetailModal";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
-  item,
+  container,
   checkboxVisible,
   setRemoveContainerID,
 }) => {
-  const { contId, contName, arduinoBoardId } = item;
+  // const { contId, contName, arduinoBoardId } = item;
 
+  const arduinoBoards = useAppSelector(selectArduinoBoards);
   //get the sensor id from the arduinoboardID
-  const arduinoBoardObj = dummyArduinoBoards.find(
-    (arduino) => arduino.arduinoBoardId === arduinoBoardId
+  const arduinoBoardObj = arduinoBoards.find(
+    (arduino) => arduino.id === container.arduinoBoardDto.id
   );
 
   //get the sensor value for every sensor type connected on the arduino
-  const sensorWaterAcidityObj = dummySensor.find(
-    (sensor) => sensor.sensorID === arduinoBoardObj?.waterAcidity
-  );
-  const sensorWaterLevelObj = dummySensor.find(
-    (sensor) => sensor.sensorID === arduinoBoardObj?.waterLevel
-  );
-  const sensorWaterNutrientObj = dummySensor.find(
-    (sensor) => sensor.sensorID === arduinoBoardObj?.waterNutrient
-  );
+  const sensorWaterAcidityObj = 30;
+  const sensorWaterLevelObj = 50;
+  const sensorWaterNutrientObj = 90;
 
   const [checkedContainer, setCheckedContainer] = useState(false);
 
@@ -48,11 +45,14 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
 
     if (!checkedContainer) {
       // If the checkbox was unchecked before, push the contId to the list
-      setRemoveContainerID((prevContainer) => [...prevContainer, contId]);
+      setRemoveContainerID((prevContainer) => [
+        ...prevContainer,
+        container.id.toString(),
+      ]);
     } else {
       // If the checkbox was checked before, remove the contId from the list
       setRemoveContainerID((prevContainer) =>
-        prevContainer.filter((id) => id !== contId)
+        prevContainer.filter((id) => id !== container.id.toString())
       );
     }
   };
@@ -105,7 +105,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
             onPress={openContainerDetailModal}
           >
             <Text style={{ fontSize: 35, margin: 3, fontWeight: "bold" }}>
-              {item.contName}
+              {container.name}
             </Text>
             <View style={{ width: "100%" }}>
               <View style={ContainerCardStyle.dataSurfaceContainer}>
@@ -117,7 +117,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   ]}
                 >
                   <Text style={ContainerCardStyle.itemTextDetails}>
-                    Acidity: {sensorWaterAcidityObj?.value} pH
+                    Acidity: {sensorWaterAcidityObj} pH
                   </Text>
                 </Surface>
                 <Surface
@@ -128,7 +128,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   ]}
                 >
                   <Text style={ContainerCardStyle.itemTextDetails}>
-                    Nutrient: {sensorWaterNutrientObj?.value}
+                    Nutrient: {sensorWaterNutrientObj}
                     ec
                   </Text>
                 </Surface>
@@ -147,14 +147,14 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   }}
                 >
                   <Text style={ContainerCardStyle.itemTextDetails}>
-                    Water Level: {sensorWaterLevelObj?.value} L
+                    Water Level: {sensorWaterLevelObj} L
                   </Text>
                 </Surface>
               </View>
 
               {/* Show the container detail when card is pressed */}
               <ContainerDetailModal
-                containerItem={item}
+                containerItem={container}
                 visible={containerDetailModalVisible}
                 onClose={closeContainerDetailModal}
               />

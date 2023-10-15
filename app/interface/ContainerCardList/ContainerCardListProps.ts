@@ -1,7 +1,10 @@
-import { ContainerItemProps } from "@interface/DataProps/ContainerItemProps";
+import {
+  ContainerItemProps,
+  ContainerProps,
+} from "@interface/DataProps/ContainerItemProps";
 
 export interface ContainerCardListProps {
-  filteredData: ContainerItemProps[];
+  filteredData: ContainerProps[];
   checkboxVisible: boolean;
   setRemoveContainerID: React.Dispatch<React.SetStateAction<string[]>>;
 }

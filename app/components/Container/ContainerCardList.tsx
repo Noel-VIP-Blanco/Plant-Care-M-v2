@@ -31,7 +31,7 @@ const ContainerCardList: React.FC<ContainerCardListProps> = ({
             { item } // Destructure 'item' from the 'renderItem' function argument
           ) => (
             <RenderContainerCard
-              item={item}
+              container={item}
               checkboxVisible={checkboxVisible}
               setRemoveContainerID={setRemoveContainerID}
             />

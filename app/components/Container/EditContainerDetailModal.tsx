@@ -13,6 +13,10 @@ import ModalButtons from "@components/Shared/ModalButtons";
 
 //interface
 import { EditContainerDetailModalProps } from "@interface/EditContainerDetailModal/EditContainerDetailModalProps";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
+import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   visible,
@@ -24,17 +28,20 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   const [selectArduinoBoard, setSelectArduinoBoard] = useState("");
   const [selectPlant, setSelectPlant] = useState("");
 
+  const containers = useAppSelector(selectContainer);
+  const arduinoBoards = useAppSelector(selectArduinoBoards);
+  const plants = useAppSelector(selectPlants);
   //data for selectlists
-  const ardunoBoardData = dummyArduinoBoards
-    .filter((arduinoBoard) => arduinoBoard.arduinoBoardStatus === "IN")
+  const ardunoBoardData = arduinoBoards
+    .filter((arduinoBoard) => arduinoBoard.status === "INACTIVE")
     .map((arduinoBoard) => ({
-      key: arduinoBoard.arduinoBoardId,
-      value: arduinoBoard.arduinoBoardId,
+      key: arduinoBoard.id,
+      value: arduinoBoard.id,
     }));
 
-  const plantData = dummyPlantItem.map(({ plantID, plantName }) => ({
-    key: plantID,
-    value: plantName,
+  const plantData = plants.map(({ id, name }) => ({
+    key: id,
+    value: name,
   }));
 
   //function for Edit container

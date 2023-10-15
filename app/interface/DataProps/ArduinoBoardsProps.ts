@@ -7,3 +7,9 @@ export type ArduinoBoardsProps = {
   waterAcidity: string;
   tempAndHumidity?: string;
 };
+export type ArduinoBoardProps = {
+  id: number;
+  name: string;
+  status: "ACTIVE" | "INACTIVE";
+  sensorMappings: null | any[]; // Define the appropriate type for sensorMappings based on your data structure
+};

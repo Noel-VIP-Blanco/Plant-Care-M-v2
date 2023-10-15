@@ -3,12 +3,16 @@ import containerReducer from "./Features/ContainerSlice";
 import taskReducer from "./Features/TaskSlice";
 import harvestLog from "./Features/HarvestLogSlice";
 import user from "./Features/UserSlice";
+import arduinoBoard from "./Features/ArduinoBoardSlice";
+import plants from "./Features/PlantSlice";
 export const store = configureStore({
   reducer: {
     containers: containerReducer,
     tasks: taskReducer,
     harvestLog: harvestLog,
     user: user,
+    arduinoBoards: arduinoBoard,
+    plants: plants,
   },
 });
 

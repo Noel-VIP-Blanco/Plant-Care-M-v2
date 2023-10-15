@@ -1,15 +1,24 @@
 //interface
-import { ContainerItemProps } from "@interface/DataProps/ContainerItemProps";
-import { ArduinoBoardsProps } from "@interface/DataProps/ArduinoBoardsProps";
-import { PlantItemProps } from "@interface/DataProps/PlantItemProps";
+import {
+  ContainerItemProps,
+  ContainerProps,
+} from "@interface/DataProps/ContainerItemProps";
+import {
+  ArduinoBoardsProps,
+  ArduinoBoardProps,
+} from "@interface/DataProps/ArduinoBoardsProps";
+import {
+  PlantItemProps,
+  PlantProps,
+} from "@interface/DataProps/PlantItemProps";
 
 export type EditContainerDetailModalProps = {
   visible: boolean;
   onClose: () => void;
   closeContainerDetailModal: () => void;
   dataForEditInitial: {
-    containerObj: ContainerItemProps | undefined;
-    arduinoBoardObj: ArduinoBoardsProps | undefined;
-    plantObj: PlantItemProps | undefined;
+    containerObj: ContainerProps | undefined;
+    arduinoBoardObj: ArduinoBoardProps | undefined;
+    plantObj: PlantProps | undefined;
   };
 };

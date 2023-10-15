@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
 
@@ -9,6 +9,7 @@ import {
   ContainerItemProps,
   ContainerProps,
 } from "@interface/DataProps/ContainerItemProps";
+import { baseURL } from "@root/utilities/shared/BaseURL";
 
 interface initialStateProps {
   value: ContainerProps[];
@@ -18,6 +19,24 @@ const initialState: initialStateProps = {
   value: [],
   filteredData: [],
 };
+
+export const getAllContainers = createAsyncThunk(
+  "api/getAllContainers",
+  async (farmId: string) => {
+    try {
+      const response = await fetch(
+        `${baseURL}/api/v1/farms/${farmId}/containers`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const containers: ContainerProps[] = await response.json();
+      return containers;
+    } catch (e) {
+      throw e;
+    }
+  }
+);
 
 export const containerSlice = createSlice({
   name: "containers",
@@ -48,6 +67,12 @@ export const containerSlice = createSlice({
         });
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getAllContainers.fulfilled, (state, action) => {
+      state.value = action.payload;
+      state.filteredData = action.payload;
+    });
   },
 });
 

@@ -17,6 +17,8 @@ import EditContainerDetailModal from "./EditContainerDetailModal";
 
 //interface
 import { ContainerDetailModalProps } from "@interface/ContainerDetailModal/ContainerDetailModalProps";
+import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
   visible,
@@ -25,7 +27,8 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
 }) => {
   //data from redux
   const containers = useAppSelector(selectContainer);
-
+  const arduinoBoards = useAppSelector(selectArduinoBoards);
+  const plants = useAppSelector(selectPlants);
   //handle edit button
   const handleEditButton = () => {
     openEditContainerDetailModal();
@@ -33,16 +36,16 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
 
   //get the container name
   const containerObj = containers.find(
-    (container) => container.contId === containerItem.contId
+    (container) => container.id === containerItem.id
   );
   //get the arduino board object to know the connected plant
-  const arduinoBoardObj = dummyArduinoBoards.find(
+  const arduinoBoardObj = arduinoBoards.find(
     (arduinoBoardItem) =>
-      arduinoBoardItem.arduinoBoardId === containerObj?.arduinoBoardId
+      arduinoBoardItem.id === containerObj?.arduinoBoardDto.id
   );
   //get the plant name by using the plant id from the arduino board
-  const plantObj = dummyPlantItem.find(
-    (plant) => plant.plantID === arduinoBoardObj?.plantId
+  const plantObj = plants.find(
+    (plant) => plant.id === containerObj?.plantDto.id
   );
 
   //opening edit container detail modal
@@ -99,7 +102,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
                   Container Name
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {containerObj && containerObj.contName}
+                  {containerObj && containerObj.name}
                 </Text>
               </View>
 
@@ -115,7 +118,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
                   Arduino Board
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {containerObj && containerObj.arduinoBoardId}
+                  {containerObj && containerObj.arduinoBoardDto.id}
                 </Text>
               </View>
 
@@ -131,7 +134,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
                   Plant Name
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {plantObj && plantObj.plantName}
+                  {plantObj && plantObj.name}
                 </Text>
               </View>
 
