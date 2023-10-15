@@ -25,3 +25,14 @@ export type ContainerProps = {
   };
   farmId: number;
 };
+
+export type AddContainerProps = {
+  name: string;
+  arduinoBoardDto: {
+    id: number;
+  };
+  plantDto: {
+    id: number;
+  };
+  farmId: number;
+};

@@ -10,43 +10,63 @@ import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
 
 //intefaces
 import { ModalType } from "@interface/Modals/ModalType";
-import { ContainerItemProps } from "@interface/DataProps/ContainerItemProps";
+import {
+  AddContainerProps,
+  ContainerItemProps,
+  ContainerProps,
+} from "@interface/DataProps/ContainerItemProps";
 
 //components
 import ModalButtons from "@components/Shared/ModalButtons";
 
 //redux
-import { addContainer } from "@reduxToolkit/Features/ContainerSlice";
-import { useAppDispatch } from "@reduxToolkit/Hooks";
+import {
+  addContainer,
+  AddContainerAPI,
+  selectContainer,
+} from "@reduxToolkit/Features/ContainerSlice";
+import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
+import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const AddContainerModal = ({ visible, onClose }: ModalType) => {
   const dispatch = useAppDispatch();
+
+  const containers = useAppSelector(selectContainer);
+  const arduinoBoards = useAppSelector(selectArduinoBoards);
+  const plants = useAppSelector(selectPlants);
 
   const [containerName, setContainerName] = useState("");
   const [selectArduinoBoard, setSelectArduinoBoard] = useState("");
   const [selectPlant, setSelectPlant] = useState("");
 
   //data for selectlists
-  const ardunoBoardData = dummyArduinoBoards
-    .filter((arduinoBoard) => arduinoBoard.arduinoBoardStatus === "IN")
+  const ardunoBoardData = arduinoBoards
+    .filter((arduinoBoard) => arduinoBoard.status === "INACTIVE")
     .map((arduinoBoard) => ({
-      key: arduinoBoard.arduinoBoardId,
-      value: arduinoBoard.arduinoBoardId,
+      key: arduinoBoard.id,
+      value: arduinoBoard.id,
     }));
 
-  const plantData = dummyPlantItem.map(({ plantID, plantName }) => ({
-    key: plantID,
-    value: plantName,
+  const plantData = plants.map(({ id, name }) => ({
+    key: id,
+    value: name,
   }));
 
   //function for adding container
   const handleAddContainer = () => {
-    const newContainer: ContainerItemProps = {
-      contId: Math.random().toString(),
-      contName: containerName,
-      arduinoBoardId: selectArduinoBoard,
+    const newContainer: AddContainerProps = {
+      name: containerName,
+      arduinoBoardDto: {
+        id: parseInt(selectArduinoBoard),
+      },
+      plantDto: {
+        id: parseInt(selectPlant),
+      },
+      farmId: 1,
     };
-    dispatch(addContainer(newContainer));
+    dispatch(AddContainerAPI({ newContainer: newContainer, farmId: 1 }));
+    //dispatch(addContainer(newContainer));
     Alert.alert("New Container", "You have successfully added the container ");
     reset();
     onClose();

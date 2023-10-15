@@ -16,6 +16,7 @@ import {
   searchContainerByName,
   removeContainers,
   selectFilteredContainer,
+  DeleteContainerAPI,
 } from "@reduxToolkit/Features/ContainerSlice";
 
 //components
@@ -37,10 +38,17 @@ const ContainersScreen = ({ navigation }: any) => {
     setRemoveContainerID([]);
   };
   const handleRemoveContainers = () => {
-    dispatch(removeContainers(removeContainerID));
+    dispatch(
+      // removeContainers(removeContainerID)
+      DeleteContainerAPI({
+        containerIds: removeContainerID,
+        farmId: 1,
+      })
+    );
     hideCheckbox();
   };
-  const [removeContainerID, setRemoveContainerID] = useState<string[]>([]);
+
+  const [removeContainerID, setRemoveContainerID] = useState<number[]>([]);
 
   //add container modal
   const [addContainerModalVisible, setAddContainerModalVisible] =
@@ -147,6 +155,7 @@ const ContainersScreen = ({ navigation }: any) => {
                   "Container Remove",
                   "You have successfully removed the container"
                 );
+
                 handleRemoveContainers();
               }}
             >

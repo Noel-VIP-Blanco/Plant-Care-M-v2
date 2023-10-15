@@ -6,5 +6,5 @@ import {
 export interface ContainerCardListProps {
   filteredData: ContainerProps[];
   checkboxVisible: boolean;
-  setRemoveContainerID: React.Dispatch<React.SetStateAction<string[]>>;
+  setRemoveContainerID: React.Dispatch<React.SetStateAction<number[]>>;
 }

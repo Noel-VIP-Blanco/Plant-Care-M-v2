@@ -45,14 +45,11 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
 
     if (!checkedContainer) {
       // If the checkbox was unchecked before, push the contId to the list
-      setRemoveContainerID((prevContainer) => [
-        ...prevContainer,
-        container.id.toString(),
-      ]);
+      setRemoveContainerID((prevContainer) => [...prevContainer, container.id]);
     } else {
       // If the checkbox was checked before, remove the contId from the list
       setRemoveContainerID((prevContainer) =>
-        prevContainer.filter((id) => id !== container.id.toString())
+        prevContainer.filter((id) => id !== container.id)
       );
     }
   };
