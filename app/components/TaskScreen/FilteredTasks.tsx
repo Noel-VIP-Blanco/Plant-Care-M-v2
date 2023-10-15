@@ -33,9 +33,9 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
   //container with state to use in the dropdown selection
   const containers = useAppSelector(selectFilteredContainer);
 
-  const containerData = containers.map(({ contName, contId }) => ({
-    key: contId,
-    value: contName,
+  const containerData = containers.map(({ name, id }) => ({
+    key: id.toString(),
+    value: name,
   }));
   //handle status checkboxes
   const [checkedAllStatus, setCheckedAllStatus] = useState(false);
@@ -47,7 +47,7 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
     if (!checkedAllStatus) {
       setCheckedGrowing(true);
       setCheckedHarvesting(true);
-      setCheckedStatus(["Growing", "Harvesting"]);
+      setCheckedStatus(["GROWING", "HARVESTING"]);
     } else {
       setCheckedGrowing(false);
       setCheckedHarvesting(false);
@@ -60,12 +60,12 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
       // If the checkbox was unchecked before, push the status to the list
       setCheckedStatus((prevCheckedStatus) => [
         ...prevCheckedStatus,
-        "Growing",
+        "GROWING",
       ]);
     } else {
       // If the checkbox was checked before, remove the taskID from the list
       setCheckedStatus((prevCheckedStatus) =>
-        prevCheckedStatus.filter((status) => status !== "Growing")
+        prevCheckedStatus.filter((status) => status !== "GROWING")
       );
     }
   };
@@ -75,12 +75,12 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
       // If the checkbox was unchecked before, push the status to the list
       setCheckedStatus((prevCheckedStatus) => [
         ...prevCheckedStatus,
-        "Harvesting",
+        "HARVESTING",
       ]);
     } else {
       // If the checkbox was checked before, remove the taskID from the list
       setCheckedStatus((prevCheckedStatus) =>
-        prevCheckedStatus.filter((status) => status !== "Harvesting")
+        prevCheckedStatus.filter((status) => status !== "HARVESTING")
       );
     }
   };

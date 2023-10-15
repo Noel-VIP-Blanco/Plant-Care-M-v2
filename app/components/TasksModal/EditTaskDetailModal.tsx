@@ -7,9 +7,6 @@ import React, { useState } from "react";
 //interface
 import { EditTaskDetailModalProps } from "@interface/EditTaskDetailModal/EditTaskDetailModalProps";
 
-//data
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-
 //component
 import ModalButtons from "@components/Shared/ModalButtons";
 
@@ -17,6 +14,7 @@ import ModalButtons from "@components/Shared/ModalButtons";
 import { useAppSelector, useAppDispatch } from "@reduxToolkit/Hooks";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 import { editTask } from "@reduxToolkit/Features/TaskSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
   visible,
@@ -26,35 +24,36 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
 }) => {
   //data from redux
   const containers = useAppSelector(selectContainer);
+  const plants = useAppSelector(selectPlants);
   //redux dispatch
   const dispatch = useAppDispatch();
 
   //store data after selecting item in selectlist
   const [selectContainerId, setSelectContainerId] = useState(
-    dataForEditInitial.containerObj?.contId
+    dataForEditInitial.containerObj?.id
   );
   const [selectPlant, setSelectPlant] = useState(
-    dataForEditInitial.plantObj.plantID
+    dataForEditInitial.plantObj.id
   );
   //data for selectlists
   const containerData = containers.map((container) => ({
-    key: container.contId,
-    value: container.contName,
+    key: container.id.toString(),
+    value: container.name,
   }));
-  const plantData = dummyPlantItem.map(({ plantID, plantName }) => ({
-    key: plantID,
-    value: plantName,
+  const plantData = plants.map(({ id, name }) => ({
+    key: id.toString(),
+    value: name,
   }));
 
   const handleEditTask = () => {
     Alert.alert("Edit Task", "You have successfully edited the task ");
-    dispatch(
-      editTask({
-        taskId: dataForEditInitial.taskObj.taskId,
-        contId: selectContainerId,
-        plantId: selectPlant,
-      })
-    );
+    // dispatch(
+    //   editTask({
+    //     taskId: dataForEditInitial.taskObj.taskId,
+    //     contId: selectContainerId,
+    //     plantId: selectPlant,
+    //   })
+    // );
     onClose();
     closeTaskDetailModal();
   };

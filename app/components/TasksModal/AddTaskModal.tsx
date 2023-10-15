@@ -11,6 +11,8 @@ import { ModalType } from "@interface/Modals/ModalType";
 import {
   TaskItemSerializableProps,
   PlantStatus,
+  TaskSerializableProps,
+  AddTaskSerializableProps,
 } from "@interface/DataProps/TaskItemProps";
 import { TaskItemProps } from "@interface/DataProps/TaskItemProps";
 
@@ -18,7 +20,7 @@ import { TaskItemProps } from "@interface/DataProps/TaskItemProps";
 import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
 
 //redux
-import { addTask } from "@reduxToolkit/Features/TaskSlice";
+import { AddTaskAPI, addTask } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
 import { selectFilteredContainer } from "@reduxToolkit/Features/ContainerSlice";
 
@@ -27,23 +29,25 @@ import ModalButtons from "@components/Shared/ModalButtons";
 
 //style
 import { AddTaskModalStyle } from "@stylesheets/AddTaskModal/AddTaskModalStyle";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const AddTaskModal = ({ visible, onClose }: ModalType) => {
   //container with state to use in the dropdown selection
   const containers = useAppSelector(selectFilteredContainer);
+  const plants = useAppSelector(selectPlants);
 
   const dispatch = useAppDispatch();
 
   const [selectPlant, setSelectPlant] = useState("");
   const [selectContainer, setSelectContainer] = useState("");
   //data
-  const plantData = dummyPlantItem.map(({ plantID, plantName }) => ({
-    key: plantID,
-    value: plantName,
+  const plantData = plants.map(({ id, name }) => ({
+    key: id.toString(),
+    value: name,
   }));
-  const containerData = containers.map(({ contId, contName }) => ({
-    key: contId,
-    value: contName,
+  const containerData = containers.map(({ id, name }) => ({
+    key: id.toString(),
+    value: name,
   }));
   //date
   const [date, setDate] = useState(new Date());
@@ -87,25 +91,27 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
     //   dateText,
     //   numberOfTask,
     // });
-    let addTasks: TaskItemSerializableProps[] = [];
-    for (let x = 0; x < parseInt(numberOfTask); x++) {
-      const dateString = dateText;
-      const date = new Date(dateString);
-      date.setDate(date.getDate() + 45); // add days depend on plant growth in plant id
-      const expectedHarvestDate = date.toISOString().split("T")[0];
 
-      const newTask: TaskItemSerializableProps = {
-        taskId: Math.random().toString(),
-        plantId: selectPlant,
-        contId: selectContainer,
-        datePlanted: dateText,
-        dateExpectedHarvest: expectedHarvestDate,
-        status: PlantStatus.Grow,
-        farmerName: "Noel Blanco",
-      };
-      addTasks.push(newTask);
-    }
-    dispatch(addTask(addTasks));
+    const dateString = dateText;
+    const date = new Date(dateString);
+    date.setDate(date.getDate() + 45); // add days depend on plant growth in plant id
+    const expectedHarvestDate = date.toISOString().split("T")[0];
+
+    const newTask: AddTaskSerializableProps = {
+      plantId: parseInt(selectPlant),
+      datePlanted: dateText,
+      harvestDate: expectedHarvestDate,
+      numberOfTasks: parseInt(numberOfTask),
+    };
+    //farm id should be get on local storage. to be added someday
+    dispatch(
+      AddTaskAPI({
+        newTasks: newTask,
+        containerId: parseInt(selectContainer),
+        farmId: 1,
+      })
+    );
+    // dispatch(addTask(addTasks));
     Alert.alert("New Task", "You have successfully added the tasks ");
     reset();
     onClose();

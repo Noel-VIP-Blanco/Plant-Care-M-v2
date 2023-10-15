@@ -1,6 +1,6 @@
 export enum PlantStatus {
-  Grow = "Growing",
-  Harvest = "Harvesting",
+  Grow = "GROWING",
+  Harvest = "HARVESTING",
 }
 export type TaskItemProps = {
   taskId: string;
@@ -10,6 +10,31 @@ export type TaskItemProps = {
   dateExpectedHarvest: Date;
   status: PlantStatus;
   farmerName: string;
+};
+export interface TaskProps {
+  id: number;
+  datePlanted: string;
+  harvestDate: string;
+  status: string;
+  plantId: number;
+  containerId: number;
+  farmId: number;
+  numberOfTasks: number;
+}
+
+export type TaskSerializableProps = Omit<
+  TaskProps,
+  "datePlanted" | "harvestDate"
+> & {
+  datePlanted: string;
+  harvestDate: string;
+};
+
+export type AddTaskSerializableProps = {
+  datePlanted: string;
+  numberOfTasks: number;
+  harvestDate: string;
+  plantId: number;
 };
 
 export type TaskItemSerializableProps = Omit<

@@ -5,9 +5,6 @@ import { Text, Modal, Portal } from "react-native-paper";
 //interface
 import { TaskDetailModalProps } from "@interface/TaskDetailModal/TaskDetailModalProps";
 
-//data
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-
 //components
 import ModalButtons from "@components/Shared/ModalButtons";
 import EditTaskDetailModal from "./EditTaskDetailModal";
@@ -16,6 +13,7 @@ import EditTaskDetailModal from "./EditTaskDetailModal";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 import { selectTask } from "@reduxToolkit/Features/TaskSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   visible,
@@ -25,9 +23,11 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   //data from redux
   const tasks = useAppSelector(selectTask);
   const containers = useAppSelector(selectContainer);
+  const plants = useAppSelector(selectPlants);
 
   //format date to string
-  const date = new Date(taskItem.dateExpectedHarvest);
+  const date = new Date(taskItem.harvestDate);
+  console.log("date line 30", date);
   const formattedExpectedHarvestDate = date.toISOString().split("T")[0];
   const date1 = new Date(taskItem.datePlanted);
   const formattedPlantedDate = date1.toISOString().split("T")[0];
@@ -42,11 +42,9 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   //   (task) => taskItem.taskId === task.taskId
   // )!;
 
-  const plantObj = dummyPlantItem.find(
-    (plant) => plant.plantID === taskItem.plantId
-  )!;
+  const plantObj = plants.find((plant) => plant.id === taskItem.plantId)!;
   const containerObj = containers.find(
-    (container) => container.contId === taskItem.contId
+    (container) => container.id === taskItem.containerId
   );
 
   //use as an initial/default data when editing task
@@ -98,7 +96,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   Plant Name
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {plantObj ? plantObj.plantName : "No Name"}
+                  {plantObj ? plantObj.name : "No Name"}
                 </Text>
               </View>
 
@@ -114,7 +112,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   Container Name
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {containerObj ? containerObj.contName : "N/A"}
+                  {containerObj ? containerObj.name : "N/A"}
                 </Text>
               </View>
 
@@ -162,7 +160,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   Farmer
                 </Text>
                 <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
-                  {taskItem.farmerName}
+                  To be announced
                 </Text>
               </View>
 

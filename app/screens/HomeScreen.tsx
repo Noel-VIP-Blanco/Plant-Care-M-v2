@@ -36,6 +36,7 @@ import {
   selectArduinoBoards,
 } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { getAllPlant, selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { getAllTasks, selectTask } from "@reduxToolkit/Features/TaskSlice";
 
 const HomeScreen = ({ navigation }: any) => {
   //filtered notification that has not yet read
@@ -68,9 +69,11 @@ const HomeScreen = ({ navigation }: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        //farm id should be get in local storage not hard coded
         await dispatch(getAllContainers("1"));
         await dispatch(getAllArduinoBoards("1"));
         await dispatch(getAllPlant("1"));
+        await dispatch(getAllTasks("1"));
       } catch (error) {
         // Handle errors if necessary
       }
@@ -83,9 +86,11 @@ const HomeScreen = ({ navigation }: any) => {
   const containers = useAppSelector(selectContainer);
   const arduinoBoards = useAppSelector(selectArduinoBoards);
   const plants = useAppSelector(selectPlants);
+  const tasks = useAppSelector(selectTask);
   console.log("All Containers homescreen", containers);
   console.log("All Arduino Boards homescreen", arduinoBoards);
   console.log("All plants homescreen", plants);
+  console.log("All tasks homescreen", tasks);
 
   return (
     <View style={HomeStyle.pageContainer}>

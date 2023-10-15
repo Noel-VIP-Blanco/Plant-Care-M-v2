@@ -24,6 +24,8 @@ import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 
 //component
 import TaskDetailModal from "@components/TasksModal/TaskDetailModal";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 
 const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   item,
@@ -32,15 +34,26 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
 }) => {
   //data from redux
   const containers = useAppSelector(selectContainer);
-
+  const plants = useAppSelector(selectPlants);
+  const arduinoBoards = useAppSelector(selectArduinoBoards);
+  // const {
+  //   taskId,
+  //   plantId,
+  //   contId,
+  //   dateExpectedHarvest,
+  //   datePlanted,
+  //   status,
+  //   farmerName,
+  // } = item;
   const {
-    taskId,
-    plantId,
-    contId,
-    dateExpectedHarvest,
+    containerId,
     datePlanted,
+    farmId,
+    harvestDate,
+    id,
+    numberOfTasks,
+    plantId,
     status,
-    farmerName,
   } = item;
   //handle checkbox
   const [checkedTask, setCheckedTask] = useState(false);
@@ -50,37 +63,31 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
 
     if (!checkedTask) {
       // If the checkbox was unchecked before, push the taskID to the list
-      setCompleteTasksID((prevTasks) => [...prevTasks, taskId]);
+      setCompleteTasksID((prevTasks) => [...prevTasks, id.toString()]);
     } else {
       // If the checkbox was checked before, remove the taskID from the list
       setCompleteTasksID((prevTasks) =>
-        prevTasks.filter((id) => id !== taskId)
+        prevTasks.filter((id) => id !== id.toString())
       );
     }
   };
 
   let bgColor: ColorValue = "#9DC08B";
   //get the plant object based on the plant ID from the task to get data like plant name
-  const plantObj = dummyPlantItem.find((plant) => plant.plantID === plantId);
+  const plantObj = plants.find((plant) => plant.id === plantId);
   //get the container obj based on the container id from the task to get arduino board connected to it
   const containerObj = containers.find(
-    (container) => contId === container.contId
+    (container) => containerId === container.id
   );
   //get the sensor data from the arduino board object based on the arduino board connected from container
-  const arduinoBoardObj = dummyArduinoBoards.find(
-    (arduino) => containerObj?.arduinoBoardId === arduino.arduinoBoardId
+  const arduinoBoardObj = arduinoBoards.find(
+    (arduino) => containerObj?.arduinoBoardDto.id === arduino.id
   );
 
   //get the sensor value for every sensor type connected on the arduino
-  const sensorWaterAcidityObj = dummySensor.find(
-    (sensor) => arduinoBoardObj?.waterAcidity === sensor.sensorID
-  );
-  const sensorWaterLevelObj = dummySensor.find(
-    (sensor) => arduinoBoardObj?.waterLevel === sensor.sensorID
-  );
-  const sensorWaterNutrientObj = dummySensor.find(
-    (sensor) => arduinoBoardObj?.waterNutrient === sensor.sensorID
-  );
+  const sensorWaterAcidityObj = 60;
+  const sensorWaterLevelObj = 80;
+  const sensorWaterNutrientObj = 100;
   if (status === PlantStatus.Grow) {
     bgColor = "#b8e6a1";
   } else if (status === PlantStatus.Harvest) {
@@ -131,7 +138,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
           >
             <View style={TaskCardStyle.taskCardBoxContainer2}>
               <Text style={TaskCardStyle.itemTextTitle}>
-                {plantObj ? plantObj.plantName : "N/A"}
+                {plantObj ? plantObj.name : "N/A"}
               </Text>
 
               <View style={TaskCardStyle.itemTextDetailsContainer}>
@@ -151,11 +158,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                     ]}
                   >
                     <Text style={TaskCardStyle.itemTextDetails}>
-                      Acidity:{" "}
-                      {sensorWaterAcidityObj
-                        ? sensorWaterAcidityObj.value
-                        : "0"}{" "}
-                      pH
+                      Acidity: {sensorWaterAcidityObj} pH
                     </Text>
                   </Surface>
 
@@ -167,10 +170,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                     ]}
                   >
                     <Text style={TaskCardStyle.itemTextDetails}>
-                      Nutrient:{" "}
-                      {sensorWaterNutrientObj
-                        ? sensorWaterNutrientObj.value
-                        : "0"}
+                      Nutrient: {sensorWaterNutrientObj}
                       ec
                     </Text>
                   </Surface>
@@ -183,8 +183,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                     ]}
                   >
                     <Text style={TaskCardStyle.itemTextDetails}>
-                      Water Level:{" "}
-                      {sensorWaterLevelObj ? sensorWaterLevelObj.value : "0"}L
+                      Water Level: {sensorWaterLevelObj}L
                     </Text>
                   </Surface>
                 </View>

@@ -1,7 +1,10 @@
-import { TaskItemSerializableProps } from "@interface/DataProps/TaskItemProps";
+import {
+  TaskItemSerializableProps,
+  TaskSerializableProps,
+} from "@interface/DataProps/TaskItemProps";
 
 export type RenderTaskCardProps = {
-  item: TaskItemSerializableProps;
+  item: TaskSerializableProps;
   checkboxVisible: boolean;
   setCompleteTasksID: React.Dispatch<React.SetStateAction<string[]>>;
 };

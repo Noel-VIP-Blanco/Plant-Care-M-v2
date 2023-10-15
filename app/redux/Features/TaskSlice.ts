@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
 import { useAppSelector } from "@reduxToolkit/Hooks";
@@ -9,21 +9,87 @@ import { dummyTaskItem } from "@root/app/dummyData/DummyTaskItem";
 import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
 
 //interface
-import { TaskItemSerializableProps } from "@interface/DataProps/TaskItemProps";
+import {
+  AddTaskSerializableProps,
+  TaskItemProps,
+  TaskItemSerializableProps,
+  TaskSerializableProps,
+} from "@interface/DataProps/TaskItemProps";
 import { PlantProps } from "@interface/DataProps/PlantItemProps";
+import { baseURL } from "@root/utilities/shared/BaseURL";
 
-const initialState = {
-  value: dummyTaskItem.map((task) => ({
-    ...task,
-    datePlanted: task.datePlanted.toISOString().split("T")[0],
-    dateExpectedHarvest: task.dateExpectedHarvest.toISOString().split("T")[0],
-  })),
-  filteredData: dummyTaskItem.map((task) => ({
-    ...task,
-    datePlanted: task.datePlanted.toISOString().split("T")[0],
-    dateExpectedHarvest: task.dateExpectedHarvest.toISOString().split("T")[0],
-  })),
+interface initialStateProps {
+  value: TaskSerializableProps[];
+  filteredData: TaskSerializableProps[];
+}
+// const initialState: initialStateProps = {
+//   value: dummyTaskItem.map((task) => ({
+//     ...task,
+//     datePlanted: task.datePlanted.toISOString().split("T")[0],
+//     dateExpectedHarvest: task.dateExpectedHarvest.toISOString().split("T")[0],
+//   })),
+//   filteredData: dummyTaskItem.map((task) => ({
+//     ...task,
+//     datePlanted: task.datePlanted.toISOString().split("T")[0],
+//     dateExpectedHarvest: task.dateExpectedHarvest.toISOString().split("T")[0],
+//   })),
+// };
+
+const initialState: initialStateProps = {
+  value: [],
+  filteredData: [],
 };
+
+export const getAllTasks = createAsyncThunk(
+  "api/getAllTasks",
+  async (farmId: string) => {
+    try {
+      const response = await fetch(
+        `${baseURL}/api/v1/farms/${farmId}/containers/tasks/all`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const tasks: TaskSerializableProps[] = await response.json();
+      return tasks;
+    } catch (e) {
+      throw e;
+    }
+  }
+);
+
+export const AddTaskAPI = createAsyncThunk(
+  "api/addTask",
+  async (
+    addNewTasks: {
+      newTasks: AddTaskSerializableProps;
+      farmId: number;
+      containerId: number;
+    },
+    { dispatch }
+  ) => {
+    try {
+      const response = await fetch(
+        `${baseURL}/api/v1/farms/${addNewTasks.farmId}/containers/${addNewTasks.containerId}/tasks`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(addNewTasks.newTasks),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const tasks: TaskSerializableProps[] = await response.json();
+      dispatch(addTask(tasks));
+      return tasks;
+    } catch (e) {
+      throw e;
+    }
+  }
+);
 
 export const taskSlice = createSlice({
   name: "tasks",
@@ -32,7 +98,7 @@ export const taskSlice = createSlice({
   reducers: {
     //modify the add tasks when implementing database by adding the tasks directly to the database
     // and fetch the tasks from database with generated ids to update my initialstate
-    addTask: (state, action: PayloadAction<TaskItemSerializableProps[]>) => {
+    addTask: (state, action: PayloadAction<TaskSerializableProps[]>) => {
       const newTasks = action.payload;
 
       // Push the new tasks to both state.value and state.filteredData
@@ -43,10 +109,10 @@ export const taskSlice = createSlice({
     removeTasks: (state, action: PayloadAction<string[]>) => {
       const removeTaskId = action.payload;
       state.value = state.value.filter(
-        (item) => !removeTaskId.includes(item.taskId)
+        (item) => !removeTaskId.includes(item.id.toString())
       );
       state.filteredData = state.filteredData.filter(
-        (item) => !removeTaskId.includes(item.taskId)
+        (item) => !removeTaskId.includes(item.id.toString())
       );
     },
 
@@ -60,21 +126,25 @@ export const taskSlice = createSlice({
     ) => {
       const { taskId, contId, plantId } = action.payload;
       // Find the index of the task with the given taskId
-      const taskIndex = state.value.findIndex((task) => task.taskId === taskId);
+      const taskIndex = state.value.findIndex(
+        (task) => task.id.toString() === taskId
+      );
       const filteredTaskIndex = state.filteredData.findIndex(
-        (task) => task.taskId === taskId
+        (task) => task.id.toString() === taskId
       );
       if (taskIndex !== -1) {
         // Update the contId and plantId of the task
-        state.value[taskIndex].contId = contId ? contId : "N/A";
-        state.value[taskIndex].plantId = plantId ? plantId : "N/A";
+        state.value[taskIndex].containerId = contId ? parseInt(contId) : 0;
+        state.value[taskIndex].plantId = plantId ? parseInt(plantId) : 0;
       }
       if (filteredTaskIndex !== -1) {
         // Update the contId and plantId of the task
-        state.filteredData[filteredTaskIndex].contId = contId ? contId : "N/A";
+        state.filteredData[filteredTaskIndex].containerId = contId
+          ? parseInt(contId)
+          : 0;
         state.filteredData[filteredTaskIndex].plantId = plantId
-          ? plantId
-          : "N/A";
+          ? parseInt(plantId)
+          : 0;
       }
     },
 
@@ -105,7 +175,7 @@ export const taskSlice = createSlice({
         !(checkedListContainerId.length === 0)
       ) {
         state.filteredData = state.value.filter((item) =>
-          checkedListContainerId.includes(item.contId)
+          checkedListContainerId.includes(item.containerId.toString())
         );
       }
       //executed if both is not empty
@@ -113,7 +183,7 @@ export const taskSlice = createSlice({
         state.filteredData = state.value.filter(
           (item) =>
             checkedStatus.includes(item.status) &&
-            checkedListContainerId.includes(item.contId)
+            checkedListContainerId.includes(item.containerId.toString())
         );
       }
     },
@@ -128,7 +198,7 @@ export const taskSlice = createSlice({
       } else {
         const tempData = state.value.filter((item) => {
           const plantObj = payload.plants.find(
-            (plant) => plant.id.toString() === item.plantId
+            (plant) => plant.id === item.plantId
           );
           if (plantObj) {
             return (
@@ -142,6 +212,12 @@ export const taskSlice = createSlice({
         state.filteredData = tempData;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getAllTasks.fulfilled, (state, action) => {
+      state.value = action.payload;
+      state.filteredData = action.payload;
+    });
   },
 });
 
