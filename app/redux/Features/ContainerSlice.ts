@@ -5,11 +5,18 @@ import type { RootState } from "../Store";
 //DATA
 import { dummyContainerItem } from "@root/app/dummyData/DummyContainerItem";
 //interface
-import { ContainerItemProps } from "@interface/DataProps/ContainerItemProps";
+import {
+  ContainerItemProps,
+  ContainerProps,
+} from "@interface/DataProps/ContainerItemProps";
 
-const initialState = {
-  value: dummyContainerItem,
-  filteredData: dummyContainerItem,
+interface initialStateProps {
+  value: ContainerProps[];
+  filteredData: ContainerProps[];
+}
+const initialState: initialStateProps = {
+  value: [],
+  filteredData: [],
 };
 
 export const containerSlice = createSlice({
@@ -17,17 +24,17 @@ export const containerSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    addContainer: (state, action: PayloadAction<ContainerItemProps>) => {
+    addContainer: (state, action: PayloadAction<ContainerProps>) => {
       state.value.push(action.payload);
       state.filteredData.push(action.payload);
     },
     removeContainers: (state, action: PayloadAction<string[]>) => {
       const removeContainerId = action.payload;
       state.value = state.value.filter(
-        (item) => !removeContainerId.includes(item.contId)
+        (item) => !removeContainerId.includes(item.id.toString())
       );
       state.filteredData = state.filteredData.filter(
-        (item) => !removeContainerId.includes(item.contId)
+        (item) => !removeContainerId.includes(item.id.toString())
       );
     },
 
@@ -37,7 +44,7 @@ export const containerSlice = createSlice({
         state.filteredData = state.value;
       } else {
         state.filteredData = state.value.filter((item) => {
-          return item.contName.toLowerCase().indexOf(text.toLowerCase()) > -1;
+          return item.name.toLowerCase().indexOf(text.toLowerCase()) > -1;
         });
       }
     },
