@@ -77,7 +77,7 @@ export const UpdateContainerAPI = createAsyncThunk(
   async (
     updateContainerObject: {
       updatedContainer: UpdateContainerProps;
-      farmId?: number;
+      farmId: number;
       containerId: number;
     },
     { dispatch }
