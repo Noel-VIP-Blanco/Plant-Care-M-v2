@@ -36,3 +36,17 @@ export type AddContainerProps = {
   };
   farmId: number;
 };
+
+interface PlantDto {
+  id: number;
+}
+
+interface ArduinoBoardDto {
+  id?: number;
+}
+
+export type UpdateContainerProps = {
+  name: string;
+  arduinoBoardDto: ArduinoBoardDto;
+  plantDto: PlantDto;
+};

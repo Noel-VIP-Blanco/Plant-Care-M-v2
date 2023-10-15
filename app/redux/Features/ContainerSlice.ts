@@ -9,6 +9,7 @@ import {
   AddContainerProps,
   ContainerItemProps,
   ContainerProps,
+  UpdateContainerProps,
 } from "@interface/DataProps/ContainerItemProps";
 import { baseURL } from "@root/utilities/shared/BaseURL";
 import { getAllArduinoBoards } from "./ArduinoBoardSlice";
@@ -71,13 +72,56 @@ export const AddContainerAPI = createAsyncThunk(
   }
 );
 
+export const UpdateContainerAPI = createAsyncThunk(
+  "api/updateContainer",
+  async (
+    updateContainerObject: {
+      updatedContainer: UpdateContainerProps;
+      farmId?: number;
+      containerId: number;
+    },
+    { dispatch }
+  ) => {
+    const response = await fetch(
+      `${baseURL}/api/v1/farms/${updateContainerObject.farmId}/containers/${updateContainerObject.containerId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateContainerObject.updatedContainer),
+      }
+    )
+      .then(async (response) => {
+        if (response.ok) {
+          // Request was successful
+          console.log("Containers deleted Updated");
+          await dispatch(
+            getAllArduinoBoards(updateContainerObject.farmId.toString())
+          );
+          await dispatch(
+            getAllContainers(updateContainerObject.farmId.toString())
+          );
+        } else {
+          // Server returned an error response
+          return response.json().then((errorData) => {
+            throw new Error(errorData.message || "Delete request failed");
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Container slice line 105: ", error.message);
+      });
+  }
+);
+
 export const DeleteContainerAPI = createAsyncThunk(
   "api/deleteContainerAPI",
   async (
     deleteContainer: { containerIds: number[]; farmId: number },
     { dispatch }
   ) => {
-    console.log("ContainerSlice.ts line 80", deleteContainer.containerIds);
     const ids = deleteContainer.containerIds;
 
     const response = await fetch(

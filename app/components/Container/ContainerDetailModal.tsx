@@ -58,7 +58,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
 
   // use data
   const dataForEditInitial = {
-    containerObj: containerObj,
+    containerObj: containerItem,
     arduinoBoardObj: arduinoBoardObj,
     plantObj: plantObj,
   };

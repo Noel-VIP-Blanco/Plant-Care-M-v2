@@ -25,6 +25,7 @@ import {
   searchTaskByPlantName,
   selectFilteredTask,
 } from "@reduxToolkit/Features/TaskSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const TaskScreen = () => {
   //complete tasks
@@ -72,8 +73,9 @@ const TaskScreen = () => {
   >([]);
 
   //function for filtering tasks based on Plant Name
+  const plant = useAppSelector(selectPlants);
   const onSearch = (text: string) => {
-    dispatch(searchTaskByPlantName(text));
+    dispatch(searchTaskByPlantName({ text: text, plants: plant }));
   };
 
   return (

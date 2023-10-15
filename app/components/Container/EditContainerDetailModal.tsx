@@ -13,10 +13,14 @@ import ModalButtons from "@components/Shared/ModalButtons";
 
 //interface
 import { EditContainerDetailModalProps } from "@interface/EditContainerDetailModal/EditContainerDetailModalProps";
-import { useAppSelector } from "@reduxToolkit/Hooks";
-import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
+import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
+import {
+  selectContainer,
+  UpdateContainerAPI,
+} from "@reduxToolkit/Features/ContainerSlice";
 import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { UpdateContainerProps } from "@interface/DataProps/ContainerItemProps";
 
 const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   visible,
@@ -31,6 +35,8 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   const containers = useAppSelector(selectContainer);
   const arduinoBoards = useAppSelector(selectArduinoBoards);
   const plants = useAppSelector(selectPlants);
+
+  const dispatch = useAppDispatch();
   //data for selectlists
   const ardunoBoardData = arduinoBoards
     .filter((arduinoBoard) => arduinoBoard.status === "INACTIVE")
@@ -46,12 +52,22 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
 
   //function for Edit container
   const handleEditContainer = () => {
-    // const newContainer: IContainerItem = {
-    //   contId: Math.random().toString(),
-    //   contName: containerName,
-    //   arduinoBoardId: selectArduinoBoard,
-    // };
-    // dispatch(addContainer(newContainer));
+    const updateContainer: UpdateContainerProps = {
+      name: containerName,
+      arduinoBoardDto: {
+        id: parseInt(selectArduinoBoard),
+      },
+      plantDto: {
+        id: parseInt(selectPlant),
+      },
+    };
+    dispatch(
+      UpdateContainerAPI({
+        updatedContainer: updateContainer,
+        containerId: dataForEditInitial.containerObj.id,
+        farmId: 1, //should be get from local storage
+      })
+    );
     Alert.alert(
       "Edit Container",
       "You have successfully edited the container "

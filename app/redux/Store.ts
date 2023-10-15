@@ -5,6 +5,7 @@ import harvestLog from "./Features/HarvestLogSlice";
 import user from "./Features/UserSlice";
 import arduinoBoard from "./Features/ArduinoBoardSlice";
 import plants from "./Features/PlantSlice";
+import farms from "./Features/FarmSlice";
 export const store = configureStore({
   reducer: {
     containers: containerReducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
     user: user,
     arduinoBoards: arduinoBoard,
     plants: plants,
+    farms: farms,
   },
 });
 

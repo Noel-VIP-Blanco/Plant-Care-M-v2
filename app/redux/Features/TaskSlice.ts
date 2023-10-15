@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectPlants } from "./PlantSlice";
 
 //data
 import { dummyTaskItem } from "@root/app/dummyData/DummyTaskItem";
@@ -8,6 +10,7 @@ import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
 
 //interface
 import { TaskItemSerializableProps } from "@interface/DataProps/TaskItemProps";
+import { PlantProps } from "@interface/DataProps/PlantItemProps";
 
 const initialState = {
   value: dummyTaskItem.map((task) => ({
@@ -115,18 +118,22 @@ export const taskSlice = createSlice({
       }
     },
 
-    searchTaskByPlantName: (state, action: PayloadAction<string>) => {
-      const text = action.payload;
-      if (text === "") {
+    searchTaskByPlantName: (
+      state,
+      action: PayloadAction<{ text: string; plants: PlantProps[] }>
+    ) => {
+      const payload = action.payload;
+      if (payload.text === "") {
         state.filteredData = state.value;
       } else {
         const tempData = state.value.filter((item) => {
-          const plantObj = dummyPlantItem.find(
-            (plant) => plant.plantID === item.plantId
+          const plantObj = payload.plants.find(
+            (plant) => plant.id.toString() === item.plantId
           );
           if (plantObj) {
             return (
-              plantObj.plantName.toLowerCase().indexOf(text.toLowerCase()) > -1
+              plantObj.name.toLowerCase().indexOf(payload.text.toLowerCase()) >
+              -1
             );
           } else {
             return false;
