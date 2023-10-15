@@ -26,6 +26,8 @@ import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightI
 import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
+import { getAllContainers } from "@reduxToolkit/Features/ContainerSlice";
+import { useAppDispatch } from "@reduxToolkit/Hooks";
 
 const HomeScreen = ({ navigation }: any) => {
   //filtered notification that has not yet read
@@ -53,6 +55,9 @@ const HomeScreen = ({ navigation }: any) => {
   const openeventModal = () => setEventModalVisible(true);
   const closeEventModal = () => setEventModalVisible(false);
 
+  //get all data from aws database
+  const dispatch = useAppDispatch();
+  dispatch(getAllContainers("1"));
   return (
     <View style={HomeStyle.pageContainer}>
       <LinearGradient

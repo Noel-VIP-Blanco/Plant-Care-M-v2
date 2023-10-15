@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
 
@@ -6,10 +6,36 @@ import type { RootState } from "../Store";
 import { dummyContainerItem } from "@root/app/dummyData/DummyContainerItem";
 //interface
 import { ContainerItemProps } from "@interface/DataProps/ContainerItemProps";
+import { baseURL } from "@root/utilities/shared/BaseURL";
+import { ContainersProps } from "@interface/Auth/AwsApiProps";
 
-const initialState = {
-  value: dummyContainerItem,
-  filteredData: dummyContainerItem,
+export const getAllContainers = createAsyncThunk(
+  "api/getAllContainers",
+  async (farmId: string) => {
+    try {
+      const response = await fetch(
+        `${baseURL}//api/v1/farms/${farmId}/containers`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const containers: ContainersProps[] = await response.json();
+      return containers;
+    } catch (e) {
+      throw e;
+    }
+  }
+);
+const initialState: {
+  value: ContainersProps[];
+  filteredData: ContainersProps[];
+  status: string;
+  error: string | null;
+} = {
+  value: [],
+  filteredData: [],
+  status: "idle",
+  error: null,
 };
 
 export const containerSlice = createSlice({
@@ -17,17 +43,17 @@ export const containerSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    addContainer: (state, action: PayloadAction<ContainerItemProps>) => {
+    addContainer: (state, action: PayloadAction<ContainersProps>) => {
       state.value.push(action.payload);
       state.filteredData.push(action.payload);
     },
     removeContainers: (state, action: PayloadAction<string[]>) => {
       const removeContainerId = action.payload;
       state.value = state.value.filter(
-        (item) => !removeContainerId.includes(item.contId)
+        (item) => !removeContainerId.includes(item.id.toString())
       );
       state.filteredData = state.filteredData.filter(
-        (item) => !removeContainerId.includes(item.contId)
+        (item) => !removeContainerId.includes(item.id.toString())
       );
     },
 
@@ -37,10 +63,18 @@ export const containerSlice = createSlice({
         state.filteredData = state.value;
       } else {
         state.filteredData = state.value.filter((item) => {
-          return item.contName.toLowerCase().indexOf(text.toLowerCase()) > -1;
+          return item.name.toLowerCase().indexOf(text.toLowerCase()) > -1;
         });
       }
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(getAllContainers.fulfilled, (state, action) => {
+      state.status = "Success";
+      state.value = action.payload;
+      state.filteredData = action.payload;
+    });
   },
 });
 

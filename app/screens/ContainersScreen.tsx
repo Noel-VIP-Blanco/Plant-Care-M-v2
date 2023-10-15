@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Alert } from "react-native";
 import { TouchableRipple, FAB, Button, Text } from "react-native-paper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 //utilities
@@ -27,7 +27,7 @@ const ContainersScreen = ({ navigation }: any) => {
   //redux
   const filteredContainer = useAppSelector(selectFilteredContainer);
   const dispatch = useAppDispatch();
-
+  console.log("Filtered Containers line 30", filteredContainer);
   //removeContainer
   const [checkboxVisible, setCheckboxVisible] = useState(false);
   const showCheckbox = () => setCheckboxVisible(true);
