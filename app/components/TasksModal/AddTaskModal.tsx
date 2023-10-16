@@ -16,9 +16,6 @@ import {
 } from "@interface/DataProps/TaskItemProps";
 import { TaskItemProps } from "@interface/DataProps/TaskItemProps";
 
-//data
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-
 //redux
 import { AddTaskAPI, addTask } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";

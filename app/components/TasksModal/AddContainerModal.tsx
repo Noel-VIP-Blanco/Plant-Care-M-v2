@@ -4,10 +4,6 @@ import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { Text, Modal, Portal, Button, TextInput } from "react-native-paper";
 
-//data
-import { dummyArduinoBoards } from "@root/app/dummyData/dummyArduinoBoards";
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-
 //intefaces
 import { ModalType } from "@interface/Modals/ModalType";
 import {

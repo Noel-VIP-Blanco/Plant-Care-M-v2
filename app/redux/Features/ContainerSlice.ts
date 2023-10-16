@@ -95,7 +95,7 @@ export const UpdateContainerAPI = createAsyncThunk(
       .then(async (response) => {
         if (response.ok) {
           // Request was successful
-          console.log("Containers deleted Updated");
+          console.log("Containers Updated");
           await dispatch(
             getAllArduinoBoards(updateContainerObject.farmId.toString())
           );
@@ -105,7 +105,7 @@ export const UpdateContainerAPI = createAsyncThunk(
         } else {
           // Server returned an error response
           return response.json().then((errorData) => {
-            throw new Error(errorData.message || "Delete request failed");
+            throw new Error(errorData.message || "Update request failed");
           });
         }
       })

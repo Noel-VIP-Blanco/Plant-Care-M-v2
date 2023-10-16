@@ -11,6 +11,11 @@ export type TaskItemProps = {
   status: PlantStatus;
   farmerName: string;
 };
+
+export type UpdateTaskProps = {
+  containerId?: number;
+  plantId: number;
+};
 export interface TaskProps {
   id: number;
   datePlanted: string;

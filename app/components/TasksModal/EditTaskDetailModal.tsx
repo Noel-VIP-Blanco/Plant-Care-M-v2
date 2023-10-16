@@ -13,7 +13,7 @@ import ModalButtons from "@components/Shared/ModalButtons";
 //redux toolkits
 import { useAppSelector, useAppDispatch } from "@reduxToolkit/Hooks";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
-import { editTask } from "@reduxToolkit/Features/TaskSlice";
+import { UpdateTaskAPI, editTask } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
@@ -30,10 +30,10 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
 
   //store data after selecting item in selectlist
   const [selectContainerId, setSelectContainerId] = useState(
-    dataForEditInitial.containerObj?.id
+    dataForEditInitial.taskObj.containerId
   );
   const [selectPlant, setSelectPlant] = useState(
-    dataForEditInitial.plantObj.id
+    dataForEditInitial.taskObj.plantId
   );
   //data for selectlists
   const containerData = containers.map((container) => ({
@@ -46,7 +46,14 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
   }));
 
   const handleEditTask = () => {
-    Alert.alert("Edit Task", "You have successfully edited the task ");
+    Alert.alert("Edit Task", "Task Edited successfuly");
+    dispatch(
+      UpdateTaskAPI({
+        dataForEditInitial: dataForEditInitial,
+        farmId: 1,
+        updatedTask: { containerId: selectContainerId, plantId: selectPlant },
+      })
+    );
     // dispatch(
     //   editTask({
     //     taskId: dataForEditInitial.taskObj.taskId,

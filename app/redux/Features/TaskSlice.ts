@@ -4,20 +4,18 @@ import type { RootState } from "../Store";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectPlants } from "./PlantSlice";
 
-//data
-import { dummyTaskItem } from "@root/app/dummyData/DummyTaskItem";
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-
 //interface
 import {
   AddTaskSerializableProps,
   TaskItemProps,
   TaskItemSerializableProps,
   TaskSerializableProps,
+  UpdateTaskProps,
 } from "@interface/DataProps/TaskItemProps";
 import { PlantProps } from "@interface/DataProps/PlantItemProps";
 import { baseURL } from "@root/utilities/shared/BaseURL";
 import { getAllContainers } from "./ContainerSlice";
+import { dataForEditInitialProps } from "@interface/EditTaskDetailModal/EditTaskDetailModalProps";
 
 interface initialStateProps {
   value: TaskSerializableProps[];
@@ -56,6 +54,45 @@ export const getAllTasks = createAsyncThunk(
     } catch (e) {
       throw e;
     }
+  }
+);
+
+export const UpdateTaskAPI = createAsyncThunk(
+  "api/updateTask",
+  async (
+    updateTaskObject: {
+      updatedTask: UpdateTaskProps;
+      dataForEditInitial: dataForEditInitialProps;
+      farmId: number;
+    },
+    { dispatch }
+  ) => {
+    const response = await fetch(
+      `${baseURL}/api/v1/farms/${updateTaskObject.farmId}/containers/${updateTaskObject.dataForEditInitial.taskObj.containerId}/tasks/${updateTaskObject.dataForEditInitial.taskObj.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateTaskObject.updatedTask),
+      }
+    )
+      .then(async (response) => {
+        if (response.ok) {
+          // Request was successful
+          console.log("Tasks Updated");
+          await dispatch(getAllTasks(updateTaskObject.farmId.toString()));
+        } else {
+          // Server returned an error response
+          return response.json().then((errorData) => {
+            throw new Error(errorData.message || "Update request failed");
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Tasks slice line 105: ", error.message);
+      });
   }
 );
 

@@ -27,6 +27,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
 
   //format date to string
   const date = new Date(taskItem.harvestDate);
+  console.log("date line 30", date);
   const formattedExpectedHarvestDate = date.toISOString().split("T")[0];
   const date1 = new Date(taskItem.datePlanted);
   const formattedPlantedDate = date1.toISOString().split("T")[0];

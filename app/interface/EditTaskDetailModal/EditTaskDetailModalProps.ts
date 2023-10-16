@@ -11,13 +11,15 @@ import {
   TaskSerializableProps,
 } from "@interface/DataProps/TaskItemProps";
 
+export type dataForEditInitialProps = {
+  taskObj: TaskSerializableProps;
+  containerObj: ContainerProps | undefined;
+  plantObj: PlantProps;
+};
+
 export type EditTaskDetailModalProps = {
   visible: boolean;
   onClose: () => void;
   closeTaskDetailModal: () => void;
-  dataForEditInitial: {
-    taskObj: TaskSerializableProps;
-    containerObj: ContainerProps | undefined;
-    plantObj: PlantProps;
-  };
+  dataForEditInitial: dataForEditInitialProps;
 };
