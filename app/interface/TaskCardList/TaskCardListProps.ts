@@ -1,6 +1,9 @@
-import { TaskItemSerializableProps } from "@interface/DataProps/TaskItemProps";
+import {
+  TaskItemSerializableProps,
+  TaskSerializableProps,
+} from "@interface/DataProps/TaskItemProps";
 export type TaskCardListProps = {
-  filteredData: TaskItemSerializableProps[];
+  filteredData: TaskSerializableProps[];
   checkboxVisible: boolean;
-  setHarvestTasksID: React.Dispatch<React.SetStateAction<string[]>>;
+  setHarvestTasksID: React.Dispatch<React.SetStateAction<number[]>>;
 };

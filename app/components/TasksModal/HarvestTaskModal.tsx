@@ -4,7 +4,7 @@ import { Text, Modal, Portal, Button } from "react-native-paper";
 import React, { useState } from "react";
 
 //redux toolkit
-import { removeTasks } from "@reduxToolkit/Features/TaskSlice";
+import { DeleteTasksAPI, removeTasks } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 
 //interface
@@ -61,8 +61,11 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
             <Button
               mode="elevated"
               onPress={() => {
+                dispatch(
+                  DeleteTasksAPI({ tasksIds: harvestTasksID, farmId: 1 }) //farm id should be get to the tocalStorage
+                );
                 //remove tasks with list of id by using the redux action
-                dispatch(removeTasks(harvestTasksID));
+                //dispatch(removeTasks(harvestTasksID));
                 Alert.alert(
                   "Plant Harvest",
                   "You have successfully harvested the plant"

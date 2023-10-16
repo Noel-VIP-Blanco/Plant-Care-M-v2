@@ -14,7 +14,10 @@ import RenderContainerItem from "@components/TaskScreen/RenderContainerItem";
 
 //redux
 import { useAppSelector } from "@reduxToolkit/Hooks";
-import { selectFilteredContainer } from "@reduxToolkit/Features/ContainerSlice";
+import {
+  selectContainer,
+  selectFilteredContainer,
+} from "@reduxToolkit/Features/ContainerSlice";
 import { filterTaskByStatusAndContainer } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 
@@ -31,7 +34,7 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
   const dispatch = useAppDispatch();
 
   //container with state to use in the dropdown selection
-  const containers = useAppSelector(selectFilteredContainer);
+  const containers = useAppSelector(selectContainer);
 
   const containerData = containers.map(({ name, id }) => ({
     key: id.toString(),

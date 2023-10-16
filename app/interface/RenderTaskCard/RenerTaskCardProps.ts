@@ -6,5 +6,5 @@ import {
 export type RenderTaskCardProps = {
   item: TaskSerializableProps;
   checkboxVisible: boolean;
-  setCompleteTasksID: React.Dispatch<React.SetStateAction<string[]>>;
+  setCompleteTasksID: React.Dispatch<React.SetStateAction<number[]>>;
 };

@@ -17,6 +17,7 @@ import {
 } from "@interface/DataProps/TaskItemProps";
 import { PlantProps } from "@interface/DataProps/PlantItemProps";
 import { baseURL } from "@root/utilities/shared/BaseURL";
+import { getAllContainers } from "./ContainerSlice";
 
 interface initialStateProps {
   value: TaskSerializableProps[];
@@ -55,6 +56,40 @@ export const getAllTasks = createAsyncThunk(
     } catch (e) {
       throw e;
     }
+  }
+);
+
+export const DeleteTasksAPI = createAsyncThunk(
+  "api/deleteTasksAPI",
+  async (deleteTasks: { tasksIds: number[]; farmId: number }, { dispatch }) => {
+    const ids = deleteTasks.tasksIds;
+
+    const response = await fetch(
+      `${baseURL}/api/v1/farms/${deleteTasks.farmId}/tasks`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ taskIds: ids }),
+      }
+    )
+      .then(async (response) => {
+        if (response.ok) {
+          // Request was successful
+          console.log("Tasks deleted successfully");
+          dispatch(getAllTasks(deleteTasks.farmId.toString()));
+        } else {
+          // Server returned an error response
+          return response.json().then((errorData) => {
+            throw new Error(errorData.message || "Delete request failed");
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Tasks slice line 93: ", error.message);
+      });
   }
 );
 

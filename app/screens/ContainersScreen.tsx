@@ -40,9 +40,10 @@ const ContainersScreen = ({ navigation }: any) => {
   const handleRemoveContainers = () => {
     dispatch(
       // removeContainers(removeContainerID)
+
       DeleteContainerAPI({
         containerIds: removeContainerID,
-        farmId: 1,
+        farmId: 1, //farm id should be get to the tocalStorage
       })
     );
     hideCheckbox();

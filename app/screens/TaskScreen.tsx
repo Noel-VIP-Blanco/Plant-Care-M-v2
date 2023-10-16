@@ -35,7 +35,7 @@ const TaskScreen = () => {
     setCheckboxVisible(false);
     setHarvestTasksID([]);
   };
-  const [harvestTasksID, setHarvestTasksID] = useState<string[]>([]);
+  const [harvestTasksID, setHarvestTasksID] = useState<number[]>([]);
 
   //menu
   const [addMenuVisible, setAddMenuVisible] = useState(false);

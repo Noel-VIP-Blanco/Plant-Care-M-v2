@@ -63,12 +63,10 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
 
     if (!checkedTask) {
       // If the checkbox was unchecked before, push the taskID to the list
-      setCompleteTasksID((prevTasks) => [...prevTasks, id.toString()]);
+      setCompleteTasksID((prevTasks) => [...prevTasks, id]);
     } else {
       // If the checkbox was checked before, remove the taskID from the list
-      setCompleteTasksID((prevTasks) =>
-        prevTasks.filter((id) => id !== id.toString())
-      );
+      setCompleteTasksID((prevTasks) => prevTasks.filter((id) => id !== id));
     }
   };
 

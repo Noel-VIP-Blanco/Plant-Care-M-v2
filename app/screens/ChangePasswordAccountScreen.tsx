@@ -83,7 +83,11 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
               mode="contained"
               onPress={() => {
                 // handleChangePassword();
-                navigation.navigate("BottomTabContainer");
+                //navigation.navigate("BottomTabContainer");
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "BottomTabContainer" }],
+                });
               }}
               style={LoginStyle.logInButton}
               labelStyle={{ fontSize: 20 }}
