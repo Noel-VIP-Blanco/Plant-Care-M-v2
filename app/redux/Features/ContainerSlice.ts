@@ -161,6 +161,9 @@ export const containerSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    resetContainer: (state) => {
+      state = initialState;
+    },
     addContainer: (state, action: PayloadAction<ContainerProps>) => {
       state.value.push(action.payload);
       state.filteredData.push(action.payload);
@@ -198,8 +201,12 @@ export const containerSlice = createSlice({
   },
 });
 
-export const { addContainer, searchContainerByName, removeContainers } =
-  containerSlice.actions;
+export const {
+  resetContainer,
+  addContainer,
+  searchContainerByName,
+  removeContainers,
+} = containerSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectContainer = (state: RootState) => state.containers.value;

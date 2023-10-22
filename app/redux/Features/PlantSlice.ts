@@ -33,7 +33,11 @@ export const plantSlice = createSlice({
   name: "plants",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {},
+  reducers: {
+    resetPlant: (state) => {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllPlant.fulfilled, (state, action) => {
       state.value = action.payload;
@@ -41,7 +45,7 @@ export const plantSlice = createSlice({
   },
 });
 
-export const {} = plantSlice.actions;
+export const { resetPlant } = plantSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectPlants = (state: RootState) => state.plants.value;

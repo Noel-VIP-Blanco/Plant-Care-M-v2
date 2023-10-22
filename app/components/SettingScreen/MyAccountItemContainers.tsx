@@ -9,6 +9,7 @@ import {
   getCurrentUser,
   getRememberMe,
   getToken,
+  removeAllLocalStorage,
 } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 
@@ -50,6 +51,7 @@ const MyAccountItemContainers = ({ navigation }: any) => {
   currentUser === null ? console.log("Null") : console.log(currentUser.email);
   console.log(token === undefined ? "Undefined" : token);
   console.log(rememberMe === undefined ? "Undefined" : rememberMe);
+
   return (
     <>
       <View style={SettingScreenStyle.itemContainer}>
@@ -135,10 +137,7 @@ const MyAccountItemContainers = ({ navigation }: any) => {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: "LoginScreen" }],
-                });
+                navigation.navigate("LoadingScreenForLogout");
               }}
             >
               <Ionicons

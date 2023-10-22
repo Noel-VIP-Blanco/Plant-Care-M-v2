@@ -9,6 +9,9 @@ import ProfileScreen from "@screens/ProfileScreen";
 import NotificationScreen from "@screens/NotificationScreen";
 
 import BottomTabContainer from "./BottomTabContainer";
+import LoadingScreenForSetupFarm from "@screens/LoadingScreenForSetupFarm";
+import LoadingScreenForFetchData from "@screens/LoadingScreenForFetchData";
+import LoadingScreenForLogout from "@screens/LoadingScreenForLogout";
 
 const StackContainer = ({ initialRoute }: any) => {
   const Stack = createNativeStackNavigator();
@@ -22,6 +25,21 @@ const StackContainer = ({ initialRoute }: any) => {
       <Stack.Screen
         name="ChangePasswordScreen"
         component={ChangePasswordAccountScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoadingScreenForSetupFarm"
+        component={LoadingScreenForSetupFarm}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoadingScreenForFetchData"
+        component={LoadingScreenForFetchData}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoadingScreenForLogout"
+        component={LoadingScreenForLogout}
         options={{ headerShown: false }}
       />
       <Stack.Screen

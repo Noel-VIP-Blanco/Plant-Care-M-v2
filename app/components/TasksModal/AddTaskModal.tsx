@@ -29,6 +29,9 @@ import { AddTaskModalStyle } from "@stylesheets/AddTaskModal/AddTaskModalStyle";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const AddTaskModal = ({ visible, onClose }: ModalType) => {
+  //farm id from local
+  const [farmId, setFarmId] = useState(null);
+
   //container with state to use in the dropdown selection
   const containers = useAppSelector(selectFilteredContainer);
   const plants = useAppSelector(selectPlants);

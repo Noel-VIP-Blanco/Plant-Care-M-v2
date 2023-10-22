@@ -21,6 +21,7 @@ import { getCurrentUser } from "@root/utilities/shared/LocalStorage";
 
 const SettingScreen = ({ navigation }: any) => {
   const userImage = "../../../assets/PlantCareImages/PlantCareLogo.png";
+
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
     null
   );

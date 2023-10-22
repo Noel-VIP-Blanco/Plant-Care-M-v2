@@ -1,18 +1,27 @@
 import { loginProps } from "@interface/Auth/AuthProps";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import { baseURL } from "@root/utilities/shared/BaseURL";
 import {
   setCurrentUser,
   setRememberMe,
   setToken,
 } from "@root/utilities/shared/LocalStorage";
 import { Alert } from "react-native";
+
+export const Logout = () => {
+  fetch(baseURL + "/api/v1/auth/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
 export const Login = ({
   username,
   password,
   rememberMe,
   navigation,
 }: loginProps) => {
-  const baseURL = "http://ec2-184-73-6-113.compute-1.amazonaws.com:80";
   const requestBody = {
     username: username,
     password: password,

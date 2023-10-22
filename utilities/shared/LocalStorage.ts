@@ -55,3 +55,36 @@ export const getRememberMe = async () => {
     console.log("LocalStorage.ts line 37 error", e);
   }
 };
+
+//handle farm/s per user
+export const setFarm = async (farm: number) => {
+  try {
+    await AsyncStorage.setItem("ASYNC_FARM", farm.toString());
+  } catch (e) {
+    console.log("LocalStorage.ts line 64 error", e);
+  }
+};
+
+export const getFarm = async () => {
+  try {
+    const farmId = await AsyncStorage.getItem("ASYNC_FARM");
+    return farmId;
+  } catch (e) {
+    console.log("LocalStorage.ts line 73 error", e);
+  }
+};
+
+//delete all local storage after logout
+export const removeAllLocalStorage = async () => {
+  const keys = [
+    "ASYNC_FARM",
+    "ASYNC_REMEMBERME",
+    "ASYNC_CURRENTUSER",
+    "ASYNC_TOKEN",
+  ];
+  try {
+    await AsyncStorage.multiRemove(keys);
+  } catch (e) {
+    // remove error
+  }
+};

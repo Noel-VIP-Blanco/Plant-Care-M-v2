@@ -36,7 +36,11 @@ export const arduinoBoardSlice = createSlice({
   name: "arduinoBoards",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {},
+  reducers: {
+    resetArduinoBoard: (state) => {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllArduinoBoards.fulfilled, (state, action) => {
       state.value = action.payload;
@@ -44,7 +48,7 @@ export const arduinoBoardSlice = createSlice({
   },
 });
 
-export const {} = arduinoBoardSlice.actions;
+export const { resetArduinoBoard } = arduinoBoardSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectArduinoBoards = (state: RootState) =>

@@ -16,6 +16,9 @@ export const userSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    resetUser: (state) => {
+      state = initialState;
+    },
     updateAfterLoggedin: (state, action: PayloadAction<string>) => {
       state.value.photoURL = action.payload;
       state.tempValue.photoURL = action.payload;
@@ -37,6 +40,7 @@ export const {
   temporaryEditImage,
   undoEditImage,
   saveEditImage,
+  resetUser,
 } = userSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

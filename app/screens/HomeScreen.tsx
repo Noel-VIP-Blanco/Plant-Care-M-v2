@@ -7,6 +7,7 @@ import {
   Divider,
   Surface,
   TouchableRipple,
+  Button,
 } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -27,16 +28,12 @@ import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
-import {
-  getAllContainers,
-  selectContainer,
-} from "@reduxToolkit/Features/ContainerSlice";
-import {
-  getAllArduinoBoards,
-  selectArduinoBoards,
-} from "@reduxToolkit/Features/ArduinoBoardSlice";
-import { getAllPlant, selectPlants } from "@reduxToolkit/Features/PlantSlice";
-import { getAllTasks, selectTask } from "@reduxToolkit/Features/TaskSlice";
+import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
+import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { selectTask } from "@reduxToolkit/Features/TaskSlice";
+import { selectFarms } from "@reduxToolkit/Features/FarmSlice";
+import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
 
 const HomeScreen = ({ navigation }: any) => {
   //filtered notification that has not yet read
@@ -63,34 +60,6 @@ const HomeScreen = ({ navigation }: any) => {
   const [selectedDate, setSelectedDate] = useState("");
   const openeventModal = () => setEventModalVisible(true);
   const closeEventModal = () => setEventModalVisible(false);
-
-  //get all data from aws database
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        //farm id should be get in local storage not hard coded
-        await dispatch(getAllContainers("1"));
-        await dispatch(getAllArduinoBoards("1"));
-        await dispatch(getAllPlant("1"));
-        await dispatch(getAllTasks("1"));
-      } catch (error) {
-        // Handle errors if necessary
-      }
-    };
-
-    fetchData(); // Call the async function inside useEffect
-  }, []);
-
-  //data from redux
-  const containers = useAppSelector(selectContainer);
-  const arduinoBoards = useAppSelector(selectArduinoBoards);
-  const plants = useAppSelector(selectPlants);
-  const tasks = useAppSelector(selectTask);
-  console.log("All Containers homescreen", containers);
-  console.log("All Arduino Boards homescreen", arduinoBoards);
-  console.log("All plants homescreen", plants);
-  console.log("All tasks homescreen", tasks);
 
   return (
     <View style={HomeStyle.pageContainer}>

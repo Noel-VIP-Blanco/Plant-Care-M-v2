@@ -10,6 +10,10 @@ import ModalButtons from "@components/Shared/ModalButtons";
 
 //data
 import { dummyFarmUser } from "@root/app/dummyData/DummyFarmUser";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectFarms } from "@reduxToolkit/Features/FarmSlice";
+import { selectUser } from "@reduxToolkit/Features/UserSlice";
+import { setFarm } from "@root/utilities/shared/LocalStorage";
 
 type SwitchFarmModalProps = {
   visible: boolean;
@@ -20,23 +24,23 @@ const SwitchFarmModal: React.FC<SwitchFarmModalProps> = ({
   visible,
   onClose,
 }) => {
+  const farms = useAppSelector(selectFarms);
   const navigation: any = useNavigation();
-  const handleSwitchFarm = () => {
+  const handleSwitchFarm = async () => {
     Alert.alert("Switch Farm", "You have successfully switched farm ");
+    await await setFarm(parseInt(selectFarm));
     navigation.reset({
       index: 0,
-      routes: [{ name: "BottomTabContainer" }],
+      routes: [{ name: "LoadingScreenForSetupFarm" }],
     });
   };
 
   const [selectFarm, setSelectFarm] = useState("");
 
-  const farmUserData = dummyFarmUser
-    .filter((farmUser) => farmUser.userId === "user1") // change userid to the login user
-    .map((farmUser) => ({
-      key: farmUser.farmId,
-      value: farmUser.farmId,
-    }));
+  const farmUserData = farms.map((farm) => ({
+    key: farm.id,
+    value: farm.id,
+  }));
   return (
     <Portal>
       <Modal visible={visible} onDismiss={onClose}>

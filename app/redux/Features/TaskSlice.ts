@@ -168,6 +168,9 @@ export const taskSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    resetTasks: (state) => {
+      state = initialState;
+    },
     //modify the add tasks when implementing database by adding the tasks directly to the database
     // and fetch the tasks from database with generated ids to update my initialstate
     addTask: (state, action: PayloadAction<TaskSerializableProps[]>) => {
@@ -299,6 +302,7 @@ export const {
   editTask,
   filterTaskByStatusAndContainer,
   searchTaskByPlantName,
+  resetTasks,
 } = taskSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
