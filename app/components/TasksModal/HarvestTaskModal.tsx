@@ -8,12 +8,16 @@ import { DeleteTasksAPI, removeTasks } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 
 //interface
-import { HarvestTaskModalProps } from "@interface/HarvestTaskModal/HarvestTaskModalProps";
+import {
+  HarvestOrRemove,
+  HarvestTaskModalProps,
+} from "@interface/HarvestTaskModal/HarvestTaskModalProps";
 
 const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
   visible,
   onClose,
   harvestTasksID,
+  harvestOrRemove,
 }) => {
   //redux dispatch
   const dispatch = useAppDispatch();
@@ -30,12 +34,12 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
           }}
         >
           <Text style={{ fontSize: 30, color: "#00ad00", textAlign: "center" }}>
-            Harvest Plants
+            {harvestOrRemove} Plants
           </Text>
 
           <View>
             <Text style={{ margin: 15, fontSize: 25, fontWeight: "bold" }}>
-              Are you sure you want to harvest the plants?
+              Are you sure you want to {harvestOrRemove} the plants?
             </Text>
           </View>
 
@@ -61,14 +65,22 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
             <Button
               mode="elevated"
               onPress={() => {
-                dispatch(
-                  DeleteTasksAPI({ tasksIds: harvestTasksID, farmId: 1 }) //farm id should be get to the tocalStorage
-                );
+                //checks if the user wants to harvest or simply remove the plants
+                if (harvestOrRemove === HarvestOrRemove.Remove) {
+                  dispatch(
+                    DeleteTasksAPI({ tasksIds: harvestTasksID, farmId: 1 }) //farm id should be get to the tocalStorage
+                  );
+                } else {
+                  //should be harvest dispatch
+                  dispatch(
+                    DeleteTasksAPI({ tasksIds: harvestTasksID, farmId: 1 }) //farm id should be get to the tocalStorage
+                  );
+                }
                 //remove tasks with list of id by using the redux action
                 //dispatch(removeTasks(harvestTasksID));
                 Alert.alert(
-                  "Plant Harvest",
-                  "You have successfully harvested the plant"
+                  `Plant ${harvestOrRemove}`,
+                  `You have successfully ${harvestOrRemove} the plant`
                 );
                 onClose();
               }}

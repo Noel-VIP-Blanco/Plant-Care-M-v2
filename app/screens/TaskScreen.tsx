@@ -26,6 +26,7 @@ import {
   selectFilteredTask,
 } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { HarvestOrRemove } from "@interface/HarvestTaskModal/HarvestTaskModalProps";
 
 const TaskScreen = () => {
   //complete tasks
@@ -36,6 +37,9 @@ const TaskScreen = () => {
     setHarvestTasksID([]);
   };
   const [harvestTasksID, setHarvestTasksID] = useState<number[]>([]);
+  const [harvestOrRemove, setHarvestOrRemove] = useState<HarvestOrRemove>(
+    HarvestOrRemove.Harvest
+  );
 
   //menu
   const [addMenuVisible, setAddMenuVisible] = useState(false);
@@ -153,6 +157,7 @@ const TaskScreen = () => {
         onClose={closeAddContainerModal}
       />
       <HarvestTaskModal
+        harvestOrRemove={harvestOrRemove}
         visible={harvestTaskModalVisible}
         onClose={closeHarvestTaskModal}
         harvestTasksID={harvestTasksID}
@@ -199,9 +204,24 @@ const TaskScreen = () => {
             elevation={2}
             textColor="black"
             labelStyle={{ fontSize: 20 }}
+            contentStyle={{ backgroundColor: "red", height: 50 }}
+            style={{ marginHorizontal: 20 }}
+            onPress={() => {
+              setHarvestOrRemove(HarvestOrRemove.Remove);
+              openAHarvestTaskModal();
+            }}
+          >
+            Remove
+          </Button>
+          <Button
+            mode="elevated"
+            elevation={2}
+            textColor="black"
+            labelStyle={{ fontSize: 20 }}
             contentStyle={{ backgroundColor: "#44f321", height: 50 }}
             style={{ marginHorizontal: 20 }}
             onPress={() => {
+              setHarvestOrRemove(HarvestOrRemove.Harvest);
               openAHarvestTaskModal();
             }}
           >
