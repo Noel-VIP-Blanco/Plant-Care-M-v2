@@ -1,5 +1,15 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesClertextTraffic": true
+          }
+        }
+      ]
+    ],
     "name": "plant-care-m-v2",
     "slug": "plant-care-m-v2",
     "version": "1.0.1",
