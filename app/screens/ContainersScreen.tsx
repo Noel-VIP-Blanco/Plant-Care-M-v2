@@ -14,7 +14,6 @@ import { ContainerScreenStyle } from "@stylesheets/ContainerScreen/ContainerScre
 import { useAppSelector, useAppDispatch } from "@reduxToolkit/Hooks";
 import {
   searchContainerByName,
-  removeContainers,
   selectFilteredContainer,
   DeleteContainerAPI,
 } from "@reduxToolkit/Features/ContainerSlice";

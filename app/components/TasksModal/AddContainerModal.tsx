@@ -1,40 +1,44 @@
 import { View, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { SelectList } from "react-native-dropdown-select-list";
 import { Text, Modal, Portal, Button, TextInput } from "react-native-paper";
 
 //intefaces
 import { ModalType } from "@interface/Modals/ModalType";
-import {
-  AddContainerProps,
-  ContainerItemProps,
-  ContainerProps,
-} from "@interface/DataProps/ContainerItemProps";
+import { AddContainerProps } from "@interface/DataProps/ContainerItemProps";
 
 //components
 import ModalButtons from "@components/Shared/ModalButtons";
 
 //redux
-import {
-  addContainer,
-  AddContainerAPI,
-  selectContainer,
-} from "@reduxToolkit/Features/ContainerSlice";
+import { AddContainerAPI } from "@reduxToolkit/Features/ContainerSlice";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
 import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const AddContainerModal = ({ visible, onClose }: ModalType) => {
   const dispatch = useAppDispatch();
 
-  const containers = useAppSelector(selectContainer);
   const arduinoBoards = useAppSelector(selectArduinoBoards);
   const plants = useAppSelector(selectPlants);
 
   const [containerName, setContainerName] = useState("");
   const [selectArduinoBoard, setSelectArduinoBoard] = useState("");
   const [selectPlant, setSelectPlant] = useState("");
+
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
 
   //data for selectlists
   const ardunoBoardData = arduinoBoards
@@ -61,7 +65,21 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
       },
       farmId: 1,
     };
-    dispatch(AddContainerAPI({ newContainer: newContainer, farmId: 1 }));
+    if (farmIdFromLocal) {
+      dispatch(
+        AddContainerAPI({
+          newContainer: newContainer,
+          farmId: parseInt(farmIdFromLocal),
+        })
+      );
+    } else {
+      Alert.alert(
+        "Add New Container Failed",
+        "You have no farm associated to your account"
+      );
+      return;
+    }
+
     //dispatch(addContainer(newContainer));
     Alert.alert("New Container", "You have successfully added the container ");
     reset();

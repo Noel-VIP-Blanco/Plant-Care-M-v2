@@ -1,12 +1,8 @@
 import { View, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { SelectList } from "react-native-dropdown-select-list";
 import { Text, Modal, Portal, TextInput } from "react-native-paper";
-
-//data
-import { dummyArduinoBoards } from "@root/app/dummyData/dummyArduinoBoards";
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
 
 //component
 import ModalButtons from "@components/Shared/ModalButtons";
@@ -21,6 +17,7 @@ import {
 import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { UpdateContainerProps } from "@interface/DataProps/ContainerItemProps";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   visible,
@@ -32,11 +29,23 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   const [selectArduinoBoard, setSelectArduinoBoard] = useState("");
   const [selectPlant, setSelectPlant] = useState("");
 
-  const containers = useAppSelector(selectContainer);
   const arduinoBoards = useAppSelector(selectArduinoBoards);
   const plants = useAppSelector(selectPlants);
 
   const dispatch = useAppDispatch();
+
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
+
   //data for selectlists
   const ardunoBoardData = arduinoBoards
     .filter((arduinoBoard) => arduinoBoard.status === "INACTIVE")
@@ -61,13 +70,22 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
         id: parseInt(selectPlant),
       },
     };
-    dispatch(
-      UpdateContainerAPI({
-        updatedContainer: updateContainer,
-        containerId: dataForEditInitial.containerObj.id,
-        farmId: 1, //should be get from local storage
-      })
-    );
+    if (farmIdFromLocal) {
+      dispatch(
+        UpdateContainerAPI({
+          updatedContainer: updateContainer,
+          containerId: dataForEditInitial.containerObj.id,
+          farmId: parseInt(farmIdFromLocal), //should be get from local storage
+        })
+      );
+    } else {
+      Alert.alert(
+        "Edit Container Failed",
+        "You have no farm associated to your account"
+      );
+      return;
+    }
+
     Alert.alert(
       "Edit Container",
       "You have successfully edited the container "

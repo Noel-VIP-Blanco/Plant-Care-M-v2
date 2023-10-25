@@ -1,13 +1,8 @@
 import { View, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 import { ActivityIndicator, Text } from "react-native-paper";
-import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
-import { getAllFarms, selectFarms } from "@reduxToolkit/Features/FarmSlice";
-import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
-import { getAllContainers } from "@reduxToolkit/Features/ContainerSlice";
-import { getAllArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
-import { getAllPlant } from "@reduxToolkit/Features/PlantSlice";
-import { getAllTasks } from "@reduxToolkit/Features/TaskSlice";
+import { useAppDispatch } from "@reduxToolkit/Hooks";
+import { getAllFarms } from "@reduxToolkit/Features/FarmSlice";
 
 const LoadingScreen = ({ navigation }: any) => {
   //get all data from aws database

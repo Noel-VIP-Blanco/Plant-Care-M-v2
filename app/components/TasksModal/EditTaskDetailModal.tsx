@@ -2,7 +2,7 @@ import { View, Alert } from "react-native";
 import { Text, Modal, Portal } from "react-native-paper";
 
 import { SelectList } from "react-native-dropdown-select-list";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 //interface
 import { EditTaskDetailModalProps } from "@interface/EditTaskDetailModal/EditTaskDetailModalProps";
@@ -13,8 +13,9 @@ import ModalButtons from "@components/Shared/ModalButtons";
 //redux toolkits
 import { useAppSelector, useAppDispatch } from "@reduxToolkit/Hooks";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
-import { UpdateTaskAPI, editTask } from "@reduxToolkit/Features/TaskSlice";
+import { UpdateTaskAPI } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
   visible,
@@ -22,6 +23,18 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
   closeTaskDetailModal,
   dataForEditInitial,
 }) => {
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
+
   //data from redux
   const containers = useAppSelector(selectContainer);
   const plants = useAppSelector(selectPlants);
@@ -46,21 +59,22 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
   }));
 
   const handleEditTask = () => {
-    Alert.alert("Edit Task", "Task Edited successfuly");
-    dispatch(
-      UpdateTaskAPI({
-        dataForEditInitial: dataForEditInitial,
-        farmId: 1,
-        updatedTask: { containerId: selectContainerId, plantId: selectPlant },
-      })
-    );
-    // dispatch(
-    //   editTask({
-    //     taskId: dataForEditInitial.taskObj.taskId,
-    //     contId: selectContainerId,
-    //     plantId: selectPlant,
-    //   })
-    // );
+    if (farmIdFromLocal) {
+      Alert.alert("Edit Task", "Task Edited successfuly");
+      dispatch(
+        UpdateTaskAPI({
+          dataForEditInitial: dataForEditInitial,
+          farmId: parseInt(farmIdFromLocal),
+          updatedTask: { containerId: selectContainerId, plantId: selectPlant },
+        })
+      );
+    } else {
+      Alert.alert("Edit Task", "You have no farm associated to your account");
+      onClose();
+      closeTaskDetailModal();
+      return;
+    }
+
     onClose();
     closeTaskDetailModal();
   };

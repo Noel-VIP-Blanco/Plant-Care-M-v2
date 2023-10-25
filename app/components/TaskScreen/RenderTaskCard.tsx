@@ -13,11 +13,6 @@ import { RenderTaskCardProps } from "@interface/RenderTaskCard/RenerTaskCardProp
 //stylesheet
 import { TaskCardStyle } from "@stylesheets/TaskCard/TaskCardStyle";
 
-//data
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-import { dummySensor } from "@root/app/dummyData/dummySensor";
-import { dummyArduinoBoards } from "@root/app/dummyData/dummyArduinoBoards";
-
 //data from redux toolkit with app-wide state
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
@@ -25,7 +20,6 @@ import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 //component
 import TaskDetailModal from "@components/TasksModal/TaskDetailModal";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
-import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 
 const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   item,
@@ -35,26 +29,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   //data from redux
   const containers = useAppSelector(selectContainer);
   const plants = useAppSelector(selectPlants);
-  const arduinoBoards = useAppSelector(selectArduinoBoards);
-  // const {
-  //   taskId,
-  //   plantId,
-  //   contId,
-  //   dateExpectedHarvest,
-  //   datePlanted,
-  //   status,
-  //   farmerName,
-  // } = item;
-  const {
-    containerId,
-    datePlanted,
-    farmId,
-    harvestDate,
-    id,
-    numberOfTasks,
-    plantId,
-    status,
-  } = item;
+  const { containerId, id, plantId, status } = item;
   //handle checkbox
   const [checkedTask, setCheckedTask] = useState(false);
 
@@ -78,9 +53,9 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
     (container) => containerId === container.id
   );
   //get the sensor data from the arduino board object based on the arduino board connected from container
-  const arduinoBoardObj = arduinoBoards.find(
-    (arduino) => containerObj?.arduinoBoardDto.id === arduino.id
-  );
+  // const arduinoBoardObj = arduinoBoards.find(
+  //   (arduino) => containerObj?.arduinoBoardDto.id === arduino.id
+  // );
 
   //get the sensor value for every sensor type connected on the arduino
   const sensorWaterAcidityObj = 60;

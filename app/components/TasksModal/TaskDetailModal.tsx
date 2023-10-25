@@ -12,7 +12,6 @@ import EditTaskDetailModal from "./EditTaskDetailModal";
 //data from redux toolkit with app-wide state
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
-import { selectTask } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
@@ -21,13 +20,11 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   taskItem,
 }) => {
   //data from redux
-  const tasks = useAppSelector(selectTask);
   const containers = useAppSelector(selectContainer);
   const plants = useAppSelector(selectPlants);
 
   //format date to string
   const date = new Date(taskItem.harvestDate);
-  console.log("date line 30", date);
   const formattedExpectedHarvestDate = date.toISOString().split("T")[0];
   const date1 = new Date(taskItem.datePlanted);
   const formattedPlantedDate = date1.toISOString().split("T")[0];

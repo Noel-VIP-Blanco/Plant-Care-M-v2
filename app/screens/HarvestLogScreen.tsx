@@ -28,6 +28,7 @@ import {
   selectListOfRowData,
 } from "@reduxToolkit/Features/HarvestLogSlice";
 import { selectTask } from "@reduxToolkit/Features/TaskSlice";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 type rowType = [string, string, string];
 
@@ -36,6 +37,7 @@ const HarvestLogScreen = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   const tasks = useAppSelector(selectTask);
   const harvestLogs = useAppSelector(selectHarvestLog);
+  const plants = useAppSelector(selectPlants);
   //data for row in table
   const listOfRowData = useAppSelector(selectListOfRowData);
   const filterListOfRowData = useAppSelector(selectFilteredListOfRowData);
@@ -45,16 +47,14 @@ const HarvestLogScreen = ({ navigation }: any) => {
   useEffect(() => {
     const newList: rowType[] = harvestLogs.map((harvestLogItem) => {
       const taskObject = tasks.find(
-        (task) => task.taskId === harvestLogItem.taskId
+        (task) => task.id.toString() === harvestLogItem.taskId
       );
       const plantId = taskObject?.plantId;
-      const plantObject = dummyPlantItem.find(
-        (plant) => plant.plantID === plantId
-      );
+      const plantObject = plants.find((plant) => plant.id === plantId);
 
       if (plantObject) {
         return [
-          plantObject.plantName,
+          plantObject.name,
           harvestLogItem.dateHarvested,
           harvestLogItem.harvester,
         ];

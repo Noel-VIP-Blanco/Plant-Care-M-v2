@@ -9,7 +9,6 @@ import {
   getCurrentUser,
   getRememberMe,
   getToken,
-  removeAllLocalStorage,
 } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 

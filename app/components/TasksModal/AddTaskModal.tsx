@@ -1,5 +1,5 @@
 import { Platform, View, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { Text, Modal, Portal, Button, TextInput } from "react-native-paper";
 import DateTimePicker, {
@@ -8,16 +8,10 @@ import DateTimePicker, {
 
 //interface
 import { ModalType } from "@interface/Modals/ModalType";
-import {
-  TaskItemSerializableProps,
-  PlantStatus,
-  TaskSerializableProps,
-  AddTaskSerializableProps,
-} from "@interface/DataProps/TaskItemProps";
-import { TaskItemProps } from "@interface/DataProps/TaskItemProps";
+import { AddTaskSerializableProps } from "@interface/DataProps/TaskItemProps";
 
 //redux
-import { AddTaskAPI, addTask } from "@reduxToolkit/Features/TaskSlice";
+import { AddTaskAPI } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
 import { selectFilteredContainer } from "@reduxToolkit/Features/ContainerSlice";
 
@@ -27,10 +21,20 @@ import ModalButtons from "@components/Shared/ModalButtons";
 //style
 import { AddTaskModalStyle } from "@stylesheets/AddTaskModal/AddTaskModalStyle";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const AddTaskModal = ({ visible, onClose }: ModalType) => {
-  //farm id from local
-  const [farmId, setFarmId] = useState(null);
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
 
   //container with state to use in the dropdown selection
   const containers = useAppSelector(selectFilteredContainer);
@@ -85,13 +89,6 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
   };
 
   const handleAddTask = () => {
-    // console.log({
-    //   selectPlant,
-    //   selectContainer,
-    //   dateText,
-    //   numberOfTask,
-    // });
-
     const dateString = dateText;
     const date = new Date(dateString);
     date.setDate(date.getDate() + 45); // add days depend on plant growth in plant id
@@ -103,14 +100,25 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
       harvestDate: expectedHarvestDate,
       numberOfTasks: parseInt(numberOfTask),
     };
-    //farm id should be get on local storage. to be added someday
-    dispatch(
-      AddTaskAPI({
-        newTasks: newTask,
-        containerId: parseInt(selectContainer),
-        farmId: 1,
-      })
-    );
+
+    if (farmIdFromLocal) {
+      dispatch(
+        AddTaskAPI({
+          newTasks: newTask,
+          containerId: parseInt(selectContainer),
+          farmId: parseInt(farmIdFromLocal),
+        })
+      );
+    } else {
+      Alert.alert(
+        "Add New Task Failed",
+        "You have no farm associated to your account"
+      );
+      reset();
+      onClose();
+      return;
+    }
+
     // dispatch(addTask(addTasks));
     Alert.alert("New Task", "You have successfully added the tasks ");
     reset();

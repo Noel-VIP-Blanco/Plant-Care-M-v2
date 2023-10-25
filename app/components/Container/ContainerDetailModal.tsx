@@ -1,11 +1,6 @@
 import { View } from "react-native";
-import { Text, Modal, Portal, Button } from "react-native-paper";
+import { Text, Modal, Portal } from "react-native-paper";
 import React, { useState } from "react";
-
-//data
-import { dummyArduinoBoards } from "@root/app/dummyData/dummyArduinoBoards";
-import { dummyPlantItem } from "@root/app/dummyData/DummyPlantItem";
-import { dummyContainerItem } from "@root/app/dummyData/DummyContainerItem";
 
 //redux toolkit
 import { useAppSelector } from "@reduxToolkit/Hooks";

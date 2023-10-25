@@ -9,10 +9,8 @@ import { useNavigation } from "@react-navigation/native";
 import ModalButtons from "@components/Shared/ModalButtons";
 
 //data
-import { dummyFarmUser } from "@root/app/dummyData/DummyFarmUser";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectFarms } from "@reduxToolkit/Features/FarmSlice";
-import { selectUser } from "@reduxToolkit/Features/UserSlice";
 import { setFarm } from "@root/utilities/shared/LocalStorage";
 
 type SwitchFarmModalProps = {
@@ -39,7 +37,7 @@ const SwitchFarmModal: React.FC<SwitchFarmModalProps> = ({
 
   const farmUserData = farms.map((farm) => ({
     key: farm.id,
-    value: farm.id,
+    value: farm.name,
   }));
   return (
     <Portal>

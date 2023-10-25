@@ -14,10 +14,7 @@ import RenderContainerItem from "@components/TaskScreen/RenderContainerItem";
 
 //redux
 import { useAppSelector } from "@reduxToolkit/Hooks";
-import {
-  selectContainer,
-  selectFilteredContainer,
-} from "@reduxToolkit/Features/ContainerSlice";
+import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 import { filterTaskByStatusAndContainer } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 

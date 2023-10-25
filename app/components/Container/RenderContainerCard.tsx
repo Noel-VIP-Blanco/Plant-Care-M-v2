@@ -1,5 +1,5 @@
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Surface, Text, Checkbox, TouchableRipple } from "react-native-paper";
+import { Surface, Text, Checkbox } from "react-native-paper";
 import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -11,10 +11,6 @@ import { RenderContainerCardProps } from "@interface/RenderContainerCard/RenderC
 
 //stylesheets
 import { ContainerCardStyle } from "@stylesheets/ContainerCard/ContainerCardStyle";
-
-//data
-import { dummyArduinoBoards } from "@root/app/dummyData/dummyArduinoBoards";
-import { dummySensor } from "@root/app/dummyData/dummySensor";
 
 //components
 import ContainerDetailModal from "./ContainerDetailModal";
@@ -29,9 +25,6 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
 
   const arduinoBoards = useAppSelector(selectArduinoBoards);
   //get the sensor id from the arduinoboardID
-  const arduinoBoardObj = arduinoBoards.find(
-    (arduino) => arduino.id === container.arduinoBoardDto.id
-  );
 
   //get the sensor value for every sensor type connected on the arduino
   const sensorWaterAcidityObj = 30;

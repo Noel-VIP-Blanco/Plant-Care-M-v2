@@ -27,13 +27,6 @@ import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightI
 import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
-import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
-import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
-import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
-import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
-import { selectTask } from "@reduxToolkit/Features/TaskSlice";
-import { selectFarms } from "@reduxToolkit/Features/FarmSlice";
-import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
 
 const HomeScreen = ({ navigation }: any) => {
   //filtered notification that has not yet read

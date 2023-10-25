@@ -1,10 +1,10 @@
 import { View, Alert } from "react-native";
 
 import { Text, Modal, Portal, Button } from "react-native-paper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 //redux toolkit
-import { DeleteTasksAPI, removeTasks } from "@reduxToolkit/Features/TaskSlice";
+import { DeleteTasksAPI } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 
 //interface
@@ -12,6 +12,7 @@ import {
   HarvestOrRemove,
   HarvestTaskModalProps,
 } from "@interface/HarvestTaskModal/HarvestTaskModalProps";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
   visible,
@@ -19,6 +20,18 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
   harvestTasksID,
   harvestOrRemove,
 }) => {
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
+
   //redux dispatch
   const dispatch = useAppDispatch();
 
@@ -67,14 +80,37 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
               onPress={() => {
                 //checks if the user wants to harvest or simply remove the plants
                 if (harvestOrRemove === HarvestOrRemove.Remove) {
-                  dispatch(
-                    DeleteTasksAPI({ tasksIds: harvestTasksID, farmId: 1 }) //farm id should be get to the tocalStorage
-                  );
+                  if (farmIdFromLocal) {
+                    dispatch(
+                      DeleteTasksAPI({
+                        tasksIds: harvestTasksID,
+                        farmId: parseInt(farmIdFromLocal),
+                      })
+                    );
+                  } else {
+                    Alert.alert(
+                      `Plant ${harvestOrRemove} failed`,
+                      "You have no farm associated to your account"
+                    );
+                    return;
+                  }
                 } else {
                   //should be harvest dispatch
-                  dispatch(
-                    DeleteTasksAPI({ tasksIds: harvestTasksID, farmId: 1 }) //farm id should be get to the tocalStorage
-                  );
+                  if (farmIdFromLocal) {
+                    dispatch(
+                      DeleteTasksAPI({
+                        tasksIds: harvestTasksID,
+                        farmId: parseInt(farmIdFromLocal),
+                      })
+                    );
+                  } else {
+                    Alert.alert(
+                      `Plant ${harvestOrRemove}`,
+                      "You have no farm associated to your account"
+                    );
+                    onClose();
+                    return;
+                  }
                 }
                 //remove tasks with list of id by using the redux action
                 //dispatch(removeTasks(harvestTasksID));
