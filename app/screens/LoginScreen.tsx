@@ -1,4 +1,4 @@
-import { View, SafeAreaView, Image, Alert } from "react-native";
+import { View, SafeAreaView, Image, Alert, PixelRatio } from "react-native";
 import {
   Button,
   Text,
@@ -18,6 +18,7 @@ import { LoginStyle } from "@stylesheets/Login/LoginStyle";
 import { Login } from "@backend/Auth/auth";
 
 const LoginScreen = ({ navigation }: any) => {
+  console.log("Pixel Ratio", PixelRatio.getFontScale());
   const plantCareLogo = "../../assets/PlantCareImages/PlantCareLogo.png";
 
   const [username, setUsername] = useState("");
