@@ -1,7 +1,8 @@
+import { dp, sp } from "@root/utilities/shared/SpDp";
 import { StyleSheet } from "react-native";
 export const HomeScreenItemStyle = StyleSheet.create({
   HomeScreenItemContainer: {
-    marginTop: 20,
+    marginTop: dp(50),
     justifyContent: "space-evenly",
     flexDirection: "row",
     flex: 1,
@@ -10,14 +11,14 @@ export const HomeScreenItemStyle = StyleSheet.create({
   linerGradient: {
     width: "100%",
     height: "100%",
-    borderRadius: 20,
+    borderRadius: dp(50),
     flexDirection: "row",
   },
   leftContainer: {
     //backgroundColor: "red",
     flex: 1,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: dp(50),
+    borderBottomLeftRadius: dp(50),
     alignItems: "center",
     justifyContent: "center",
   },
@@ -25,25 +26,27 @@ export const HomeScreenItemStyle = StyleSheet.create({
     //backgroundColor: "blue",
     flex: 1,
     marginRight: 4,
-    borderBottomRightRadius: 20,
-    borderTopRightRadius: 20,
+    borderBottomRightRadius: dp(50),
+    borderTopRightRadius: dp(50),
     alignItems: "center",
     justifyContent: "center",
   },
   surface: {
     margin: 5,
-    width: 200,
-    height: 150,
-    borderRadius: 20,
+    width: dp(500),
+    height: dp(400),
+    borderRadius: dp(50),
     alignItems: "center",
     justifyContent: "center",
   },
   screenItemTitle: {
-    fontSize: 20,
+    fontSize: sp(42),
     textAlign: "center",
-    marginBottom: 15,
+    marginBottom: dp(30),
     fontWeight: "bold",
   },
-
-  mapButton: {},
+  button: {
+    height: dp(105),
+    justifyContent: "center",
+  },
 });

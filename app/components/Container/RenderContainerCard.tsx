@@ -16,6 +16,7 @@ import { ContainerCardStyle } from "@stylesheets/ContainerCard/ContainerCardStyl
 import ContainerDetailModal from "./ContainerDetailModal";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   container,
   checkboxVisible,
@@ -72,7 +73,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
           height: "100%",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 20,
+          borderRadius: dp(50),
         }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -94,7 +95,9 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
             style={ContainerCardStyle.containerCardBoxContainer2}
             onPress={openContainerDetailModal}
           >
-            <Text style={{ fontSize: 35, margin: 3, fontWeight: "bold" }}>
+            <Text
+              style={{ fontSize: sp(80), margin: dp(7), fontWeight: "bold" }}
+            >
               {container.name}
             </Text>
             <View style={{ width: "100%" }}>
@@ -128,8 +131,8 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                 <Surface
                   elevation={4}
                   style={{
-                    borderRadius: 15,
-                    marginHorizontal: 100,
+                    borderRadius: dp(45),
+                    marginHorizontal: dp(200),
                     flex: 1,
                     justifyContent: "center",
                     alignItems: "center",

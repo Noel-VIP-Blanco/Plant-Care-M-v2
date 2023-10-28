@@ -22,6 +22,7 @@ import {
 import CustomSearchBar from "@components/Shared/CustomSearchBar";
 import AddContainerModal from "@components/TasksModal/AddContainerModal";
 import ContainerCardList from "@components/Container/ContainerCardList";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const ContainersScreen = ({ navigation }: any) => {
   //redux
@@ -64,10 +65,10 @@ const ContainersScreen = ({ navigation }: any) => {
       <View style={{ flexDirection: "row" }}>
         <View
           style={{
-            marginTop: 30,
-            marginLeft: 10,
-            width: 80,
-            borderRadius: 30,
+            marginTop: dp(70),
+            marginLeft: dp(25),
+            width: dp(120),
+            borderRadius: dp(70),
             flex: 1,
           }}
         >
@@ -78,7 +79,7 @@ const ContainersScreen = ({ navigation }: any) => {
           >
             <Ionicons
               name="arrow-back"
-              style={{ marginTop: 15 }}
+              style={{ marginTop: dp(40) }}
               size={60}
               color="white"
             />
@@ -106,7 +107,7 @@ const ContainersScreen = ({ navigation }: any) => {
         <CustomSearchBar onSearch={onSearch} searchValue="Container" />
         <Text
           style={{
-            fontSize: 30,
+            fontSize: sp(80),
             color: "#086308",
             fontWeight: "bold",
             textAlign: "center",
@@ -136,7 +137,7 @@ const ContainersScreen = ({ navigation }: any) => {
           <View style={ContainerScreenStyle.buttonContainer}>
             <Button
               mode="elevated"
-              labelStyle={{ fontSize: 20 }}
+              labelStyle={{ fontSize: sp(50) }}
               contentStyle={{ height: 50 }}
               style={ContainerScreenStyle.button}
               onPress={() => {
@@ -147,7 +148,7 @@ const ContainersScreen = ({ navigation }: any) => {
             </Button>
             <Button
               mode="elevated"
-              labelStyle={{ fontSize: 20 }}
+              labelStyle={{ fontSize: sp(50) }}
               contentStyle={{ backgroundColor: "#44f321", height: 50 }}
               style={ContainerScreenStyle.button}
               onPress={() => {

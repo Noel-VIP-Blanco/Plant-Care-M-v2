@@ -1,3 +1,4 @@
+import { sp } from "@root/utilities/shared/SpDp";
 import { StyleSheet } from "react-native";
 export const NotificationItemStyle = StyleSheet.create({
   mainContainer: {
@@ -17,12 +18,12 @@ export const NotificationItemStyle = StyleSheet.create({
   notificationTitle: {
     textAlign: "center",
     color: "white",
-    fontSize: 25,
+    fontSize: sp(55),
     fontWeight: "bold",
   },
   notificationSubtitle: {
     textAlign: "center",
-    fontSize: 15,
+    fontSize: sp(40),
     color: "white",
   },
   notificationDate: { textAlign: "center", color: "white" },

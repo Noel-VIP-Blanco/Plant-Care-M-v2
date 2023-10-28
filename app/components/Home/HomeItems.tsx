@@ -12,6 +12,7 @@ import {
 
 //stylesheets
 import { HomeScreenItemStyle } from "@stylesheets/Home/HomeScreenItemStyle";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 //type
 type IHomeScreenItems = {
   navigation: any;
@@ -37,7 +38,7 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
             <Text style={HomeScreenItemStyle.screenItemTitle}>
               Room Temperature
             </Text>
-            <Text style={{ fontSize: 40 }}>30°C</Text>
+            <Text style={{ fontSize: sp(80) }}>30°C</Text>
           </View>
         </LinearGradient>
       </Surface>
@@ -59,7 +60,7 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
             <Text style={HomeScreenItemStyle.screenItemTitle}>
               Air Humidity
             </Text>
-            <Text style={{ fontSize: 40 }}>300</Text>
+            <Text style={{ fontSize: sp(80) }}>300</Text>
           </View>
         </LinearGradient>
       </Surface>
@@ -85,6 +86,8 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate("ContainersScreen");
               }}
+              labelStyle={{ fontSize: sp(30) }}
+              style={HomeScreenItemStyle.button}
             >
               View All
             </Button>
@@ -115,6 +118,8 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate("HarvestLogScreen");
               }}
+              labelStyle={{ fontSize: sp(30) }}
+              style={HomeScreenItemStyle.button}
             >
               View All
             </Button>

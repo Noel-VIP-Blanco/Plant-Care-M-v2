@@ -103,8 +103,8 @@ export const LoginStyle = StyleSheet.create({
     borderRadius: 70,
   },
   logoImage: {
-    maxHeight: 200,
-    maxWidth: 200,
+    maxHeight: dp(500),
+    maxWidth: dp(500),
     borderRadius: 100,
   },
   contentContainer: {

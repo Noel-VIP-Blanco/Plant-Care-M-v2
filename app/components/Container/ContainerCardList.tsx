@@ -7,6 +7,7 @@ import { ContainerCardListProps } from "@interface/ContainerCardList/ContainerCa
 
 //components
 import RenderContainerCard from "./RenderContainerCard";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const ContainerCardList: React.FC<ContainerCardListProps> = ({
   filteredData,
@@ -19,13 +20,13 @@ const ContainerCardList: React.FC<ContainerCardListProps> = ({
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
-          <Text style={{ fontSize: 30, fontWeight: "bold" }}>
+          <Text style={{ fontSize: sp(70), fontWeight: "bold" }}>
             Container Not Found
           </Text>
         </View>
       ) : (
         <FlatList
-          style={{ marginTop: 7 }}
+          style={{ marginTop: dp(12) }}
           data={filteredData}
           renderItem={(
             { item } // Destructure 'item' from the 'renderItem' function argument

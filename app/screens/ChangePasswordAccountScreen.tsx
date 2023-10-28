@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 //stylesheets
 import { ChangePasswordAccountStyle } from "@stylesheets/ChangePasswordAccount/ChangePasswordAccountStyle";
 import { LoginStyle } from "@stylesheets/Login/LoginStyle";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const ChangePasswordAccountScreen = ({ navigation }: any) => {
   const [oldPassword, setOldPassword] = useState("");
@@ -42,11 +43,11 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
               Reset Password
             </Text>
           </View>
-          <View style={{ marginHorizontal: 20 }}>
+          <View style={{ marginHorizontal: dp(40) }}>
             <TextInput
               left={<TextInput.Icon icon="lock" />}
               outlineStyle={ChangePasswordAccountStyle.textInputOutline}
-              style={{ fontSize: 20, margin: 2 }}
+              style={{ fontSize: sp(35), margin: dp(6) }}
               secureTextEntry
               mode="outlined"
               label="Old Password"
@@ -54,11 +55,11 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
               onChangeText={(value) => setOldPassword(value)}
             />
           </View>
-          <View style={{ marginHorizontal: 20, marginTop: 15 }}>
+          <View style={{ marginHorizontal: dp(40), marginTop: dp(25) }}>
             <TextInput
               left={<TextInput.Icon icon="lock" />}
               outlineStyle={ChangePasswordAccountStyle.textInputOutline}
-              style={{ fontSize: 20, margin: 2 }}
+              style={{ fontSize: sp(40), margin: dp(6) }}
               secureTextEntry
               mode="outlined"
               label="New Password"
@@ -66,11 +67,11 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
               onChangeText={(value) => setNewPassword(value)}
             />
           </View>
-          <View style={{ marginHorizontal: 20, marginTop: 15 }}>
+          <View style={{ marginHorizontal: dp(40), marginTop: dp(25) }}>
             <TextInput
               left={<TextInput.Icon icon="lock" />}
               outlineStyle={ChangePasswordAccountStyle.textInputOutline}
-              style={{ fontSize: 20, margin: 2 }}
+              style={{ fontSize: sp(40), margin: dp(6) }}
               secureTextEntry
               mode="outlined"
               label="Comfirm New Password"
@@ -78,7 +79,7 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
               onChangeText={(value) => setConfirmNewPassword(value)}
             />
           </View>
-          <View style={{ marginHorizontal: 20, marginTop: 15 }}>
+          <View style={{ marginHorizontal: dp(40), marginTop: dp(25) }}>
             <Button
               mode="contained"
               onPress={() => {
@@ -86,8 +87,8 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
                 navigation.navigate("LoadingScreenForSetupFarm");
               }}
               style={LoginStyle.logInButton}
-              labelStyle={{ fontSize: 20 }}
-              contentStyle={{ height: 50 }}
+              labelStyle={{ fontSize: sp(40) }}
+              contentStyle={{ height: dp(130) }}
             >
               Update Password
             </Button>

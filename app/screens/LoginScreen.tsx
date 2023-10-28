@@ -16,6 +16,7 @@ import ForgotPasswordModal from "@components/Login/ForgotPasswordModal";
 import { LoginStyle } from "@stylesheets/Login/LoginStyle";
 //backend
 import { Login } from "@backend/Auth/auth";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const LoginScreen = ({ navigation }: any) => {
   console.log("Pixel Ratio", PixelRatio.getFontScale());
@@ -95,8 +96,8 @@ const LoginScreen = ({ navigation }: any) => {
               Login({ username, password, rememberMe, navigation });
             }}
             style={LoginStyle.logInButton}
-            labelStyle={{ fontSize: 20 }}
-            contentStyle={{ height: 50 }}
+            labelStyle={{ fontSize: sp(40) }}
+            contentStyle={{ height: dp(115) }}
           >
             Sign in
           </Button>

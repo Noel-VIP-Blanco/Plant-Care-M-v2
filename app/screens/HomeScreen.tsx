@@ -27,6 +27,7 @@ import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightI
 import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const HomeScreen = ({ navigation }: any) => {
   //filtered notification that has not yet read
@@ -65,7 +66,7 @@ const HomeScreen = ({ navigation }: any) => {
         <View style={HomeStyle.notificationBellContainer}>
           <Menu
             contentStyle={{ alignItems: "center" }}
-            style={{ marginTop: 50, width: 250 }}
+            style={{ marginTop: dp(120), width: dp(590) }}
             visible={notifMenuVisible}
             onDismiss={closeMenu}
             anchor={
@@ -82,11 +83,11 @@ const HomeScreen = ({ navigation }: any) => {
               </TouchableOpacity>
             }
           >
-            <Text style={{ fontSize: 25 }}>Notifications</Text>
+            <Text style={{ fontSize: sp(70) }}>Notifications</Text>
 
             {/* render the notifications  */}
             <FlatList
-              style={{ height: 200, width: "100%" }}
+              style={{ height: dp(600), width: "100%" }}
               data={unreadNotification}
               renderItem={({ item }) => (
                 <>
@@ -106,7 +107,7 @@ const HomeScreen = ({ navigation }: any) => {
                   closeMenu();
                 }}
               >
-                <Text style={{ textAlign: "center", fontSize: 20 }}>
+                <Text style={{ textAlign: "center", fontSize: sp(55) }}>
                   View All
                 </Text>
               </TouchableRipple>

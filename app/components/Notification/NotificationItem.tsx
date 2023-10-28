@@ -10,6 +10,7 @@ import OneNotificationModal from "@components/Notification/OneNotificationModal"
 
 //interface
 import { NotificationItemProps } from "@interface/Notification/NotificationProps";
+import { dp } from "@root/utilities/shared/SpDp";
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
@@ -36,7 +37,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <View style={NotificationItemStyle.profilePicContainer}>
           <Image
             source={require(profileImage)}
-            style={{ height: 50, width: 50, borderRadius: 30, marginLeft: 10 }}
+            style={{
+              height: dp(100),
+              width: dp(100),
+              borderRadius: 30,
+              marginLeft: dp(25),
+            }}
           />
         </View>
         <View style={NotificationItemStyle.notificationContentContainer}>
