@@ -20,6 +20,7 @@ import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 //component
 import TaskDetailModal from "@components/TasksModal/TaskDetailModal";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { dp } from "@root/utilities/shared/SpDp";
 
 const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   item,
@@ -86,7 +87,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
       <View
         style={[
           TaskCardStyle.taskCardMainContainer,
-          { backgroundColor: bgColor, borderRadius: 20 },
+          { backgroundColor: bgColor, borderRadius: dp(60) },
         ]}
       >
         <View style={TaskCardStyle.taskCardView}>
@@ -117,7 +118,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
               <View style={TaskCardStyle.itemTextDetailsContainer}>
                 <View
                   style={{
-                    margin: 3,
+                    margin: 6,
                     flex: 1,
                     flexDirection: "row",
                     justifyContent: "space-evenly",

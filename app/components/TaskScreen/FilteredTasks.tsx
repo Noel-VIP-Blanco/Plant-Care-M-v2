@@ -20,6 +20,7 @@ import { useAppDispatch } from "@reduxToolkit/Hooks";
 
 //interface
 import { FilteredTasksProps } from "@interface/FilteredTask/FilteredTaskProps";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const FilteredTasks: React.FC<FilteredTasksProps> = ({
   checkedStatus,
@@ -152,7 +153,7 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
   return (
     <View>
       <Menu
-        style={{ marginTop: 50 }}
+        style={{ marginTop: dp(100) }}
         visible={filterMenuVisible}
         onDismiss={closeMenu}
         anchor={
@@ -161,13 +162,17 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
           </TouchableOpacity>
         }
       >
-        <View style={{ width: 200, backgroundColor: "white" }}>
+        <View style={{ width: dp(480), backgroundColor: "white" }}>
           <List.Section style={{ flex: 1, backgroundColor: "white" }}>
             <List.Accordion
               left={() => (
                 <Checkbox status={checkedAllStatus ? "checked" : "unchecked"} />
               )}
-              titleStyle={{ fontSize: 25, color: "black", fontWeight: "bold" }}
+              titleStyle={{
+                fontSize: sp(60),
+                color: "black",
+                fontWeight: "bold",
+              }}
               right={({ isExpanded }) => null} //hide arrow icon
               expanded={true}
               title="Status"
@@ -188,7 +193,7 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
                   }}
                 >
                   <Checkbox status={checkedGrowing ? "checked" : "unchecked"} />
-                  <Text style={{ fontSize: 20 }}>Growing</Text>
+                  <Text style={{ fontSize: sp(45) }}>Growing</Text>
                 </View>
               </TouchableRipple>
 
@@ -206,7 +211,7 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
                   <Checkbox
                     status={checkedHarvesting ? "checked" : "unchecked"}
                   />
-                  <Text style={{ fontSize: 20 }}>To Be Harvest</Text>
+                  <Text style={{ fontSize: sp(45) }}>To Be Harvest</Text>
                 </View>
               </TouchableRipple>
             </List.Accordion>
@@ -220,14 +225,18 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
               onPress={() => {
                 handleCheckedAllContainerId();
               }}
-              titleStyle={{ fontSize: 25, color: "black", fontWeight: "bold" }}
+              titleStyle={{
+                fontSize: sp(60),
+                color: "black",
+                fontWeight: "bold",
+              }}
               right={({ isExpanded }) => null} //hide arrow icon
               expanded={true}
               title="Container"
               style={{ alignContent: "center" }}
             >
-              <ScrollView style={{ height: 120 }} horizontal={true}>
-                <View style={{ width: 300 }}>
+              <ScrollView style={{ height: dp(300) }} horizontal={true}>
+                <View style={{ width: dp(400) }}>
                   <FlatList
                     data={containerData}
                     renderItem={(

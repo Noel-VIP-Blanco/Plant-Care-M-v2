@@ -138,7 +138,7 @@ const ContainersScreen = ({ navigation }: any) => {
             <Button
               mode="elevated"
               labelStyle={{ fontSize: sp(50) }}
-              contentStyle={{ height: 50 }}
+              contentStyle={{ height: dp(130) }}
               style={ContainerScreenStyle.button}
               onPress={() => {
                 hideCheckbox();
@@ -149,7 +149,7 @@ const ContainersScreen = ({ navigation }: any) => {
             <Button
               mode="elevated"
               labelStyle={{ fontSize: sp(50) }}
-              contentStyle={{ backgroundColor: "#44f321", height: 50 }}
+              contentStyle={{ backgroundColor: "#44f321", height: dp(130) }}
               style={ContainerScreenStyle.button}
               onPress={() => {
                 Alert.alert(

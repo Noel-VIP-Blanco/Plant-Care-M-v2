@@ -1,3 +1,4 @@
+import { dp, sp } from "@root/utilities/shared/SpDp";
 import { StyleSheet } from "react-native";
 export const TaskScreeenStyle = StyleSheet.create({
   contentMainContainer: {
@@ -13,8 +14,8 @@ export const TaskScreeenStyle = StyleSheet.create({
     alignItems: "center",
   },
   listOfPlantTubeText: {
-    fontSize: 30,
-    marginVertical: 5,
+    fontSize: sp(80),
+    marginVertical: dp(10),
     color: "#086308",
     fontWeight: "bold",
     textAlign: "center",

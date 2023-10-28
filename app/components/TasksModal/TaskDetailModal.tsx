@@ -13,6 +13,7 @@ import EditTaskDetailModal from "./EditTaskDetailModal";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   visible,
@@ -60,10 +61,10 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
         <View
           style={{
             backgroundColor: "white",
-            padding: 20,
-            margin: 30,
-            borderRadius: 30,
-            height: 350,
+            padding: dp(50),
+            margin: dp(30),
+            borderRadius: dp(60),
+            height: dp(1300),
           }}
         >
           <View style={{ flex: 1 }}>
@@ -73,90 +74,90 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   color: "#086308",
                   fontWeight: "bold",
                   textAlign: "center",
-                  fontSize: 30,
+                  fontSize: sp(80),
                 }}
               >
                 Task Details
               </Text>
             </View>
 
-            <View style={{ flex: 9, paddingTop: 10 }}>
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+            <View style={{ flex: 9, paddingTop: dp(1) }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Plant Name
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   {plantObj ? plantObj.name : "No Name"}
                 </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Container Name
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   {containerObj ? containerObj.name : "N/A"}
                 </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Date Planted
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   {formattedPlantedDate}
                 </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Expected Harvest
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   {formattedExpectedHarvestDate}
                 </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Farmer
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   To be announced
                 </Text>
               </View>

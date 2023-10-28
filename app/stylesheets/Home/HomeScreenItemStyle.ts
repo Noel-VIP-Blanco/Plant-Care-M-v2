@@ -9,8 +9,8 @@ export const HomeScreenItemStyle = StyleSheet.create({
     flexWrap: "wrap",
   },
   linerGradient: {
-    width: "100%",
-    height: "100%",
+    width: dp(500),
+    height: dp(400),
     borderRadius: dp(50),
     flexDirection: "row",
   },
@@ -46,7 +46,9 @@ export const HomeScreenItemStyle = StyleSheet.create({
     fontWeight: "bold",
   },
   button: {
-    height: dp(105),
+    height: dp(110),
+    width: dp(230),
+    alignItems: "center",
     justifyContent: "center",
   },
 });

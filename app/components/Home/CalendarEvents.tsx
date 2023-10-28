@@ -10,6 +10,7 @@ import {
 
 //dummy local data
 import { dummyTaskItem } from "@root/app/dummyData/DummyTaskItem";
+import { dp } from "@root/utilities/shared/SpDp";
 
 const CalendarEvents: React.FC<CalendarEventsProps> = ({
   openEventModal,
@@ -31,17 +32,17 @@ const CalendarEvents: React.FC<CalendarEventsProps> = ({
   return (
     <View
       style={{
-        marginTop: -100,
-        width: "75%", // You can adjust the width as a percentage
+        marginTop: dp(-180),
+        width: dp(800), //"75%", // You can adjust the width as a percentage
         alignItems: "center",
-        height: 385,
-        borderRadius: 20,
+        height: dp(900),
+        borderRadius: dp(60),
         elevation: 2,
         backgroundColor: "white",
       }}
     >
       <Calendar
-        style={{ width: 300, margin: 20 }}
+        style={{ width: dp(750), margin: dp(50) }}
         hideExtraDays
         markedDates={markedDates}
         onDayPress={(date) => {

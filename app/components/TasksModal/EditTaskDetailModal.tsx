@@ -16,6 +16,7 @@ import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 import { UpdateTaskAPI } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
   visible,
@@ -84,17 +85,17 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
         <View
           style={{
             backgroundColor: "white",
-            padding: 20,
-            margin: 30,
-            borderRadius: 30,
+            padding: dp(40),
+            margin: dp(60),
+            borderRadius: dp(60),
           }}
         >
           {/* Container for text and select list */}
           <View>
             <Text
               style={{
-                margin: 10,
-                fontSize: 30,
+                margin: dp(25),
+                fontSize: sp(80),
                 fontWeight: "bold",
                 color: "#00ad00",
                 textAlign: "center",
@@ -115,8 +116,9 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
                 search={true}
                 placeholder="Select Container"
                 save="key"
-                boxStyles={{ width: 180, margin: 5 }}
-                inputStyles={{ width: 130, fontSize: 17 }}
+                boxStyles={{ width: dp(440), margin: dp(10) }}
+                inputStyles={{ width: dp(320), fontSize: sp(40) }}
+                dropdownTextStyles={{ fontSize: sp(40) }}
               />
               <SelectList
                 setSelected={(key: any) => setSelectPlant(key)}
@@ -124,8 +126,9 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
                 search={true}
                 placeholder="Select Plant"
                 save="key"
-                boxStyles={{ width: 160, margin: 5 }}
-                inputStyles={{ width: 110, fontSize: 17 }}
+                boxStyles={{ width: dp(390), margin: dp(10) }}
+                inputStyles={{ width: dp(260), fontSize: sp(40) }}
+                dropdownTextStyles={{ fontSize: sp(40) }}
               />
             </View>
           </View>

@@ -6,6 +6,7 @@ import RenderTaskCard from "@components/TaskScreen/RenderTaskCard";
 
 //interface
 import { TaskCardListProps } from "@interface/TaskCardList/TaskCardListProps";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const TaskCardList: React.FC<TaskCardListProps> = ({
   filteredData,
@@ -18,13 +19,13 @@ const TaskCardList: React.FC<TaskCardListProps> = ({
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
-          <Text style={{ fontSize: 30, fontWeight: "bold" }}>
+          <Text style={{ fontSize: sp(55), fontWeight: "bold" }}>
             Task Not Found
           </Text>
         </View>
       ) : (
         <FlatList
-          style={{ marginTop: 7 }}
+          style={{ marginTop: dp(10) }}
           data={filteredData}
           renderItem={(
             { item } // Destructure 'item' from the 'renderItem' function argument
@@ -37,7 +38,7 @@ const TaskCardList: React.FC<TaskCardListProps> = ({
           )}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={{
-            marginTop: -10,
+            marginTop: dp(-20),
             paddingBottom: 150,
           }}
         />

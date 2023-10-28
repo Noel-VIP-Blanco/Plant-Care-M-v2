@@ -1,3 +1,4 @@
+import { dp } from "@root/utilities/shared/SpDp";
 import { StyleSheet } from "react-native";
 
 export const HomeStyle = StyleSheet.create({
@@ -10,13 +11,13 @@ export const HomeStyle = StyleSheet.create({
     marginTop: "10%",
     alignItems: "flex-end",
   },
-  bottomMainContainer:{
+  bottomMainContainer: {
     backgroundColor: "#fff",
     flex: 1,
-    marginTop: 100,
+    marginTop: dp(200),
     height: "100%",
     borderTopLeftRadius: 80,
     borderTopRightRadius: 80,
     alignItems: "center",
-  }
+  },
 });

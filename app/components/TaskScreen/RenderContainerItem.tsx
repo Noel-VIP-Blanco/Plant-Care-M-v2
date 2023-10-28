@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Checkbox, TouchableRipple, Text } from "react-native-paper";
 //interface
 import { RenderContainerItemProps } from "@interface/RenderContainerItem/RenderContainerItemProps";
+import { sp } from "@root/utilities/shared/SpDp";
 
 const RenderContainerItem: React.FC<RenderContainerItemProps> = ({
   item,
@@ -54,7 +55,7 @@ const RenderContainerItem: React.FC<RenderContainerItemProps> = ({
         }}
       >
         <Checkbox status={checkedContainerId ? "checked" : "unchecked"} />
-        <Text style={{ fontSize: 20 }}>{item.value}</Text>
+        <Text style={{ fontSize: sp(45) }}>{item.value}</Text>
       </View>
     </TouchableRipple>
   );

@@ -18,6 +18,7 @@ import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { UpdateContainerProps } from "@interface/DataProps/ContainerItemProps";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   visible,
@@ -107,12 +108,14 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
         <View
           style={{
             backgroundColor: "white",
-            padding: 20,
-            margin: 30,
-            borderRadius: 30,
+            padding: dp(50),
+            margin: dp(70),
+            borderRadius: dp(70),
           }}
         >
-          <Text style={{ fontSize: 30, color: "#00ad00", textAlign: "center" }}>
+          <Text
+            style={{ fontSize: sp(80), color: "#00ad00", textAlign: "center" }}
+          >
             Edit Container
           </Text>
           <TextInput
@@ -128,8 +131,8 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
           <View>
             <Text
               style={{
-                margin: 15,
-                fontSize: 25,
+                margin: dp(45),
+                fontSize: sp(60),
                 fontWeight: "bold",
                 color: "#00ad00",
               }}
@@ -149,8 +152,9 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
                 search={true}
                 placeholder="Arduino Board"
                 save="key"
-                boxStyles={{ width: 160, margin: 5 }}
-                inputStyles={{ width: 110, fontSize: 20 }}
+                boxStyles={{ width: dp(400), margin: dp(10) }}
+                inputStyles={{ width: dp(280), fontSize: sp(40) }}
+                dropdownTextStyles={{ fontSize: sp(40) }}
               />
               <SelectList
                 setSelected={(key: any) => setSelectPlant(key)}
@@ -158,8 +162,9 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
                 search={true}
                 placeholder="Plant"
                 save="key"
-                boxStyles={{ width: 160, margin: 5 }}
-                inputStyles={{ width: 110, fontSize: 20 }}
+                boxStyles={{ width: dp(400), margin: dp(10) }}
+                inputStyles={{ width: dp(280), fontSize: sp(40) }}
+                dropdownTextStyles={{ fontSize: sp(40) }}
               />
             </View>
           </View>

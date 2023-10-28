@@ -86,7 +86,7 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate("ContainersScreen");
               }}
-              labelStyle={{ fontSize: sp(30) }}
+              labelStyle={{ fontSize: sp(32) }}
               style={HomeScreenItemStyle.button}
             >
               View All
@@ -118,7 +118,7 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate("HarvestLogScreen");
               }}
-              labelStyle={{ fontSize: sp(30) }}
+              labelStyle={{ fontSize: sp(32) }}
               style={HomeScreenItemStyle.button}
             >
               View All

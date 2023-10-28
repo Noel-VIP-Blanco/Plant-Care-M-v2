@@ -27,6 +27,7 @@ import {
 } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { HarvestOrRemove } from "@interface/HarvestTaskModal/HarvestTaskModalProps";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const TaskScreen = () => {
   //complete tasks
@@ -91,7 +92,7 @@ const TaskScreen = () => {
         }}
       >
         <Menu
-          style={{ marginTop: 50 }}
+          style={{ marginTop: dp(120) }}
           visible={addMenuVisible}
           onDismiss={closeMenu}
           anchor={
@@ -179,7 +180,7 @@ const TaskScreen = () => {
         <View
           style={{
             position: "absolute",
-            margin: 16,
+            marginBottom: dp(30),
             bottom: 0,
             width: "100%",
             //right: "30%",
@@ -190,9 +191,9 @@ const TaskScreen = () => {
           <Button
             mode="elevated"
             elevation={2}
-            labelStyle={{ fontSize: 20 }}
-            contentStyle={{ height: 50 }}
-            style={{ marginHorizontal: 20 }}
+            labelStyle={{ fontSize: sp(60) }}
+            contentStyle={{ height: dp(120) }}
+            style={{ marginHorizontal: dp(15) }}
             onPress={() => {
               hideCheckbox();
             }}
@@ -203,9 +204,9 @@ const TaskScreen = () => {
             mode="elevated"
             elevation={2}
             textColor="black"
-            labelStyle={{ fontSize: 20 }}
-            contentStyle={{ backgroundColor: "red", height: 50 }}
-            style={{ marginHorizontal: 20 }}
+            labelStyle={{ fontSize: sp(60) }}
+            contentStyle={{ backgroundColor: "red", height: dp(120) }}
+            style={{ marginHorizontal: dp(15) }}
             onPress={() => {
               setHarvestOrRemove(HarvestOrRemove.Remove);
               openAHarvestTaskModal();
@@ -217,9 +218,9 @@ const TaskScreen = () => {
             mode="elevated"
             elevation={2}
             textColor="black"
-            labelStyle={{ fontSize: 20 }}
-            contentStyle={{ backgroundColor: "#44f321", height: 50 }}
-            style={{ marginHorizontal: 20 }}
+            labelStyle={{ fontSize: sp(60) }}
+            contentStyle={{ backgroundColor: "#44f321", height: dp(120) }}
+            style={{ marginHorizontal: dp(15) }}
             onPress={() => {
               setHarvestOrRemove(HarvestOrRemove.Harvest);
               openAHarvestTaskModal();

@@ -14,6 +14,7 @@ import EditContainerDetailModal from "./EditContainerDetailModal";
 import { ContainerDetailModalProps } from "@interface/ContainerDetailModal/ContainerDetailModalProps";
 import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
   visible,
@@ -60,14 +61,14 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
 
   return (
     <Portal>
-      <Modal style={{}} visible={visible} onDismiss={onClose}>
+      <Modal visible={visible} onDismiss={onClose}>
         <View
           style={{
             backgroundColor: "white",
-            padding: 20,
-            margin: 30,
-            borderRadius: 30,
-            height: 260,
+            padding: dp(50),
+            margin: dp(30),
+            borderRadius: dp(60),
+            height: dp(900),
           }}
         >
           <View style={{ flex: 1 }}>
@@ -77,58 +78,58 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
                   color: "#086308",
                   fontWeight: "bold",
                   textAlign: "center",
-                  fontSize: 30,
+                  fontSize: sp(80),
                 }}
               >
                 Container Details
               </Text>
             </View>
 
-            <View style={{ flex: 9, paddingTop: 10 }}>
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+            <View style={{ flex: 9, paddingTop: dp(1) }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Container Name
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   {containerObj && containerObj.name}
                 </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Arduino Board
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   {containerObj && containerObj.arduinoBoardDto.id}
                 </Text>
               </View>
 
-              <View style={{ flexDirection: "row", marginBottom: 15 }}>
+              <View style={{ flexDirection: "row", marginBottom: dp(30) }}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: sp(60),
                     fontWeight: "bold",
-                    marginLeft: 15,
+                    marginLeft: dp(30),
                     flex: 1,
                   }}
                 >
                   Plant Name
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, flex: 1 }}>
+                <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
                   {plantObj && plantObj.name}
                 </Text>
               </View>

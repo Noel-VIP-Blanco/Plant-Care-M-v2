@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { Button } from "react-native-paper";
 import React from "react";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 interface IModalButtons {
   labelForSave: string;
@@ -17,7 +18,7 @@ const ModalButtons: React.FC<IModalButtons> = ({
       style={{
         flexDirection: "row",
         justifyContent: "space-evenly",
-        marginTop: 10,
+        marginTop: dp(20),
       }}
     >
       <Button
@@ -26,9 +27,9 @@ const ModalButtons: React.FC<IModalButtons> = ({
           onClose();
         }}
         textColor="black"
-        labelStyle={{ fontSize: 20 }}
-        contentStyle={{ padding: 5 }}
-        style={{ flex: 1, margin: 5 }}
+        labelStyle={{ fontSize: sp(40) }}
+        contentStyle={{ padding: dp(10), height: dp(130) }}
+        style={{ flex: 1, margin: dp(10) }}
       >
         Cancel
       </Button>
@@ -38,9 +39,13 @@ const ModalButtons: React.FC<IModalButtons> = ({
           onSave();
         }}
         textColor="black"
-        labelStyle={{ fontSize: 20 }}
-        contentStyle={{ backgroundColor: "#44f321", padding: 5 }}
-        style={{ flex: 1, margin: 5 }}
+        labelStyle={{ fontSize: sp(40) }}
+        contentStyle={{
+          backgroundColor: "#44f321",
+          padding: dp(10),
+          height: dp(130),
+        }}
+        style={{ flex: 1, margin: dp(10) }}
       >
         {labelForSave}
       </Button>
