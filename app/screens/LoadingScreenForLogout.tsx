@@ -12,6 +12,7 @@ import { useAppDispatch } from "@reduxToolkit/Hooks";
 import { ActivityIndicator } from "react-native-paper";
 import { Logout } from "@backend/Auth/auth";
 import { removeAllLocalStorage } from "@root/utilities/shared/LocalStorage";
+import { sp } from "@root/utilities/shared/SpDp";
 const LoadingScreenForLogout = ({ navigation }: any) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -34,12 +35,13 @@ const LoadingScreenForLogout = ({ navigation }: any) => {
   const logout = async () => {};
   return (
     <View style={styles.container}>
-      <Text>Loggin out...</Text>
+      <Text style={styles.text}>Logging out...</Text>
       <ActivityIndicator size="large" color="#00ff00" />
     </View>
   );
 };
 const styles = StyleSheet.create({
+  text: { fontSize: sp(60) },
   container: {
     flex: 1,
     justifyContent: "center",

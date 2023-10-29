@@ -36,12 +36,14 @@ const MyFarmItem = ({ navigation }: any) => {
             name="swap-horizontal-sharp"
             style={SettingScreenStyle.accountBox1Icon}
           />
-          <Text>Switch Farm</Text>
+          <Text style={SettingScreenStyle.itemTitleText}>Switch Farm</Text>
         </View>
         <View style={SettingScreenStyle.accountBox2}>
           <View style={SettingScreenStyle.acountBox2Items}>
             {/* change on the current farm used by user */}
-            <Text>{selectedFarmId}</Text>
+            <Text style={SettingScreenStyle.itemTitleText}>
+              {selectedFarmId}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 openSwitchFarmModal();

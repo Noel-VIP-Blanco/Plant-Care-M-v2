@@ -9,6 +9,7 @@ import { getAllContainers } from "@reduxToolkit/Features/ContainerSlice";
 import { getAllArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { getAllPlant } from "@reduxToolkit/Features/PlantSlice";
 import { getAllTasks } from "@reduxToolkit/Features/TaskSlice";
+import { sp } from "@root/utilities/shared/SpDp";
 
 const LoadingScreenForFetchData = ({ navigation }: any) => {
   //get all data from aws database
@@ -27,7 +28,11 @@ const LoadingScreenForFetchData = ({ navigation }: any) => {
             await dispatch(getAllArduinoBoards(farms[0].id.toString()));
             await dispatch(getAllPlant(farms[0].id.toString()));
             await dispatch(getAllTasks(farms[0].id.toString()));
-            navigation.navigate("BottomTabContainer");
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "BottomTabContainer" }],
+            });
+            // navigation.navigate("BottomTabContainer");
           }
         }
         if (fetchedFarmId) {
@@ -35,7 +40,11 @@ const LoadingScreenForFetchData = ({ navigation }: any) => {
           await dispatch(getAllArduinoBoards(fetchedFarmId));
           await dispatch(getAllPlant(fetchedFarmId));
           await dispatch(getAllTasks(fetchedFarmId));
-          navigation.navigate("BottomTabContainer");
+          //navigation.navigate("BottomTabContainer");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "BottomTabContainer" }],
+          });
         }
       } catch (error) {
         // Handle errors if necessary
@@ -46,12 +55,13 @@ const LoadingScreenForFetchData = ({ navigation }: any) => {
   }, []);
   return (
     <View style={styles.container}>
-      <Text>Fetching necessary data...</Text>
+      <Text style={styles.text}>Fetching necessary data...</Text>
       <ActivityIndicator size="large" color="#00ff00" />
     </View>
   );
 };
 const styles = StyleSheet.create({
+  text: { fontSize: sp(60) },
   container: {
     flex: 1,
     justifyContent: "center",

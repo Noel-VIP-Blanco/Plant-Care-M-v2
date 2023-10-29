@@ -12,6 +12,7 @@ import ModalButtons from "@components/Shared/ModalButtons";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectFarms } from "@reduxToolkit/Features/FarmSlice";
 import { setFarm } from "@root/utilities/shared/LocalStorage";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 type SwitchFarmModalProps = {
   visible: boolean;
@@ -45,12 +46,14 @@ const SwitchFarmModal: React.FC<SwitchFarmModalProps> = ({
         <View
           style={{
             backgroundColor: "#ffffffff",
-            padding: 20,
-            margin: 30,
-            borderRadius: 30,
+            padding: dp(50),
+            margin: dp(70),
+            borderRadius: dp(70),
           }}
         >
-          <Text style={{ textAlign: "center", color: "green", fontSize: 35 }}>
+          <Text
+            style={{ textAlign: "center", color: "green", fontSize: sp(80) }}
+          >
             Choose Farm
           </Text>
           <View style={{ alignItems: "center" }}>
@@ -60,9 +63,9 @@ const SwitchFarmModal: React.FC<SwitchFarmModalProps> = ({
               search={false}
               placeholder="Select Farm"
               save="key"
-              boxStyles={{ width: 150, margin: 5 }}
-              inputStyles={{ width: 100, fontSize: 20 }}
-              dropdownStyles={{ height: 150 }}
+              boxStyles={{ width: dp(400), margin: dp(10) }}
+              inputStyles={{ width: dp(280), fontSize: sp(40) }}
+              dropdownTextStyles={{ fontSize: sp(40) }}
             />
           </View>
           {/* 2 button inside - cancel and confirm buttom */}

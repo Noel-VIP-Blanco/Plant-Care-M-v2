@@ -1,12 +1,13 @@
+import { dp, sp } from "@root/utilities/shared/SpDp";
 import { StyleSheet } from "react-native";
 export const AddTaskModalStyle = StyleSheet.create({
   mainContainer: {
     backgroundColor: "white",
-    padding: 20,
-    margin: 30,
-    borderRadius: 30,
+    padding: dp(50),
+    margin: dp(70),
+    borderRadius: dp(70),
   },
-  textTitle: { fontSize: 30, color: "#00ad00", textAlign: "center" },
+  textTitle: { fontSize: sp(80), color: "#00ad00", textAlign: "center" },
   selectListContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -15,6 +16,6 @@ export const AddTaskModalStyle = StyleSheet.create({
   dateButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 2,
+    marginTop: dp(8),
   },
 });

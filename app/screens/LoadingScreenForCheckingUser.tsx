@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { ActivityIndicator, Modal, Portal, Text } from "react-native-paper";
 import React, { FC } from "react";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 interface ILoadingScreenForCheckingUser {
   title: string;
   showActivityIndicator: boolean;
@@ -15,14 +16,18 @@ const LoadingScreenForCheckingUser: FC<ILoadingScreenForCheckingUser> = ({
         <View
           style={{
             backgroundColor: "#ffffffff",
-            padding: 20,
-            margin: 60,
-            borderRadius: 30,
+            padding: dp(50),
+            margin: dp(150),
+            borderRadius: dp(70),
           }}
         >
           {title && (
             <Text
-              style={{ fontSize: 25, textAlign: "center", fontWeight: "bold" }}
+              style={{
+                fontSize: sp(60),
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
             >
               {title}
             </Text>

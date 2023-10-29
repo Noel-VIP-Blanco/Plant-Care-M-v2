@@ -1,32 +1,33 @@
+import { dp, sp } from "@root/utilities/shared/SpDp";
 import { StyleSheet } from "react-native";
 export const SettingScreenStyle = StyleSheet.create({
   accountTextContainer: {
-    margin: 15,
+    margin: dp(50),
   },
   accountText: {
-    fontSize: 25,
+    fontSize: sp(80),
     color: "#159415",
     fontWeight: "bold",
   },
   myAccountContainer: {
-    marginHorizontal: 15,
+    marginHorizontal: dp(35),
     backgroundColor: "white",
     borderBottomColor: "black",
-    borderRadius: 10,
+    borderRadius: dp(20),
     elevation: 2,
   },
   itemContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    padding: dp(30),
     borderBottomColor: "black",
     borderBottomWidth: 2,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: dp(30),
+    borderBottomRightRadius: dp(30),
   },
   itemTitleText: {
-    fontSize: 15,
+    fontSize: sp(50),
   },
   accountBox1: {
     flex: 1,
@@ -34,8 +35,8 @@ export const SettingScreenStyle = StyleSheet.create({
     alignItems: "center",
   },
   accountBox1Icon: {
-    fontSize: 30,
-    marginRight: 5,
+    fontSize: sp(110),
+    marginRight: dp(15),
   },
   accountBox2: {
     alignItems: "flex-end",
@@ -46,7 +47,7 @@ export const SettingScreenStyle = StyleSheet.create({
     alignItems: "center",
   },
   accountBox2Icon: {
-    fontSize: 30,
+    fontSize: sp(110),
     marginRight: 5,
   },
 });

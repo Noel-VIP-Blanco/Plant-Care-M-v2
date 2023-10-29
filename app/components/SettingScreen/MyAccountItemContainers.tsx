@@ -56,7 +56,7 @@ const MyAccountItemContainers = ({ navigation }: any) => {
       <View style={SettingScreenStyle.itemContainer}>
         <View style={SettingScreenStyle.accountBox1}>
           <Ionicons name="person" style={SettingScreenStyle.accountBox1Icon} />
-          <Text>Profile</Text>
+          <Text style={SettingScreenStyle.itemTitleText}>Profile</Text>
         </View>
         <View style={SettingScreenStyle.accountBox2}>
           <View style={SettingScreenStyle.acountBox2Items}>
@@ -130,7 +130,9 @@ const MyAccountItemContainers = ({ navigation }: any) => {
             color="red"
             style={SettingScreenStyle.accountBox1Icon}
           />
-          <Text style={{ color: "red" }}>Sign Out</Text>
+          <Text style={[SettingScreenStyle.itemTitleText, { color: "red" }]}>
+            Sign Out
+          </Text>
         </View>
         <View style={SettingScreenStyle.accountBox2}>
           <View style={{ flexDirection: "row" }}>

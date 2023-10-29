@@ -22,6 +22,7 @@ import ModalButtons from "@components/Shared/ModalButtons";
 import { AddTaskModalStyle } from "@stylesheets/AddTaskModal/AddTaskModalStyle";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const AddTaskModal = ({ visible, onClose }: ModalType) => {
   //get farmId from local
@@ -89,6 +90,10 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
   };
 
   const handleAddTask = () => {
+    if (!selectPlant && !selectContainer && !dateText && !numberOfTask) {
+      Alert.alert("Add New Task Failed", "All fields are required");
+      return;
+    }
     const dateString = dateText;
     const date = new Date(dateString);
     date.setDate(date.getDate() + 45); // add days depend on plant growth in plant id
@@ -148,8 +153,9 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
                 search={false}
                 placeholder="Select Plant"
                 save="key"
-                boxStyles={{ width: 150, margin: 5 }}
-                inputStyles={{ width: 100, fontSize: 20 }}
+                boxStyles={{ width: dp(400), margin: dp(8) }}
+                inputStyles={{ width: dp(290), fontSize: sp(40) }}
+                dropdownTextStyles={{ fontSize: sp(40) }}
               />
               <SelectList
                 setSelected={(val: any) => setSelectContainer(val)}
@@ -157,8 +163,9 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
                 search={false}
                 placeholder="Select Container"
                 save="key"
-                boxStyles={{ width: 180, margin: 5 }}
-                inputStyles={{ width: 130, fontSize: 20, flexWrap: "nowrap" }}
+                boxStyles={{ width: dp(400), margin: dp(8) }}
+                inputStyles={{ width: dp(290), fontSize: sp(39) }}
+                dropdownTextStyles={{ fontSize: sp(35) }}
               />
             </View>
           </View>
@@ -169,11 +176,12 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
               onPress={showCalendarModal}
               icon="calendar"
               textColor="black"
-              style={{ margin: 5 }}
+              style={{ margin: dp(10) }}
+              labelStyle={{ fontSize: sp(40) }}
             >
               Select Date Planted
             </Button>
-            <Text style={{ fontSize: 25 }}>{dateText}</Text>
+            <Text style={{ fontSize: sp(50) }}>{dateText}</Text>
           </View>
           <TextInput
             label="Number of Tasks"
@@ -183,7 +191,7 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
             }}
             keyboardType="numeric"
             mode="outlined"
-            style={{ width: 140 }}
+            style={{ width: dp(500) }}
           />
 
           <ModalButtons
