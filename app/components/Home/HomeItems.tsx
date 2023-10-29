@@ -35,10 +35,16 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
             <FontAwesome5 name="temperature-high" size={70} />
           </View>
           <View style={HomeScreenItemStyle.rightContainer}>
-            <Text style={HomeScreenItemStyle.screenItemTitle}>
+            <Text
+              style={HomeScreenItemStyle.screenItemTitle}
+              className="dark:text-white"
+            >
               Room Temperature
             </Text>
-            <Text style={{ fontSize: sp(80) }}>30°C</Text>
+            <View></View>
+            <Text className="dark:text-white" style={{ fontSize: sp(80) }}>
+              30°C
+            </Text>
           </View>
         </LinearGradient>
       </Surface>
@@ -57,10 +63,15 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
             <Entypo name="air" size={70} />
           </View>
           <View style={HomeScreenItemStyle.rightContainer}>
-            <Text style={HomeScreenItemStyle.screenItemTitle}>
+            <Text
+              className="dark:text-white"
+              style={HomeScreenItemStyle.screenItemTitle}
+            >
               Air Humidity
             </Text>
-            <Text style={{ fontSize: sp(80) }}>300</Text>
+            <Text className="dark:text-white" style={{ fontSize: sp(80) }}>
+              300
+            </Text>
           </View>
         </LinearGradient>
       </Surface>
@@ -79,7 +90,12 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
             <FontAwesome5 name="inbox" size={70} />
           </View>
           <View style={HomeScreenItemStyle.rightContainer}>
-            <Text style={HomeScreenItemStyle.screenItemTitle}>Containers</Text>
+            <Text
+              className="dark:text-white"
+              style={HomeScreenItemStyle.screenItemTitle}
+            >
+              Containers
+            </Text>
             <Button
               mode="elevated"
               rippleColor={COLORS.BACKGROUNDCOLORSECONDARY}
@@ -109,7 +125,10 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
             <MaterialIcons name="event-note" size={70} />
           </View>
           <View style={HomeScreenItemStyle.rightContainer}>
-            <Text style={HomeScreenItemStyle.screenItemTitle}>
+            <Text
+              className="dark:text-white"
+              style={HomeScreenItemStyle.screenItemTitle}
+            >
               Harvest Logs
             </Text>
             <Button

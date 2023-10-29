@@ -115,7 +115,10 @@ const HomeScreen = ({ navigation }: any) => {
           </Menu>
         </View>
 
-        <View style={HomeStyle.bottomMainContainer}>
+        <View
+          style={HomeStyle.bottomMainContainer}
+          className="bg-white dark:bg-gray-800"
+        >
           <CalendarEvents
             openEventModal={openeventModal}
             setSelectedDate={setSelectedDate}

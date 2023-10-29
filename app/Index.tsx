@@ -6,6 +6,7 @@ import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
 import { onValue, ref } from "firebase/database";
 import { getRememberMe } from "@root/utilities/shared/LocalStorage";
 import LoadingScreenForCheckingUser from "@screens/LoadingScreenForCheckingUser";
+import { View } from "react-native";
 
 const Index = () => {
   const [user, setUser] = useState<boolean | undefined | null>(null);

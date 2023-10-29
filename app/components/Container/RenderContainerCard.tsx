@@ -61,6 +61,8 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
     }
   }, [checkboxVisible]);
 
+  //check the sensor data if it is outside the range
+  const [isValueGood, setIsValueGood] = useState(true);
   return (
     <Surface elevation={4} style={ContainerCardStyle.surface}>
       <LinearGradient
@@ -96,6 +98,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
             onPress={openContainerDetailModal}
           >
             <Text
+              className="text-white dark:text-black"
               style={{ fontSize: sp(80), margin: dp(7), fontWeight: "bold" }}
             >
               {container.name}
@@ -109,7 +112,10 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
                   ]}
                 >
-                  <Text style={ContainerCardStyle.itemTextDetails}>
+                  <Text
+                    className="text-white dark:text-black"
+                    style={ContainerCardStyle.itemTextDetails}
+                  >
                     Acidity: {sensorWaterAcidityObj} pH
                   </Text>
                 </Surface>
@@ -120,7 +126,10 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
                   ]}
                 >
-                  <Text style={ContainerCardStyle.itemTextDetails}>
+                  <Text
+                    className="text-white dark:text-black"
+                    style={ContainerCardStyle.itemTextDetails}
+                  >
                     Nutrient: {sensorWaterNutrientObj}
                     ec
                   </Text>
@@ -139,7 +148,10 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     backgroundColor: COLORS.BACKGROUNDCRITICALVALUE,
                   }}
                 >
-                  <Text style={ContainerCardStyle.itemTextDetails}>
+                  <Text
+                    className="text-white dark:text-black"
+                    style={ContainerCardStyle.itemTextDetails}
+                  >
                     Water Level: {sensorWaterLevelObj} L
                   </Text>
                 </Surface>

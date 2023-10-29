@@ -103,12 +103,15 @@ const ContainersScreen = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={ContainerScreenStyle.containerContents}>
+      <View
+        className="bg-white dark:bg-slate-800"
+        style={ContainerScreenStyle.containerContents}
+      >
         <CustomSearchBar onSearch={onSearch} searchValue="Container" />
         <Text
+          className="text-green-800 dark:text-green-400"
           style={{
             fontSize: sp(80),
-            color: "#086308",
             fontWeight: "bold",
             textAlign: "center",
           }}

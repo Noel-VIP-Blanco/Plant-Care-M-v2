@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { Searchbar } from "react-native-paper";
 import React, { useState } from "react";
-
+import { useColorScheme } from "nativewind";
 //interface
 import { CustomSearchBarProps } from "@interface/Shared/CustomSearchBarProps";
 
@@ -11,6 +11,7 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
   onSearch,
   searchValue,
 }) => {
+  const { colorScheme } = useColorScheme();
   const [searchTask, setSearchTask] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchTaskHandler = (value: string) => {
@@ -29,6 +30,7 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
   const handleSearchBlur = () => {
     setIsSearchFocused(false);
   };
+
   return (
     <View style={CustomSearchBarStyle.searchBarContainer}>
       <Searchbar
@@ -38,7 +40,9 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
         elevation={3}
         placeholder={"Search " + searchValue + " Name"}
         value={searchTask}
-        style={{ width: "85%", backgroundColor: "white" }}
+        style={{ width: "85%" }}
+        inputStyle={{ color: colorScheme === "light" ? "black" : "white" }}
+        className="bg-white dark:bg-slate-600"
         onFocus={handleSearchFocused}
         onBlur={handleSearchBlur}
       />

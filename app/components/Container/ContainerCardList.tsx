@@ -20,7 +20,10 @@ const ContainerCardList: React.FC<ContainerCardListProps> = ({
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
-          <Text style={{ fontSize: sp(70), fontWeight: "bold" }}>
+          <Text
+            className="text-green-800 dark:text-green-400"
+            style={{ fontSize: sp(70), fontWeight: "bold" }}
+          >
             Container Not Found
           </Text>
         </View>

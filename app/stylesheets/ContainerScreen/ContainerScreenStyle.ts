@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 export const ContainerScreenStyle = StyleSheet.create({
   containerContents: {
-    backgroundColor: "white",
     flex: 1,
     height: "100%",
     borderTopLeftRadius: 70,

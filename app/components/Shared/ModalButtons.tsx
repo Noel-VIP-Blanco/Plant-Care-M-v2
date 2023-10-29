@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { Button } from "react-native-paper";
 import React from "react";
 import { dp, sp } from "@root/utilities/shared/SpDp";
-
+import { useColorScheme } from "nativewind";
 interface IModalButtons {
   labelForSave: string;
   onClose: () => void;
@@ -13,6 +13,7 @@ const ModalButtons: React.FC<IModalButtons> = ({
   onClose,
   labelForSave,
 }) => {
+  const { colorScheme } = useColorScheme();
   return (
     <View
       style={{
@@ -26,10 +27,11 @@ const ModalButtons: React.FC<IModalButtons> = ({
         onPress={() => {
           onClose();
         }}
-        textColor="black"
+        textColor={colorScheme === "light" ? "black" : "white"}
         labelStyle={{ fontSize: sp(40) }}
         contentStyle={{ padding: dp(10), height: dp(130) }}
         style={{ flex: 1, margin: dp(10) }}
+        className=" dark:bg-slate-500"
       >
         Cancel
       </Button>
@@ -38,14 +40,14 @@ const ModalButtons: React.FC<IModalButtons> = ({
         onPress={() => {
           onSave();
         }}
-        textColor="black"
+        textColor={colorScheme === "light" ? "black" : "white"}
         labelStyle={{ fontSize: sp(40) }}
         contentStyle={{
-          backgroundColor: "#44f321",
           padding: dp(10),
           height: dp(130),
         }}
         style={{ flex: 1, margin: dp(10) }}
+        className=" bg-green-400 dark:bg-green-600"
       >
         {labelForSave}
       </Button>

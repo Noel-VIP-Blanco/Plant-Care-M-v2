@@ -12,7 +12,6 @@ export const HomeStyle = StyleSheet.create({
     alignItems: "flex-end",
   },
   bottomMainContainer: {
-    backgroundColor: "#fff",
     flex: 1,
     marginTop: dp(200),
     height: "100%",
