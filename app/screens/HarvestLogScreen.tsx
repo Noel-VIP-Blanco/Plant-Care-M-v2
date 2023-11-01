@@ -109,7 +109,10 @@ const HarvestLogScreen = ({ navigation }: any) => {
           </TouchableRipple>
         </View>
       </View>
-      <View style={HarvestLogScreenStyle.containerContents}>
+      <View
+        className="bg-white dark:bg-slate-800"
+        style={HarvestLogScreenStyle.containerContents}
+      >
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <View
             style={{
@@ -134,10 +137,10 @@ const HarvestLogScreen = ({ navigation }: any) => {
             </View>
           </View>
           <Text
+            className="text-green-800 dark:text-green-400"
             style={{
               fontSize: 30,
               marginVertical: 5,
-              color: "#086308",
               fontWeight: "bold",
             }}
           >

@@ -5,13 +5,11 @@ export const SettingScreenStyle = StyleSheet.create({
     margin: dp(50),
   },
   accountText: {
-    fontSize: sp(80),
-    color: "#159415",
+    fontSize: sp(60),
     fontWeight: "bold",
   },
   myAccountContainer: {
     marginHorizontal: dp(35),
-    backgroundColor: "white",
     borderBottomColor: "black",
     borderRadius: dp(20),
     elevation: 2,
@@ -27,7 +25,7 @@ export const SettingScreenStyle = StyleSheet.create({
     borderBottomRightRadius: dp(30),
   },
   itemTitleText: {
-    fontSize: sp(50),
+    fontSize: sp(40),
   },
   accountBox1: {
     flex: 1,
@@ -35,7 +33,7 @@ export const SettingScreenStyle = StyleSheet.create({
     alignItems: "center",
   },
   accountBox1Icon: {
-    fontSize: sp(110),
+    fontSize: sp(70),
     marginRight: dp(15),
   },
   accountBox2: {
@@ -47,7 +45,7 @@ export const SettingScreenStyle = StyleSheet.create({
     alignItems: "center",
   },
   accountBox2Icon: {
-    fontSize: sp(110),
+    fontSize: sp(70),
     marginRight: 5,
   },
 });

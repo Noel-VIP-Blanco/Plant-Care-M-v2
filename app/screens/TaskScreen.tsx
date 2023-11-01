@@ -124,7 +124,10 @@ const TaskScreen = () => {
         </Menu>
       </View>
 
-      <View style={TaskScreeenStyle.contentMainContainer}>
+      <View
+        className="bg-white dark:bg-slate-800"
+        style={TaskScreeenStyle.contentMainContainer}
+      >
         <View style={TaskScreeenStyle.searchBarContainer}>
           <View style={{ flex: 0.8 }}>
             <CustomSearchBar onSearch={onSearch} searchValue="Plant" />
@@ -141,7 +144,10 @@ const TaskScreen = () => {
         </View>
 
         {/* <FilterTasks /> */}
-        <Text style={TaskScreeenStyle.listOfPlantTubeText}>
+        <Text
+          className="text-green-800 dark:text-green-400"
+          style={TaskScreeenStyle.listOfPlantTubeText}
+        >
           List of Plant Tubes
         </Text>
         <TaskCardList

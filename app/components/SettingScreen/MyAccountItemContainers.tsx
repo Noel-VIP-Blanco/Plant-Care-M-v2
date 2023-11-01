@@ -11,6 +11,7 @@ import {
   getToken,
 } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import { sp } from "@root/utilities/shared/SpDp";
 
 const MyAccountItemContainers = ({ navigation }: any) => {
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
@@ -53,14 +54,25 @@ const MyAccountItemContainers = ({ navigation }: any) => {
 
   return (
     <>
-      <View style={SettingScreenStyle.itemContainer}>
-        <View style={SettingScreenStyle.accountBox1}>
+      <View
+        className="bg-white dark:bg-slate-500"
+        style={SettingScreenStyle.itemContainer}
+      >
+        <View
+          className="bg-white dark:bg-slate-500"
+          style={SettingScreenStyle.accountBox1}
+        >
           <Ionicons name="person" style={SettingScreenStyle.accountBox1Icon} />
-          <Text style={SettingScreenStyle.itemTitleText}>Profile</Text>
+          <Text
+            className="text-black dark:text-white"
+            style={SettingScreenStyle.itemTitleText}
+          >
+            Profile
+          </Text>
         </View>
         <View style={SettingScreenStyle.accountBox2}>
           <View style={SettingScreenStyle.acountBox2Items}>
-            <Text>{currentUser?.firstName}</Text>
+            <Text style={{ fontSize: sp(35) }}>{currentUser?.firstName}</Text>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("ProfileScreen");
@@ -75,7 +87,10 @@ const MyAccountItemContainers = ({ navigation }: any) => {
         </View>
       </View>
 
-      <View style={SettingScreenStyle.itemContainer}>
+      <View
+        className="bg-white dark:bg-slate-500"
+        style={SettingScreenStyle.itemContainer}
+      >
         <View style={SettingScreenStyle.accountBox1}>
           <Ionicons
             name="notifications"
@@ -99,7 +114,10 @@ const MyAccountItemContainers = ({ navigation }: any) => {
         </View>
       </View>
 
-      <View style={SettingScreenStyle.itemContainer}>
+      <View
+        className="bg-white dark:bg-slate-500"
+        style={SettingScreenStyle.itemContainer}
+      >
         <View style={SettingScreenStyle.accountBox1}>
           <Ionicons
             name="lock-closed"
@@ -123,14 +141,20 @@ const MyAccountItemContainers = ({ navigation }: any) => {
         </View>
       </View>
 
-      <View style={SettingScreenStyle.itemContainer}>
+      <View
+        className="bg-white dark:bg-slate-500"
+        style={SettingScreenStyle.itemContainer}
+      >
         <View style={SettingScreenStyle.accountBox1}>
           <Ionicons
             name="log-out-sharp"
             color="red"
             style={SettingScreenStyle.accountBox1Icon}
           />
-          <Text style={[SettingScreenStyle.itemTitleText, { color: "red" }]}>
+          <Text
+            className="text-red-700 dark:text-red-400"
+            style={[SettingScreenStyle.itemTitleText, { fontWeight: "bold" }]}
+          >
             Sign Out
           </Text>
         </View>

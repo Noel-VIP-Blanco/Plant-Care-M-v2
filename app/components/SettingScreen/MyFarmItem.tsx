@@ -30,7 +30,10 @@ const MyFarmItem = ({ navigation }: any) => {
 
   return (
     <>
-      <View style={SettingScreenStyle.itemContainer}>
+      <View
+        className="bg-white dark:bg-slate-500"
+        style={SettingScreenStyle.itemContainer}
+      >
         <View style={SettingScreenStyle.accountBox1}>
           <Ionicons
             name="swap-horizontal-sharp"

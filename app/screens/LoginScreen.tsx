@@ -9,6 +9,7 @@ import {
 } from "react-native-paper";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useColorScheme } from "nativewind";
 
 //components
 import ForgotPasswordModal from "@components/Login/ForgotPasswordModal";
@@ -19,6 +20,8 @@ import { Login } from "@backend/Auth/auth";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const LoginScreen = ({ navigation }: any) => {
+  const { colorScheme } = useColorScheme();
+
   console.log("Pixel Ratio", PixelRatio.getFontScale());
   const plantCareLogo = "../../assets/PlantCareImages/PlantCareLogo.png";
 
@@ -38,14 +41,29 @@ const LoginScreen = ({ navigation }: any) => {
         </View>
       </View>
 
-      <View style={{ flex: 1 }}>
-        <Surface elevation={5} style={LoginStyle.contentContainer}>
-          <Text style={LoginStyle.titleText}>Plant-Care</Text>
+      <View className="bg-white dark:bg-slate-800" style={{ flex: 1 }}>
+        <Surface
+          elevation={5}
+          className="bg-white dark:bg-slate-800"
+          style={LoginStyle.contentContainer}
+        >
+          <Text
+            className="text-green-800 dark:text-green-400"
+            style={LoginStyle.titleText}
+          >
+            Plant-Care
+          </Text>
           <Text style={LoginStyle.titleSubText}>Good to see you back.</Text>
           <TextInput
             left={
               <TextInput.Icon
-                icon={() => <Ionicons name="person" size={25} />}
+                icon={() => (
+                  <Ionicons
+                    name="person"
+                    size={25}
+                    color={colorScheme === "light" ? "black" : "white"}
+                  />
+                )}
               />
             }
             autoCapitalize="none"
@@ -83,7 +101,10 @@ const LoginScreen = ({ navigation }: any) => {
                   openForgotPassModal();
                 }}
               >
-                <Text style={LoginStyle.forgotPasswordText}>
+                <Text
+                  className="text-green-800 dark:text-green-400"
+                  style={LoginStyle.forgotPasswordText}
+                >
                   Forgot Password?
                 </Text>
               </TouchableRipple>

@@ -19,7 +19,10 @@ const TaskCardList: React.FC<TaskCardListProps> = ({
         <View
           style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
         >
-          <Text style={{ fontSize: sp(55), fontWeight: "bold" }}>
+          <Text
+            className="text-green-800 dark:text-green-400"
+            style={{ fontSize: sp(55), fontWeight: "bold" }}
+          >
             Task Not Found
           </Text>
         </View>

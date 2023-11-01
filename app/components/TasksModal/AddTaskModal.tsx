@@ -5,6 +5,7 @@ import { Text, Modal, Portal, Button, TextInput } from "react-native-paper";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
+import { useColorScheme } from "nativewind";
 
 //interface
 import { ModalType } from "@interface/Modals/ModalType";
@@ -25,6 +26,7 @@ import { getFarm } from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const AddTaskModal = ({ visible, onClose }: ModalType) => {
+  const { colorScheme } = useColorScheme();
   //get farmId from local
   const [farmIdFromLocal, setFarmIdFromLocal] = useState<
     string | null | undefined
@@ -131,7 +133,7 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
   };
   return (
     <Portal>
-      <Modal style={{}} visible={visible} onDismiss={onClose}>
+      <Modal visible={visible} onDismiss={onClose}>
         {showCalendar && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -142,10 +144,18 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
             onChange={onPickDate}
           />
         )}
-        <View style={AddTaskModalStyle.mainContainer}>
+        <View
+          className="bg-white dark:bg-slate-800"
+          style={AddTaskModalStyle.mainContainer}
+        >
           {/* Container for text and 2 select list */}
           <View>
-            <Text style={AddTaskModalStyle.textTitle}>Add Task</Text>
+            <Text
+              className="text-green-800 dark:text-green-400"
+              style={AddTaskModalStyle.textTitle}
+            >
+              Add Task
+            </Text>
             <View style={AddTaskModalStyle.selectListContainer}>
               <SelectList
                 setSelected={(val: any) => setSelectPlant(val)}
@@ -153,9 +163,16 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
                 search={false}
                 placeholder="Select Plant"
                 save="key"
-                boxStyles={{ width: dp(400), margin: dp(8) }}
+                boxStyles={{
+                  width: dp(400),
+                  margin: dp(8),
+                  backgroundColor: "white",
+                }}
                 inputStyles={{ width: dp(290), fontSize: sp(40) }}
-                dropdownTextStyles={{ fontSize: sp(40) }}
+                dropdownTextStyles={{
+                  fontSize: sp(40),
+                }}
+                dropdownStyles={{ backgroundColor: "white" }}
               />
               <SelectList
                 setSelected={(val: any) => setSelectContainer(val)}
@@ -163,9 +180,14 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
                 search={false}
                 placeholder="Select Container"
                 save="key"
-                boxStyles={{ width: dp(400), margin: dp(8) }}
+                boxStyles={{
+                  width: dp(400),
+                  margin: dp(8),
+                  backgroundColor: "white",
+                }}
                 inputStyles={{ width: dp(290), fontSize: sp(39) }}
                 dropdownTextStyles={{ fontSize: sp(35) }}
+                dropdownStyles={{ backgroundColor: "white" }}
               />
             </View>
           </View>
@@ -176,7 +198,7 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
               onPress={showCalendarModal}
               icon="calendar"
               textColor="black"
-              style={{ margin: dp(10) }}
+              style={{ margin: dp(10), backgroundColor: "white" }}
               labelStyle={{ fontSize: sp(40) }}
             >
               Select Date Planted

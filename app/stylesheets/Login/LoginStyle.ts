@@ -73,7 +73,6 @@ export const LoginStyle = StyleSheet.create({
   titleText: {
     fontSize: sp(150),
     fontWeight: "bold",
-    color: "#36d436",
     textAlign: "center",
   },
   titleSubText: {
@@ -113,10 +112,12 @@ export const LoginStyle = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 10,
     marginHorizontal: 25,
-    backgroundColor: "white",
   },
-  textInputOutline: { borderRadius: dp(40), borderColor: "#3dff3d" },
-  textInputStyle: { fontSize: sp(50), margin: dp(15) },
+  textInputOutline: {
+    borderRadius: dp(40),
+    borderColor: "#3dff3d",
+  },
+  textInputStyle: { fontSize: sp(50), margin: dp(15), color: "red" },
   utilitiesContainer: { flexDirection: "row", justifyContent: "space-around" },
   rememberMeText: {
     marginLeft: 10,
@@ -131,6 +132,5 @@ export const LoginStyle = StyleSheet.create({
   forgotPasswordContainer: { marginTop: 17, alignItems: "center" },
   forgotPasswordText: {
     fontSize: sp(45),
-    color: "green",
   },
 });

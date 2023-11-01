@@ -44,15 +44,16 @@ const SwitchFarmModal: React.FC<SwitchFarmModalProps> = ({
     <Portal>
       <Modal visible={visible} onDismiss={onClose}>
         <View
+          className="bg-white dark:bg-slate-800"
           style={{
-            backgroundColor: "#ffffffff",
             padding: dp(50),
             margin: dp(70),
             borderRadius: dp(70),
           }}
         >
           <Text
-            style={{ textAlign: "center", color: "green", fontSize: sp(80) }}
+            className="text-green-800 dark:text-green-400"
+            style={{ textAlign: "center", fontSize: sp(80) }}
           >
             Choose Farm
           </Text>
@@ -63,9 +64,14 @@ const SwitchFarmModal: React.FC<SwitchFarmModalProps> = ({
               search={false}
               placeholder="Select Farm"
               save="key"
-              boxStyles={{ width: dp(400), margin: dp(10) }}
+              boxStyles={{
+                width: dp(400),
+                backgroundColor: "white",
+                margin: dp(10),
+              }}
               inputStyles={{ width: dp(280), fontSize: sp(40) }}
               dropdownTextStyles={{ fontSize: sp(40) }}
+              dropdownStyles={{ backgroundColor: "white" }}
             />
           </View>
           {/* 2 button inside - cancel and confirm buttom */}

@@ -111,7 +111,10 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
             }}
           >
             <View style={TaskCardStyle.taskCardBoxContainer2}>
-              <Text style={TaskCardStyle.itemTextTitle}>
+              <Text
+                className="text-black dark:text-black"
+                style={TaskCardStyle.itemTextTitle}
+              >
                 {plantObj ? plantObj.name : "N/A"}
               </Text>
 
@@ -131,7 +134,10 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
                     ]}
                   >
-                    <Text style={TaskCardStyle.itemTextDetails}>
+                    <Text
+                      className="text-black dark:text-black"
+                      style={TaskCardStyle.itemTextDetails}
+                    >
                       Acidity: {sensorWaterAcidityObj} pH
                     </Text>
                   </Surface>
@@ -143,7 +149,10 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
                     ]}
                   >
-                    <Text style={TaskCardStyle.itemTextDetails}>
+                    <Text
+                      className="text-black dark:text-black"
+                      style={TaskCardStyle.itemTextDetails}
+                    >
                       Nutrient: {sensorWaterNutrientObj}
                       ec
                     </Text>
@@ -156,7 +165,10 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       { backgroundColor: COLORS.BACKGROUNDCRITICALVALUE },
                     ]}
                   >
-                    <Text style={TaskCardStyle.itemTextDetails}>
+                    <Text
+                      className="text-black dark:text-black"
+                      style={TaskCardStyle.itemTextDetails}
+                    >
                       Water Level: {sensorWaterLevelObj}L
                     </Text>
                   </Surface>

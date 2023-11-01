@@ -38,9 +38,9 @@ const SettingScreen = ({ navigation }: any) => {
     <View style={{ backgroundColor: COLORS.BACKGROUNDCOLOR, flex: 1 }}>
       <View style={{ flex: 1 }}></View>
       <View
+        className="bg-white dark:bg-slate-800"
         style={{
           flex: 5,
-          backgroundColor: "white",
           borderTopLeftRadius: 50,
           borderTopRightRadius: 50,
         }}
@@ -53,16 +53,29 @@ const SettingScreen = ({ navigation }: any) => {
         </View>
 
         <View style={SettingScreenStyle.accountTextContainer}>
-          <Text style={SettingScreenStyle.accountText}>My Account</Text>
+          <Text
+            className="text-green-800 dark:text-green-400"
+            style={SettingScreenStyle.accountText}
+          >
+            My Account
+          </Text>
         </View>
 
         {/* Render the items in account detail item */}
-        <View style={SettingScreenStyle.myAccountContainer}>
+        <View
+          className="bg-white dark:bg-slate-500"
+          style={SettingScreenStyle.myAccountContainer}
+        >
           <MyAccountItemContainers navigation={navigation} />
         </View>
 
         <View style={SettingScreenStyle.accountTextContainer}>
-          <Text style={SettingScreenStyle.accountText}>My Farm</Text>
+          <Text
+            className="text-green-800 dark:text-green-400"
+            style={SettingScreenStyle.accountText}
+          >
+            My Farm
+          </Text>
         </View>
 
         {/* Render the item in farm item */}

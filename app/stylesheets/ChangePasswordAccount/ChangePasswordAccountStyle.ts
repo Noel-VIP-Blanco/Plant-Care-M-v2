@@ -9,7 +9,6 @@ export const ChangePasswordAccountStyle = StyleSheet.create({
     borderRadius: dp(50),
   },
   lowerContainer: {
-    backgroundColor: "white",
     flex: 1,
     marginTop: dp(150),
     borderTopLeftRadius: dp(140),

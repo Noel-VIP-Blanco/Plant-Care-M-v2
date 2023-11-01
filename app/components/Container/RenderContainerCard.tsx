@@ -98,7 +98,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
             onPress={openContainerDetailModal}
           >
             <Text
-              className="text-white dark:text-black"
+              className="text-black dark:text-black"
               style={{ fontSize: sp(80), margin: dp(7), fontWeight: "bold" }}
             >
               {container.name}
@@ -113,7 +113,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   ]}
                 >
                   <Text
-                    className="text-white dark:text-black"
+                    className="text-black dark:text-black"
                     style={ContainerCardStyle.itemTextDetails}
                   >
                     Acidity: {sensorWaterAcidityObj} pH
@@ -127,7 +127,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   ]}
                 >
                   <Text
-                    className="text-white dark:text-black"
+                    className="text-black dark:text-black"
                     style={ContainerCardStyle.itemTextDetails}
                   >
                     Nutrient: {sensorWaterNutrientObj}
@@ -149,7 +149,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   }}
                 >
                   <Text
-                    className="text-white dark:text-black"
+                    className="text-black dark:text-black"
                     style={ContainerCardStyle.itemTextDetails}
                   >
                     Water Level: {sensorWaterLevelObj} L

@@ -97,17 +97,18 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
     <Portal>
       <Modal visible={visible} onDismiss={onClose}>
         <View
+          className="bg-white dark:bg-slate-800"
           style={{
-            backgroundColor: "white",
             padding: dp(50),
             margin: dp(70),
             borderRadius: dp(70),
           }}
         >
           <Text
+            className="text-green-800 dark:text-green-400"
             style={{
               fontSize: sp(80),
-              color: "#00ad00",
+
               textAlign: "center",
               fontWeight: "bold",
             }}
@@ -126,11 +127,11 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
           {/* Container for text and select list */}
           <View>
             <Text
+              className="text-green-800 dark:text-green-400"
               style={{
                 margin: dp(45),
                 fontSize: sp(60),
                 fontWeight: "bold",
-                color: "#00ad00",
               }}
             >
               Set up Arduno Board and Plant
@@ -148,9 +149,14 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
                 search={true}
                 placeholder="Arduino Board"
                 save="key"
-                boxStyles={{ width: dp(400), margin: dp(10) }}
+                boxStyles={{
+                  width: dp(400),
+                  margin: dp(10),
+                  backgroundColor: "white",
+                }}
                 inputStyles={{ width: dp(280), fontSize: sp(40) }}
                 dropdownTextStyles={{ fontSize: sp(40) }}
+                dropdownStyles={{ backgroundColor: "white" }}
               />
               <SelectList
                 setSelected={(key: any) => setSelectPlant(key)}
@@ -158,9 +164,14 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
                 search={true}
                 placeholder="Plant"
                 save="key"
-                boxStyles={{ width: dp(400), margin: dp(10) }}
+                boxStyles={{
+                  width: dp(400),
+                  margin: dp(10),
+                  backgroundColor: "white",
+                }}
                 inputStyles={{ width: dp(280), fontSize: sp(40) }}
                 dropdownTextStyles={{ fontSize: sp(40) }}
+                dropdownStyles={{ backgroundColor: "white" }}
               />
             </View>
           </View>

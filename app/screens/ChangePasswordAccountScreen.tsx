@@ -27,7 +27,10 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
         </TouchableRipple>
       </View>
 
-      <View style={ChangePasswordAccountStyle.lowerContainer}>
+      <View
+        className="bg-white dark:bg-slate-800"
+        style={ChangePasswordAccountStyle.lowerContainer}
+      >
         <View style={ChangePasswordAccountStyle.outerLogoContainer}>
           <View style={ChangePasswordAccountStyle.innerLogoContainer}>
             <Image

@@ -8,7 +8,7 @@ import {
 } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-
+import { useColorScheme } from "nativewind";
 //component
 import RenderContainerItem from "@components/TaskScreen/RenderContainerItem";
 
@@ -28,6 +28,7 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
   checkedListContainerId,
   setCheckedListContainerId,
 }) => {
+  const { colorScheme } = useColorScheme();
   //dispatch hook from redux toolkit
   const dispatch = useAppDispatch();
 
@@ -151,32 +152,51 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
   const openMenu = () => setFilterMenuVisible(true);
   const closeMenu = () => setFilterMenuVisible(false);
   return (
-    <View>
+    <View
+      style={{ backgroundColor: colorScheme === "light" ? "white" : "#1E293B" }}
+    >
       <Menu
         style={{ marginTop: dp(100) }}
         visible={filterMenuVisible}
         onDismiss={closeMenu}
         anchor={
           <TouchableOpacity onPress={openMenu}>
-            <Ionicons name="filter" size={40} />
+            <Ionicons
+              name="filter"
+              size={40}
+              color={colorScheme === "light" ? "black" : "white"}
+            />
           </TouchableOpacity>
         }
       >
-        <View style={{ width: dp(480), backgroundColor: "white" }}>
-          <List.Section style={{ flex: 1, backgroundColor: "white" }}>
+        <View
+          style={{
+            width: dp(480),
+            backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+          }}
+        >
+          <List.Section
+            style={{
+              flex: 1,
+              backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+            }}
+          >
             <List.Accordion
               left={() => (
                 <Checkbox status={checkedAllStatus ? "checked" : "unchecked"} />
               )}
               titleStyle={{
                 fontSize: sp(60),
-                color: "black",
+                color: colorScheme === "light" ? "black" : "white",
                 fontWeight: "bold",
               }}
               right={({ isExpanded }) => null} //hide arrow icon
               expanded={true}
               title="Status"
-              style={{ alignContent: "center" }}
+              style={{
+                alignContent: "center",
+                backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+              }}
               onPress={() => {
                 handleCheckedAllStatus();
               }}
@@ -227,13 +247,16 @@ const FilteredTasks: React.FC<FilteredTasksProps> = ({
               }}
               titleStyle={{
                 fontSize: sp(60),
-                color: "black",
+                color: colorScheme === "light" ? "black" : "white",
                 fontWeight: "bold",
               }}
               right={({ isExpanded }) => null} //hide arrow icon
               expanded={true}
               title="Container"
-              style={{ alignContent: "center" }}
+              style={{
+                alignContent: "center",
+                backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+              }}
             >
               <ScrollView style={{ height: dp(300) }} horizontal={true}>
                 <View style={{ width: dp(400) }}>

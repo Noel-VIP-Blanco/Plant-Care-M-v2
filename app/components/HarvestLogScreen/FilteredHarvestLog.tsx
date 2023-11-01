@@ -2,7 +2,7 @@ import { View, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import { Text, Menu, List, Checkbox } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-
+import { useColorScheme } from "nativewind";
 //data
 import { dummyHarvestLog } from "@root/app/dummyData/DummyHarvestLog";
 
@@ -26,6 +26,7 @@ const FilteredHarvestLog: React.FC<FilteredHarvestLogProps> = ({
   checkedListMonths,
   setCheckedListMonths,
 }) => {
+  const { colorScheme } = useColorScheme();
   //redux toolkits and data
   const harvestData = useAppSelector(selectHarvestLog);
   const dispatch = useAppDispatch();
@@ -142,19 +143,35 @@ const FilteredHarvestLog: React.FC<FilteredHarvestLogProps> = ({
   }, [checkedListMonths, checkedListYears]);
 
   return (
-    <View>
+    <View
+      style={{ backgroundColor: colorScheme === "light" ? "white" : "#1E293B" }}
+    >
       <Menu
         style={{ marginTop: 50 }}
         visible={filterMenuVisible}
         onDismiss={closeMenu}
         anchor={
           <TouchableOpacity onPress={openMenu}>
-            <Ionicons name="filter" size={40} />
+            <Ionicons
+              name="filter"
+              size={40}
+              color={colorScheme === "light" ? "black" : "white"}
+            />
           </TouchableOpacity>
         }
       >
-        <View style={{ width: 200, backgroundColor: "white" }}>
-          <List.Section style={{ flex: 1, backgroundColor: "white" }}>
+        <View
+          style={{
+            width: 200,
+            backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+          }}
+        >
+          <List.Section
+            style={{
+              flex: 1,
+              backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+            }}
+          >
             <List.Accordion
               left={() => (
                 <Checkbox status={checkedAllYear ? "checked" : "unchecked"} />
@@ -162,11 +179,18 @@ const FilteredHarvestLog: React.FC<FilteredHarvestLogProps> = ({
               onPress={() => {
                 handleCheckedAllYear();
               }}
-              titleStyle={{ fontSize: 25, color: "black", fontWeight: "bold" }}
+              titleStyle={{
+                fontSize: 25,
+                color: colorScheme === "light" ? "black" : "white",
+                fontWeight: "bold",
+              }}
               right={({ isExpanded }) => null} //hide arrow icon
               expanded={true}
               title="Year"
-              style={{ alignContent: "center" }}
+              style={{
+                alignContent: "center",
+                backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+              }}
             >
               <View style={{ height: 120 }}>
                 <FlatList
@@ -195,11 +219,18 @@ const FilteredHarvestLog: React.FC<FilteredHarvestLogProps> = ({
               onPress={() => {
                 handleCheckedAllMonths();
               }}
-              titleStyle={{ fontSize: 25, color: "black", fontWeight: "bold" }}
+              titleStyle={{
+                fontSize: 25,
+                color: colorScheme === "light" ? "black" : "white",
+                fontWeight: "bold",
+              }}
               right={({ isExpanded }) => null} //hide arrow icon
               expanded={true}
               title="Months"
-              style={{ alignContent: "center" }}
+              style={{
+                alignContent: "center",
+                backgroundColor: colorScheme === "light" ? "white" : "#1E293B",
+              }}
             >
               <View style={{ height: 120 }}>
                 <FlatList
