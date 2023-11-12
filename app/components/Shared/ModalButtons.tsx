@@ -41,7 +41,7 @@ const ModalButtons: React.FC<IModalButtons> = ({
           onSave();
         }}
         textColor={colorScheme === "light" ? "black" : "white"}
-        labelStyle={{ fontSize: sp(40) }}
+        labelStyle={{ fontSize: sp(35) }}
         contentStyle={{
           padding: dp(10),
           height: dp(130),
