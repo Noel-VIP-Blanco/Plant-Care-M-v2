@@ -5,7 +5,12 @@ import { ColorValue } from "react-native/Libraries/StyleSheet/StyleSheet";
 
 //utilities
 import { COLORS } from "@root/utilities/shared/Colors";
-
+import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
+import {
+  getCurrentTDS,
+  getCurrentWaterLevel,
+  getCurrentpH,
+} from "@root/utilities/shared/RealtineDatabase";
 //interface
 import { PlantStatus } from "@interface/DataProps/TaskItemProps";
 import { RenderTaskCardProps } from "@interface/RenderTaskCard/RenerTaskCardProps";
@@ -19,8 +24,11 @@ import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
 
 //component
 import TaskDetailModal from "@components/TasksModal/TaskDetailModal";
+
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { dp } from "@root/utilities/shared/SpDp";
+import { onValue, ref } from "firebase/database";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   item,
@@ -53,15 +61,48 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   const containerObj = containers.find(
     (container) => containerId === container.id
   );
-  //get the sensor data from the arduino board object based on the arduino board connected from container
-  // const arduinoBoardObj = arduinoBoards.find(
-  //   (arduino) => containerObj?.arduinoBoardDto.id === arduino.id
-  // );
+
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
 
   //get the sensor value for every sensor type connected on the arduino
-  const sensorWaterAcidityObj = 60;
-  const sensorWaterLevelObj = 80;
-  const sensorWaterNutrientObj = 100;
+  const [sensorWaterAcidity, setSensorWaterAcidity] = useState("");
+  const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
+  const [sensorWaterLevel, setSensorWaterLevel] = useState("");
+  const arduinoBoardId = containerObj?.arduinoBoardDto.id;
+  useEffect(() => {
+    getCurrentTDS({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterNutrient,
+    });
+  }, [sensorWaterNutrient, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getCurrentpH({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterAcidity,
+    });
+  }, [sensorWaterAcidity, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getCurrentWaterLevel({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterLevel,
+    });
+  }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
+
   if (status === PlantStatus.Grow) {
     bgColor = "#b8e6a1";
   } else if (status === PlantStatus.Harvest) {
@@ -138,7 +179,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       className="text-black dark:text-black"
                       style={TaskCardStyle.itemTextDetails}
                     >
-                      Acidity: {sensorWaterAcidityObj} pH
+                      Acidity: {sensorWaterAcidity} pH
                     </Text>
                   </Surface>
 
@@ -153,8 +194,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       className="text-black dark:text-black"
                       style={TaskCardStyle.itemTextDetails}
                     >
-                      Nutrient: {sensorWaterNutrientObj}
-                      ec
+                      Nutrient: {sensorWaterNutrient} ec
                     </Text>
                   </Surface>
 
@@ -169,7 +209,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       className="text-black dark:text-black"
                       style={TaskCardStyle.itemTextDetails}
                     >
-                      Water Level: {sensorWaterLevelObj}L
+                      Water Level: {sensorWaterLevel} L
                     </Text>
                   </Surface>
                 </View>

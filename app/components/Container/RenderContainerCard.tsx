@@ -17,6 +17,12 @@ import ContainerDetailModal from "./ContainerDetailModal";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
+import {
+  getCurrentTDS,
+  getCurrentWaterLevel,
+  getCurrentpH,
+} from "@root/utilities/shared/RealtineDatabase";
 const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   container,
   checkboxVisible,
@@ -25,12 +31,49 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   // const { contId, contName, arduinoBoardId } = item;
 
   const arduinoBoards = useAppSelector(selectArduinoBoards);
+
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
+
   //get the sensor id from the arduinoboardID
 
   //get the sensor value for every sensor type connected on the arduino
-  const sensorWaterAcidityObj = 30;
-  const sensorWaterLevelObj = 50;
-  const sensorWaterNutrientObj = 90;
+  const [sensorWaterAcidity, setSensorWaterAcidity] = useState("");
+  const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
+  const [sensorWaterLevel, setSensorWaterLevel] = useState("");
+  const arduinoBoardId = container.arduinoBoardDto.id;
+  useEffect(() => {
+    getCurrentTDS({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterNutrient,
+    });
+  }, [sensorWaterNutrient, farmIdFromLocal]);
+
+  useEffect(() => {
+    getCurrentpH({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterAcidity,
+    });
+  }, [sensorWaterAcidity, farmIdFromLocal]);
+
+  useEffect(() => {
+    getCurrentWaterLevel({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterLevel,
+    });
+  }, [sensorWaterLevel, farmIdFromLocal]);
 
   const [checkedContainer, setCheckedContainer] = useState(false);
 
@@ -116,7 +159,8 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     className="text-black dark:text-black"
                     style={ContainerCardStyle.itemTextDetails}
                   >
-                    Acidity: {sensorWaterAcidityObj} pH
+                    Acidity:{" "}
+                    {sensorWaterAcidity ? sensorWaterAcidity + " pH" : `N/A`}
                   </Text>
                 </Surface>
                 <Surface
@@ -130,8 +174,8 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     className="text-black dark:text-black"
                     style={ContainerCardStyle.itemTextDetails}
                   >
-                    Nutrient: {sensorWaterNutrientObj}
-                    ec
+                    Nutrient:{" "}
+                    {sensorWaterNutrient ? sensorWaterNutrient + " ec" : `N/A`}
                   </Text>
                 </Surface>
               </View>
@@ -152,7 +196,8 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     className="text-black dark:text-black"
                     style={ContainerCardStyle.itemTextDetails}
                   >
-                    Water Level: {sensorWaterLevelObj} L
+                    Water Level:{" "}
+                    {sensorWaterLevel ? sensorWaterLevel + " L" : `N/A`}
                   </Text>
                 </Surface>
               </View>
