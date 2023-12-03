@@ -24,8 +24,6 @@ import {
   selectListOfRowData,
   addFilteredListOfRowData,
 } from "@reduxToolkit/Features/HarvestLogSlice";
-import { selectTask } from "@reduxToolkit/Features/TaskSlice";
-import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 
 type rowType = [string, string, string];
 
@@ -49,7 +47,7 @@ const HarvestLogScreen = ({ navigation }: any) => {
     console.log("NEW LIST",newList)
     dispatch(addListOfRowData(newList));
     dispatch(addFilteredListOfRowData(newList));
-  }, []);
+  }, [harvestLogs]);
 
   const onSearch = (text: string) => {
     if (text === "") {

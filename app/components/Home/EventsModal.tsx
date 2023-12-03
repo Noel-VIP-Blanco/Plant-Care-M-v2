@@ -21,16 +21,24 @@ import { EventItemProps } from "@interface/EventsModal/EventItemProps";
 //style
 import { EventsModalStyle } from "@stylesheets/EventsModal/EventsModalStyle";
 
+import { selectTask } from "@reduxToolkit/Features/TaskSlice";
+import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
+import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
+import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
+
 const EventsModal: React.FC<EventsModalProps> = ({
   visible,
   onClose,
   selectedDate,
 }) => {
   const markedDates: Record<string, MarkedDate> = {};
-
-  for (const item of dummyTaskItem) {
-    const date = new Date(item.dateExpectedHarvest);
-    const formattedDate = date.toISOString().split("T")[0];
+   const dispatch = useAppDispatch();
+   const tasks = useAppSelector(selectTask);
+   const plant = useAppSelector(selectPlants)
+   const container = useAppSelector(selectContainer)
+  for (const item of tasks) {
+    const date = item.harvestDate;
+    const formattedDate = date.split("T")[0];
 
     if (!markedDates[formattedDate]) {
       markedDates[formattedDate] = {
@@ -39,40 +47,38 @@ const EventsModal: React.FC<EventsModalProps> = ({
       };
     }
   }
-  const eventItems: EventItemProps = dummyTaskItem.reduce(
+  const eventItems: EventItemProps = tasks.reduce(
     (acc: EventItemProps, taskItem) => {
-      const date = new Date(taskItem.dateExpectedHarvest);
-      const formattedDate = date.toISOString().split("T")[0];
+      const date = taskItem.harvestDate;
+      const formattedDate = date.split("T")[0];
 
-      const { taskId, farmerName, plantId, contId } = taskItem;
+      const { id, plantId, containerId } = taskItem;
       //get the plant object based on the plantId from the task
-      const plantObj = dummyPlantItem.find(
-        (plant) => plantId === plant.plantID
+      const plantObj = plant.find(
+        (plant) => plantId === plant.id
       );
-      const containerObj = dummyContainerItem.find(
-        (container) => contId === container.contId
+      const containerObj = container.find(
+        (container) => containerId === container.id
       );
       //check if date is already used as a key, if yes, push the data to its list of value
       if (acc[formattedDate]) {
         acc[formattedDate].push({
-          id: taskId,
+          id: id.toString(),
           height: 80,
           day: formattedDate,
           name: "Your plants are ready to harvest",
-          farmerName: farmerName,
-          plantName: plantObj?.plantName,
-          containerName: containerObj?.contName,
+          plantName: plantObj?.name,
+          containerName: containerObj?.name,
         });
       } else {
         acc[formattedDate] = [
           {
-            id: taskId,
+            id: id.toString(),
             height: 80,
             day: formattedDate,
             name: "Your plants are ready to harvest",
-            farmerName: farmerName,
-            plantName: plantObj?.plantName,
-            containerName: containerObj?.contName,
+            plantName: plantObj?.name,
+            containerName: containerObj?.name,
           },
         ];
       }

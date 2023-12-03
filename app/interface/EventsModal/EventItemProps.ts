@@ -6,7 +6,6 @@ export type EventItemProps = AgendaSchedule & {
     day: string;
     name: string;
     height: number;
-    farmerName: string;
     plantName: string | undefined;
     containerName: string | undefined;
   }[];

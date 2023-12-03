@@ -8,19 +8,23 @@ import {
   MarkedDate,
 } from "@interface/CalendarEvents/CalendarEventsProps";
 
-//dummy local data
-import { dummyTaskItem } from "@root/app/dummyData/DummyTaskItem";
 import { dp } from "@root/utilities/shared/SpDp";
+import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
+import { selectHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
 
 const CalendarEvents: React.FC<CalendarEventsProps> = ({
   openEventModal,
   setSelectedDate,
 }) => {
+   //use redux toolkits and data
+   const dispatch = useAppDispatch();
+   const harvestLogs = useAppSelector(selectHarvestLog);
+
   const markedDates: Record<string, MarkedDate> = {};
 
-  for (const item of dummyTaskItem) {
-    const date = new Date(item.dateExpectedHarvest);
-    const formattedDate = date.toISOString().split("T")[0];
+  for (const item of harvestLogs) {
+    const date = item.harvestedDate;
+    const formattedDate = date.split("T")[0];
 
     if (!markedDates[formattedDate]) {
       markedDates[formattedDate] = {
