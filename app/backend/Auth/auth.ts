@@ -69,7 +69,7 @@ export const Login = ({
         setCurrentUser({ currentUser: data });
         setRememberMe(rememberMe);
 
-        navigation.navigate("BottomTabContainer");
+        navigation.navigate("LoadingScreenForSetupFarm");
       }
     })
     .catch((err) => {

@@ -2,6 +2,7 @@ import { View, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import axios from "axios"
 
 //stylesheets
 import { SettingScreenStyle } from "@stylesheets/Setting/SettingScreenStyle";
@@ -37,7 +38,7 @@ const MyAccountItemContainers = ({ navigation }: any) => {
         }
       })
       .catch((error) => {
-        console.log("Error getting current user:", error);
+        console.log("Error getting current token:", error);
       });
 
     getRememberMe()
@@ -45,7 +46,7 @@ const MyAccountItemContainers = ({ navigation }: any) => {
         setRememberMe(rememberMeFromLocal);
       })
       .catch((error) => {
-        console.log("Error getting current user:", error);
+        console.log("Error getting current remembeme:", error);
       });
   }, []);
   currentUser === null ? console.log("Null") : console.log(currentUser.email);
@@ -162,6 +163,7 @@ const MyAccountItemContainers = ({ navigation }: any) => {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
+                axios.delete(`https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`)
                 navigation.navigate("LoadingScreenForLogout");
               }}
             >

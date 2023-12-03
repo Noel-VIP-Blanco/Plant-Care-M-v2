@@ -1,19 +1,12 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+// The Cloud Functions for Firebase SDK to setup triggers and logging.
+const {onValueUpdated} = require("firebase-functions/v2/database");
+// The Firebase Admin SDK to access the Firebase Realtime Database.
+const admin = require("firebase-admin");
+admin.initializeApp();
 
-import {onRequest} from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
-
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.triggerTDSUpdate = onValueUpdated(
+    "farm/{farmID}/arduinoBoard/{arduinoBoardID}/currentTDS",
+    (event:any)=> {
+        const tds = event.data.after.val();
+        console.log(tds)
+});

@@ -1,4 +1,5 @@
 import { View, Image } from "react-native";
+import axios from 'axios';
 import {
   Text,
   TouchableRipple,
@@ -15,13 +16,39 @@ import { COLORS } from "@root/utilities/shared/Colors";
 //stylesheet
 import { ShowProfileStyle } from "@stylesheets/ShowProfile/ShowProfileStyle";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import { getCurrentUser, getRememberMe, setRememberMe } from "@root/utilities/shared/LocalStorage";
+import { registerIndieID, unregisterIndieDevice } from "native-notify";
 const NotificationScreen = () => {
   const navigation = useNavigation();
+  const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
+    null
+  );
   //handle switched
-  const [isPushNotifSwitchOn, setIsPushNotifSwitchOn] = useState(true);
-  const onTogglePushNotifSwitch = () =>
-    setIsPushNotifSwitchOn(!isPushNotifSwitchOn);
+  const [rememberMes, setRememberMes] = React.useState<boolean | undefined>(true);
+  React.useEffect(() => {
+    getCurrentUser()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((error) => {
+        console.log("Error getting current user:", error);
+      });
 
+    getRememberMe()
+      .then((rememberMeFromLocal) => {
+        setRememberMes(rememberMeFromLocal);
+      })
+      .catch((error) => {
+        console.log("Error getting current remembeme:", error);
+      });
+  }, []);
+
+  console.log("Notification Screen " + currentUser?.id)
+  console.log("Notification Screen " + rememberMes)
+  const onTogglePushNotifSwitch = () =>
+     setRememberMes(!rememberMes);
+  
   const profileImage = "../../assets/PlantCareImages/PlantCareLogo.png";
 
   
@@ -50,7 +77,7 @@ const NotificationScreen = () => {
               style={{ height: dp(300), width: dp(300), borderRadius: 60 }}
             />
           </View>
-          <Text style={{ fontSize: sp(50) }}>Admin</Text>
+          <Text style={{ fontSize: sp(50) }}>{currentUser?.role}</Text>
         </View>
 
         <View style={{ flex: 1 }}>
@@ -98,7 +125,7 @@ const NotificationScreen = () => {
               </Text>
 
               <Switch
-                value={isPushNotifSwitchOn}
+                value={rememberMes}
                 onValueChange={onTogglePushNotifSwitch}
               />
             </View>
@@ -123,6 +150,13 @@ const NotificationScreen = () => {
             mode="elevated"
             onPress={() => {
               // handleEdit();
+              if(rememberMes){
+                registerIndieID(`${currentUser?.id}`, 13240, 'JgacDlBDrMg8qvQWalJuRM');
+              }else{
+                unregisterIndieDevice(`${currentUser?.id}`, 13240, 'JgacDlBDrMg8qvQWalJuRM');
+                axios.delete(`https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`)
+              }
+              navigation.goBack();
             }}
           >
             Save

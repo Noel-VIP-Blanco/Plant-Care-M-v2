@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation }: any) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
 
   //forgot password modal
   const [forgotPassModalVisible, setForgotPassModalVisible] = useState(false);

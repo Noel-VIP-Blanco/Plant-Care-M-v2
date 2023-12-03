@@ -28,8 +28,39 @@ import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import { getCurrentUser, getRememberMe } from "@root/utilities/shared/LocalStorage";
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import { registerIndieID, unregisterIndieDevice } from "native-notify";
 
 const HomeScreen = ({ navigation }: any) => {
+  const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
+    null
+  );
+  const [rememberMe, setRememberMe] = React.useState<boolean>();
+  React.useEffect(() => {
+    getCurrentUser()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((error) => {
+        console.log("Error getting current user:", error);
+      });
+
+    getRememberMe()
+      .then((rememberMeFromLocal) => {
+        setRememberMe(rememberMeFromLocal);
+      })
+      .catch((error) => {
+        console.log("Error getting current remembeme:", error);
+      });
+  }, []);
+
+  console.log("Error getting current remembeme:", currentUser?.id);
+  if(rememberMe){
+    registerIndieID(`${currentUser?.id}`, 13240, 'JgacDlBDrMg8qvQWalJuRM');
+  }else{
+    unregisterIndieDevice(`${currentUser?.id}`, 13240, 'JgacDlBDrMg8qvQWalJuRM');
+  }
   //filtered notification that has not yet read
   const unreadNotification = dummyNotifications.filter(
     (notification) => notification.notifHasRead === false
