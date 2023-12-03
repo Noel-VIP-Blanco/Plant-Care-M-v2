@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import { Surface, Text, Checkbox } from "react-native-paper";
+import { Surface, Text, Checkbox, Button } from "react-native-paper";
 import React, { useState, useEffect } from "react";
 import { ColorValue } from "react-native/Libraries/StyleSheet/StyleSheet";
 
@@ -79,29 +79,41 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
   const [sensorWaterLevel, setSensorWaterLevel] = useState("");
   const arduinoBoardId = containerObj?.arduinoBoardDto.id;
-  useEffect(() => {
-    getCurrentTDS({
-      farmId: farmIdFromLocal,
-      arduinoBoardId,
-      setSensorWaterNutrient,
+  useEffect(()=>{
+    const currentTDSRef = ref(
+      FIREBASE_DATABASE,
+      //`farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTDS`
+      `farm/1/arduinoBoard/1/currentTDS`
+    );
+    onValue(currentTDSRef, (snapshot) => {
+      const tds = snapshot.val();
+      setSensorWaterNutrient(tds);
     });
-  }, [sensorWaterNutrient, farmIdFromLocal, arduinoBoardId]);
+  },[sensorWaterNutrient])
+  
+  // useEffect(() => {
+  //   getCurrentTDS({
+  //     farmId: farmIdFromLocal,
+  //     arduinoBoardId,
+  //     setSensorWaterNutrient,
+  //   });
+  // }, [sensorWaterNutrient, farmIdFromLocal, arduinoBoardId]);
 
-  useEffect(() => {
-    getCurrentpH({
-      farmId: farmIdFromLocal,
-      arduinoBoardId,
-      setSensorWaterAcidity,
-    });
-  }, [sensorWaterAcidity, farmIdFromLocal, arduinoBoardId]);
+  // useEffect(() => {
+  //   getCurrentpH({
+  //     farmId: farmIdFromLocal,
+  //     arduinoBoardId,
+  //     setSensorWaterAcidity,
+  //   });
+  // }, [sensorWaterAcidity, farmIdFromLocal, arduinoBoardId]);
 
-  useEffect(() => {
-    getCurrentWaterLevel({
-      farmId: farmIdFromLocal,
-      arduinoBoardId,
-      setSensorWaterLevel,
-    });
-  }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
+  // useEffect(() => {
+  //   getCurrentWaterLevel({
+  //     farmId: farmIdFromLocal,
+  //     arduinoBoardId,
+  //     setSensorWaterLevel,
+  //   });
+  // }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
 
   if (status === PlantStatus.Grow) {
     bgColor = "#b8e6a1";
@@ -125,12 +137,19 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
 
   return (
     <Surface elevation={4} style={TaskCardStyle.surface}>
+    
       <View
         style={[
           TaskCardStyle.taskCardMainContainer,
           { backgroundColor: bgColor, borderRadius: dp(60) },
         ]}
       >
+          {/* <Button
+      onPress={()=>{
+        console.log(sensorWaterNutrient)
+      }}>
+        TEST DATABASE ONLY
+      </Button> */}
         <View style={TaskCardStyle.taskCardView}>
           {checkboxVisible && (
             <View style={TaskCardStyle.taskCardBoxContainer1}>
