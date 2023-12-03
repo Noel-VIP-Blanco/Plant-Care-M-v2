@@ -79,41 +79,42 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
   const [sensorWaterLevel, setSensorWaterLevel] = useState("");
   const arduinoBoardId = containerObj?.arduinoBoardDto.id;
-  useEffect(()=>{
-    const currentTDSRef = ref(
-      FIREBASE_DATABASE,
-      //`farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTDS`
-      `farm/1/arduinoBoard/1/currentTDS`
-    );
-    onValue(currentTDSRef, (snapshot) => {
-      const tds = snapshot.val();
-      setSensorWaterNutrient(tds);
+  // useEffect(()=>{
+  //   const currentTDSRef = ref(
+  //     FIREBASE_DATABASE,
+  //     //`farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTDS`
+  //     `farm/1/arduinoBoard/1/currentTDS`
+  //   );
+  //   onValue(currentTDSRef, (snapshot) => {
+  //     const tds = snapshot.val();
+  //     setSensorWaterNutrient(tds);
+  //   });
+  // },[sensorWaterNutrient])
+  console.log("farm id from local", farmIdFromLocal);
+  console.log("arduinoboard id from local", arduinoBoardId);
+  useEffect(() => {
+    getCurrentTDS({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterNutrient,
     });
-  },[sensorWaterNutrient])
-  
-  // useEffect(() => {
-  //   getCurrentTDS({
-  //     farmId: farmIdFromLocal,
-  //     arduinoBoardId,
-  //     setSensorWaterNutrient,
-  //   });
-  // }, [sensorWaterNutrient, farmIdFromLocal, arduinoBoardId]);
+  }, [sensorWaterNutrient, farmIdFromLocal, arduinoBoardId]);
 
-  // useEffect(() => {
-  //   getCurrentpH({
-  //     farmId: farmIdFromLocal,
-  //     arduinoBoardId,
-  //     setSensorWaterAcidity,
-  //   });
-  // }, [sensorWaterAcidity, farmIdFromLocal, arduinoBoardId]);
+  useEffect(() => {
+    getCurrentpH({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterAcidity,
+    });
+  }, [sensorWaterAcidity, farmIdFromLocal, arduinoBoardId]);
 
-  // useEffect(() => {
-  //   getCurrentWaterLevel({
-  //     farmId: farmIdFromLocal,
-  //     arduinoBoardId,
-  //     setSensorWaterLevel,
-  //   });
-  // }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
+  useEffect(() => {
+    getCurrentWaterLevel({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setSensorWaterLevel,
+    });
+  }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
 
   if (status === PlantStatus.Grow) {
     bgColor = "#b8e6a1";
@@ -137,14 +138,13 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
 
   return (
     <Surface elevation={4} style={TaskCardStyle.surface}>
-    
       <View
         style={[
           TaskCardStyle.taskCardMainContainer,
           { backgroundColor: bgColor, borderRadius: dp(60) },
         ]}
       >
-          {/* <Button
+        {/* <Button
       onPress={()=>{
         console.log(sensorWaterNutrient)
       }}>
@@ -199,7 +199,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       style={TaskCardStyle.itemTextDetails}
                     >
                       Acidity:{" "}
-                    {sensorWaterAcidity ? sensorWaterAcidity + " pH" : `6.0'`}
+                      {sensorWaterAcidity ? sensorWaterAcidity + " pH" : `6.0'`}
                     </Text>
                   </Surface>
 
@@ -215,7 +215,9 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       style={TaskCardStyle.itemTextDetails}
                     >
                       Nutrient:{" "}
-                    {sensorWaterNutrient ? sensorWaterNutrient + " ec" : `600' ec`}
+                      {sensorWaterNutrient
+                        ? sensorWaterNutrient + " ec"
+                        : `600' ec`}
                     </Text>
                   </Surface>
 
@@ -231,7 +233,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       style={TaskCardStyle.itemTextDetails}
                     >
                       Water Level:{" "}
-                    {sensorWaterLevel ? sensorWaterLevel + " L" : `70%'`}
+                      {sensorWaterLevel ? sensorWaterLevel + " %" : `70%'`}
                     </Text>
                   </Surface>
                 </View>

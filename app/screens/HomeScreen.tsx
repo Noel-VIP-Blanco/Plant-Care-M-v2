@@ -28,13 +28,33 @@ import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
 import { dummyNotifications } from "../dummyData/DummyNotification";
 import { dp, sp } from "@root/utilities/shared/SpDp";
-import { getCurrentUser, getRememberMe } from "@root/utilities/shared/LocalStorage";
+import {
+  getCurrentUser,
+  getRememberMe,
+} from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 import { registerIndieID, unregisterIndieDevice } from "native-notify";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
 
+import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
+import { onValue, ref } from "firebase/database";
+
 const HomeScreen = ({ navigation }: any) => {
+  // const [ph, setph] = useState("None");
+
+  // console.log("Entered ph useeffect");
+  // const db = FIREBASE_DATABASE;
+  // const starCountRef = ref(db, "farm/1/arduinoBoard/1/currentpH");
+  // onValue(starCountRef, (snapshot) => {
+  //   if (!snapshot) {
+  //     console.log("Snapshot is empty");
+  //   }
+  //   setph(snapshot.val());
+  //   console.log(snapshot.val());
+  // });
+  // console.log("Exited ph useeffect");
+
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
     null
   );
@@ -58,10 +78,14 @@ const HomeScreen = ({ navigation }: any) => {
   }, []);
 
   console.log("Error getting current remembeme:", currentUser?.id);
-  if(rememberMe){
-    registerIndieID(`${currentUser?.id}`, 13240, 'JgacDlBDrMg8qvQWalJuRM');
-  }else{
-    unregisterIndieDevice(`${currentUser?.id}`, 13240, 'JgacDlBDrMg8qvQWalJuRM');
+  if (rememberMe) {
+    registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
+  } else {
+    unregisterIndieDevice(
+      `${currentUser?.id}`,
+      13240,
+      "JgacDlBDrMg8qvQWalJuRM"
+    );
   }
   //filtered notification that has not yet read
   const unreadNotification = dummyNotifications.filter(
@@ -160,6 +184,14 @@ const HomeScreen = ({ navigation }: any) => {
           <ScrollView>
             <HomeItems navigation={navigation} />
           </ScrollView>
+
+          {/* <Button
+            onPress={() => {
+              console.log("CURRENT PH", ph);
+            }}
+          >
+            For RealtimeDatabase Test
+          </Button> */}
         </View>
 
         {/* Modals */}
