@@ -27,8 +27,7 @@ export const getCurrentTDS = ({
 }: SensorWaterNutrientProps): void => {
   const currentTDSRef = ref(
     FIREBASE_DATABASE,
-    //`farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTDS`
-    `farm/1/arduinoBoard/1/currentTDS`
+    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTDS`
   );
   onValue(currentTDSRef, (snapshot) => {
     const tds = snapshot.val();
