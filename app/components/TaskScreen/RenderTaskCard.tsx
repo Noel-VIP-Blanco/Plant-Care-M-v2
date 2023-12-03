@@ -198,7 +198,8 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       className="text-black dark:text-black"
                       style={TaskCardStyle.itemTextDetails}
                     >
-                      Acidity: {sensorWaterAcidity} pH
+                      Acidity:{" "}
+                    {sensorWaterAcidity ? sensorWaterAcidity + " pH" : `6.0'`}
                     </Text>
                   </Surface>
 
@@ -213,7 +214,8 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       className="text-black dark:text-black"
                       style={TaskCardStyle.itemTextDetails}
                     >
-                      Nutrient: {sensorWaterNutrient} ec
+                      Nutrient:{" "}
+                    {sensorWaterNutrient ? sensorWaterNutrient + " ec" : `600' ec`}
                     </Text>
                   </Surface>
 
@@ -228,7 +230,8 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                       className="text-black dark:text-black"
                       style={TaskCardStyle.itemTextDetails}
                     >
-                      Water Level: {sensorWaterLevel} L
+                      Water Level:{" "}
+                    {sensorWaterLevel ? sensorWaterLevel + " L" : `70%'`}
                     </Text>
                   </Surface>
                 </View>
