@@ -15,17 +15,14 @@ import { HarvestLogScreenStyle } from "@stylesheets/HarvestLogScreen/HarvestLogS
 import CustomSearchBar from "@components/Shared/CustomSearchBar";
 import FilteredHarvestLog from "@components/HarvestLogScreen/FilteredHarvestLog";
 
-//data
-import { dummyPlantItem } from "../dummyData/DummyPlantItem";
-
 //import redux toolkits and data
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
 import {
   selectHarvestLog,
-  addFilteredListOfRowData,
   addListOfRowData,
   selectFilteredListOfRowData,
   selectListOfRowData,
+  addFilteredListOfRowData,
 } from "@reduxToolkit/Features/HarvestLogSlice";
 import { selectTask } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
@@ -35,9 +32,7 @@ type rowType = [string, string, string];
 const HarvestLogScreen = ({ navigation }: any) => {
   //use redux toolkits and data
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector(selectTask);
   const harvestLogs = useAppSelector(selectHarvestLog);
-  const plants = useAppSelector(selectPlants);
   //data for row in table
   const listOfRowData = useAppSelector(selectListOfRowData);
   const filterListOfRowData = useAppSelector(selectFilteredListOfRowData);
@@ -45,27 +40,16 @@ const HarvestLogScreen = ({ navigation }: any) => {
   const tableHead = ["Plant Name", "Date Harvested", "Harvester"];
 
   useEffect(() => {
-    const newList: rowType[] = harvestLogs.map((harvestLogItem) => {
-      const taskObject = tasks.find(
-        (task) => task.id.toString() === harvestLogItem.taskId
-      );
-      const plantId = taskObject?.plantId;
-      const plantObject = plants.find((plant) => plant.id === plantId);
+    console.log("Enteres use effect from harvest log screen")
 
-      if (plantObject) {
-        return [
-          plantObject.name,
-          harvestLogItem.dateHarvested,
-          harvestLogItem.harvester,
-        ];
-      }
-
-      return ["", "", ""];
+    console.log("Harvest log from harvest log screen line 45", harvestLogs)
+    const newList: rowType[] = harvestLogs.map((logItem) => {
+      return [logItem.plantName, logItem.harvestedDate.split("T")[0], logItem.farmerLastName]
     });
-
+    console.log("NEW LIST",newList)
     dispatch(addListOfRowData(newList));
     dispatch(addFilteredListOfRowData(newList));
-  }, [harvestLogs]);
+  }, []);
 
   const onSearch = (text: string) => {
     if (text === "") {

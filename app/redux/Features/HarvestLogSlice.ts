@@ -1,9 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
 
 //data
 import { dummyHarvestLog } from "@root/app/dummyData/DummyHarvestLog";
+import { baseURL } from "@root/utilities/shared/BaseURL";
+import { HarvestLogProps } from "@interface/DataProps/HarvestLogProps";
 
 //type
 type rowType = [string, string, string];
@@ -23,33 +25,49 @@ const monthNames = [
   "December",
 ];
 
-interface HarvestLogState {
-  value: {
-    dateHarvested: string;
-    taskId: string;
-    harvester: string;
-  }[];
-  filteredData: {
-    dateHarvested: string;
-    taskId: string;
-    harvester: string;
-  }[];
-  // Other state properties...
-  listOfRowData: rowType[];
-  listOfFilteredRowData: rowType[];
+interface initialStateProps {
+  value: HarvestLogProps[];
+  filteredData: HarvestLogProps[];
+  listOfRowData: rowType[] ,
+  listOfFilteredRowData: rowType[] ,
 }
-const initialState: HarvestLogState = {
-  value: dummyHarvestLog.map((harvestLog) => ({
-    ...harvestLog,
-    dateHarvested: harvestLog.dateHarvested.toISOString().split("T")[0],
-  })),
-  filteredData: dummyHarvestLog.map((harvestLog) => ({
-    ...harvestLog,
-    dateHarvested: harvestLog.dateHarvested.toISOString().split("T")[0],
-  })),
+const initialState: initialStateProps = {
+  value: [],
+  filteredData: [],
   listOfRowData: [],
   listOfFilteredRowData: [],
 };
+// const initialState: HarvestLogState = {
+//   value: dummyHarvestLog.map((harvestLog) => ({
+//     ...harvestLog,
+//     dateHarvested: harvestLog.dateHarvested.toISOString().split("T")[0],
+//   })),
+//   filteredData: dummyHarvestLog.map((harvestLog) => ({
+//     ...harvestLog,
+//     dateHarvested: harvestLog.dateHarvested.toISOString().split("T")[0],
+//   })),
+//   listOfRowData: [],
+//   listOfFilteredRowData: [],
+// };
+
+export const getAllHarvestLog = createAsyncThunk(
+  "api/getAllHarvestLog",
+  async (farmId: string) => {
+    try {
+      const response = await fetch(
+        `${baseURL}/api/v1/farms/${farmId}/harvest-logs`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const harvestLogs: HarvestLogProps[] = await response.json();
+      return harvestLogs;
+    } catch (e) {
+      throw e;
+    }
+  }
+);
+
 
 export const harvestLogSlice = createSlice({
   name: "harvestLog",
@@ -116,10 +134,16 @@ export const harvestLogSlice = createSlice({
       state.listOfFilteredRowData = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getAllHarvestLog.fulfilled, (state, action) => {
+      state.value = action.payload;
+      state.filteredData = action.payload;
+    });
+  },
 });
 
 //export actions to use as a function from different components
-export const { filterHarvestLog, addFilteredListOfRowData, addListOfRowData } =
+export const { filterHarvestLog,addListOfRowData  , addFilteredListOfRowData} =
   harvestLogSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

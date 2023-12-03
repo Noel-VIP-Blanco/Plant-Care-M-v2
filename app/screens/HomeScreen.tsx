@@ -31,6 +31,8 @@ import { dp, sp } from "@root/utilities/shared/SpDp";
 import { getCurrentUser, getRememberMe } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 import { registerIndieID, unregisterIndieDevice } from "native-notify";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
 
 const HomeScreen = ({ navigation }: any) => {
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(

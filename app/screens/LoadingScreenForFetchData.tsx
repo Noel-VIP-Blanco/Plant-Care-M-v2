@@ -10,6 +10,7 @@ import { getAllArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { getAllPlant } from "@reduxToolkit/Features/PlantSlice";
 import { getAllTasks } from "@reduxToolkit/Features/TaskSlice";
 import { sp } from "@root/utilities/shared/SpDp";
+import { getAllHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
 
 const LoadingScreenForFetchData = ({ navigation }: any) => {
   //get all data from aws database
@@ -28,6 +29,7 @@ const LoadingScreenForFetchData = ({ navigation }: any) => {
             await dispatch(getAllArduinoBoards(farms[0].id.toString()));
             await dispatch(getAllPlant(farms[0].id.toString()));
             await dispatch(getAllTasks(farms[0].id.toString()));
+            await dispatch(getAllHarvestLog(farms[0].id.toString()))
             navigation.reset({
               index: 0,
               routes: [{ name: "BottomTabContainer" }],
@@ -40,6 +42,7 @@ const LoadingScreenForFetchData = ({ navigation }: any) => {
           await dispatch(getAllArduinoBoards(fetchedFarmId));
           await dispatch(getAllPlant(fetchedFarmId));
           await dispatch(getAllTasks(fetchedFarmId));
+          await dispatch(getAllHarvestLog(fetchedFarmId))
           //navigation.navigate("BottomTabContainer");
           navigation.reset({
             index: 0,

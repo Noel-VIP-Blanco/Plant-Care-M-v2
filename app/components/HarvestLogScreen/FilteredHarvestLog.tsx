@@ -36,8 +36,10 @@ const FilteredHarvestLog: React.FC<FilteredHarvestLogProps> = ({
   const closeMenu = () => setFilterMenuVisible(false);
 
   //data for filtered  menu items
+  console.log("Harvest DATA FROM FILTERED HARVEST LOG", harvestData)
+  console.log("HARVEST DATE", harvestData[0].harvestedDate)
   const allYearsSet = new Set(
-    harvestData.map((log) => log.dateHarvested.substring(0, 4))
+    harvestData.map((log) => log.harvestedDate.substring(0, 4))
   );
   const allYearsData = Array.from(allYearsSet).map((year) => year.toString());
   allYearsData.sort((a, b) => parseInt(b) - parseInt(a));

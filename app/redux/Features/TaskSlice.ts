@@ -130,6 +130,40 @@ export const DeleteTasksAPI = createAsyncThunk(
   }
 );
 
+export const HarvestTaskAPI = createAsyncThunk(
+  "api/harvestTasksAPI",
+  async (harvestTasks: { tasksIds: number[]; farmId: number }, { dispatch }) => {
+    const ids = harvestTasks.tasksIds;
+
+    const response = await fetch(
+      `${baseURL}/api/v1/farms/${harvestTasks.farmId}/containers/0/tasks/harvest`, // container id is not used
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ taskIds: ids }),
+      }
+    )
+      .then(async (response) => {
+        if (response.ok) {
+          // Request was successful
+          console.log("Tasks harvested successfully");
+          dispatch(getAllTasks(harvestTasks.farmId.toString()));
+        } else {
+          // Server returned an error response
+          return response.json().then((errorData) => {
+            throw new Error(errorData.message || "Harvest request failed");
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Tasks slice line 162: ", error.message);
+      });
+  }
+);
+
 export const AddTaskAPI = createAsyncThunk(
   "api/addTask",
   async (

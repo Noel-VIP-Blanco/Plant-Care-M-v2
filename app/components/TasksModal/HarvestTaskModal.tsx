@@ -4,7 +4,7 @@ import { Text, Modal, Portal, Button } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 
 //redux toolkit
-import { DeleteTasksAPI } from "@reduxToolkit/Features/TaskSlice";
+import { DeleteTasksAPI, HarvestTaskAPI } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 
 //interface
@@ -98,7 +98,7 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
                   //should be harvest dispatch
                   if (farmIdFromLocal) {
                     dispatch(
-                      DeleteTasksAPI({
+                      HarvestTaskAPI({
                         tasksIds: harvestTasksID,
                         farmId: parseInt(farmIdFromLocal),
                       })
