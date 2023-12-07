@@ -11,28 +11,51 @@ import {
 import { dp } from "@root/utilities/shared/SpDp";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
 import { selectHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
+import { selectTask } from "@reduxToolkit/Features/TaskSlice";
 
 const CalendarEvents: React.FC<CalendarEventsProps> = ({
   openEventModal,
   setSelectedDate,
 }) => {
-   //use redux toolkits and data
-   const dispatch = useAppDispatch();
-   const harvestLogs = useAppSelector(selectHarvestLog);
+  //use redux toolkits and data
+  const dispatch = useAppDispatch();
+  const tasks = useAppSelector(selectTask);
+  const harvestLogs = useAppSelector(selectHarvestLog);
 
   const markedDates: Record<string, MarkedDate> = {};
+  // const [color, setColor] = React.useState("green");
 
-  for (const item of harvestLogs) {
-    const date = item.harvestedDate;
+  for (const item of tasks) {
+    const date = item.harvestDate;
     const formattedDate = date.split("T")[0];
-
+    let color = "green";
+    let today = new Date();
+    let todayValue = today.getTime();
+    let harvestDate = new Date(formattedDate);
+    let harvestDateValue = harvestDate.getTime();
+    if (todayValue > harvestDateValue) {
+      color = "red";
+    } else {
+      color = "green";
+    }
     if (!markedDates[formattedDate]) {
       markedDates[formattedDate] = {
         selected: true,
-        selectedColor: "green",
+        selectedColor: color,
       };
     }
   }
+  // for (const item of harvestLogs) {
+  //   const date = item.harvestedDate;
+  //   const formattedDate = date.split("T")[0];
+
+  //   if (!markedDates[formattedDate]) {
+  //     markedDates[formattedDate] = {
+  //       selected: true,
+  //       selectedColor: "green",
+  //     };
+  //   }
+  // }
   return (
     <View
       style={{

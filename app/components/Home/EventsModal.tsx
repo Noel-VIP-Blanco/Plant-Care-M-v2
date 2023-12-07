@@ -25,6 +25,7 @@ import { selectTask } from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { selectContainer } from "@reduxToolkit/Features/ContainerSlice";
+import { sp } from "@root/utilities/shared/SpDp";
 
 const EventsModal: React.FC<EventsModalProps> = ({
   visible,
@@ -32,18 +33,28 @@ const EventsModal: React.FC<EventsModalProps> = ({
   selectedDate,
 }) => {
   const markedDates: Record<string, MarkedDate> = {};
-   const dispatch = useAppDispatch();
-   const tasks = useAppSelector(selectTask);
-   const plant = useAppSelector(selectPlants)
-   const container = useAppSelector(selectContainer)
+  const dispatch = useAppDispatch();
+  const tasks = useAppSelector(selectTask);
+  const plant = useAppSelector(selectPlants);
+  const container = useAppSelector(selectContainer);
+
   for (const item of tasks) {
     const date = item.harvestDate;
     const formattedDate = date.split("T")[0];
-
+    let color = "green";
+    let today = new Date();
+    let todayValue = today.getTime();
+    let harvestDate = new Date(formattedDate);
+    let harvestDateValue = harvestDate.getTime();
+    if (todayValue > harvestDateValue) {
+      color = "red";
+    } else {
+      color = "green";
+    }
     if (!markedDates[formattedDate]) {
       markedDates[formattedDate] = {
         selected: true,
-        selectedColor: "green",
+        selectedColor: color,
       };
     }
   }
@@ -54,9 +65,7 @@ const EventsModal: React.FC<EventsModalProps> = ({
 
       const { id, plantId, containerId } = taskItem;
       //get the plant object based on the plantId from the task
-      const plantObj = plant.find(
-        (plant) => plantId === plant.id
-      );
+      const plantObj = plant.find((plant) => plantId === plant.id);
       const containerObj = container.find(
         (container) => containerId === container.id
       );
@@ -89,10 +98,18 @@ const EventsModal: React.FC<EventsModalProps> = ({
   );
 
   const renderEvent = (reservation: any) => {
+    let today = new Date();
+    let todayValue = today.getTime();
+    let harvestDate = new Date(reservation.day);
+    let harvestDateValue = harvestDate.getTime();
     return (
       <LinearGradient
         style={EventsModalStyle.renderEventContainer}
-        colors={[COLORS.BACKGROUNDGRADIENTSTART, COLORS.BACKGROUNDGRADIENTEND]}
+        colors={
+          todayValue < harvestDateValue
+            ? [COLORS.BACKGROUNDGRADIENTSTART, COLORS.BACKGROUNDGRADIENTEND]
+            : [COLORS.BACKGROUNDREDDARK, COLORS.BACKGROUNDREDLIGHT]
+        }
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
@@ -110,7 +127,7 @@ const EventsModal: React.FC<EventsModalProps> = ({
   const renderEmptyEvent = () => {
     return (
       <View style={EventsModalStyle.renderEmptyEventContainer}>
-        <Text style={{ fontSize: 30 }}>No Events on this day</Text>
+        <Text style={{ fontSize: sp(70) }}>No Events on this day</Text>
       </View>
     );
   };

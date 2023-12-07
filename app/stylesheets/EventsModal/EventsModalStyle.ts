@@ -1,3 +1,4 @@
+import { sp } from "@root/utilities/shared/SpDp";
 import { Dimensions, StyleSheet } from "react-native";
 export const EventsModalStyle = StyleSheet.create({
   renderEventContainer: {
@@ -6,7 +7,12 @@ export const EventsModalStyle = StyleSheet.create({
     marginRight: 10,
     marginTop: 17,
   },
-  renderEventText: { fontSize: 25, fontWeight: "bold", textAlign: "center" },
+  renderEventText: {
+    fontSize: sp(50),
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "black",
+  },
   renderEmptyEventContainer: {
     flex: 1,
     alignItems: "center",

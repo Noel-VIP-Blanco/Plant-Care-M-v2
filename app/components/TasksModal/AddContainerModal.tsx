@@ -18,6 +18,9 @@ import { selectArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import { PlantProps } from "@interface/DataProps/PlantItemProps";
+import { ref, update } from "firebase/database";
+import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
 
 const AddContainerModal = ({ visible, onClose }: ModalType) => {
   const dispatch = useAppDispatch();
@@ -33,6 +36,7 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
   const [farmIdFromLocal, setFarmIdFromLocal] = useState<
     string | null | undefined
   >(null);
+
   useEffect(() => {
     const getFarmIdFromLocal = async () => {
       const fetchedFarmId = await getFarm();
@@ -54,8 +58,26 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
     value: name,
   }));
 
+  const [plantDTO, setPlantDTO] = useState<PlantProps>();
+  useEffect(() => {
+    const plant = plants.find((plantItem) => {
+      return plantItem.id === parseInt(selectPlant);
+    });
+    setPlantDTO(plant);
+    console.log(plantDTO);
+  }, [selectPlant, plantDTO]);
+
   //function for adding container
   const handleAddContainer = () => {
+    if (
+      containerName === "" ||
+      selectArduinoBoard === "" ||
+      selectPlant === ""
+    ) {
+      Alert.alert("Add New Container Failed", "Fill up all the fields");
+      return;
+    }
+
     const newContainer: AddContainerProps = {
       name: containerName,
       arduinoBoardDto: {
@@ -72,6 +94,18 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
           newContainer: newContainer,
           farmId: parseInt(farmIdFromLocal),
         })
+      );
+      update(
+        ref(
+          FIREBASE_DATABASE,
+          `farm/${farmIdFromLocal}/arduinoBoard/${selectArduinoBoard}/`
+        ),
+        {
+          minpH: plantDTO?.minimumPh,
+          maxTDS: plantDTO?.maximumEc,
+          maxpH: plantDTO?.maximumPh,
+          minTDS: plantDTO?.minimumEc,
+        }
       );
     } else {
       Alert.alert(
