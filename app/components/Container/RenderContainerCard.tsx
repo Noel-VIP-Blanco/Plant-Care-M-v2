@@ -22,6 +22,10 @@ import {
   getCurrentTDS,
   getCurrentWaterLevel,
   getCurrentpH,
+  getMaxTDS,
+  getMaxpH,
+  getMinTDS,
+  getMinpH,
 } from "@root/utilities/shared/RealtineDatabase";
 const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   container,
@@ -50,7 +54,73 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   const [sensorWaterAcidity, setSensorWaterAcidity] = useState("");
   const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
   const [sensorWaterLevel, setSensorWaterLevel] = useState("");
+
+  const [minTDS, setMinTDS] = useState("");
+  const [maxTDS, setMaxTDS] = useState("");
+  const [minpH, setMinpH] = useState("");
+  const [maxpH, setMaxpH] = useState("");
+
+  const [pHBgColor, setpHBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
+  const [tdsBgColor, setTdsBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
+  const [waterBgColor, setWaterBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
   const arduinoBoardId = container.arduinoBoardDto.id;
+
+  useEffect(() => {
+    if (sensorWaterAcidity > maxpH || sensorWaterAcidity < minpH) {
+      setpHBgColor(COLORS.BACKGROUNDCRITICALVALUE);
+    } else {
+      setpHBgColor(COLORS.BACKGROUNDGOODVALUE);
+    }
+  }, [minpH, maxpH, sensorWaterAcidity]);
+
+  useEffect(() => {
+    if (sensorWaterNutrient > maxTDS || sensorWaterNutrient < minTDS) {
+      setTdsBgColor(COLORS.BACKGROUNDCRITICALVALUE);
+    } else {
+      setTdsBgColor(COLORS.BACKGROUNDGOODVALUE);
+    }
+  }, [minTDS, maxTDS, sensorWaterNutrient]);
+
+  useEffect(() => {
+    if (sensorWaterLevel < "20") {
+      setWaterBgColor(COLORS.BACKGROUNDCRITICALVALUE);
+    } else {
+      setWaterBgColor(COLORS.BACKGROUNDGOODVALUE);
+    }
+  }, [sensorWaterLevel]);
+
+  useEffect(() => {
+    getMinpH({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMinpH,
+    });
+  }, [minpH, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getMaxpH({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMaxpH,
+    });
+  }, [maxpH, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getMinTDS({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMinTDS,
+    });
+  }, [minTDS, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getMaxTDS({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMaxTDS,
+    });
+  }, [maxTDS, farmIdFromLocal, arduinoBoardId]);
+
   useEffect(() => {
     getCurrentTDS({
       farmId: farmIdFromLocal,
@@ -152,7 +222,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   elevation={4}
                   style={[
                     ContainerCardStyle.dataSurface,
-                    { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
+                    { backgroundColor: pHBgColor },
                   ]}
                 >
                   <Text
@@ -167,7 +237,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                   elevation={4}
                   style={[
                     ContainerCardStyle.dataSurface,
-                    { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
+                    { backgroundColor: tdsBgColor },
                   ]}
                 >
                   <Text
@@ -189,7 +259,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     flex: 1,
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: COLORS.BACKGROUNDCRITICALVALUE,
+                    backgroundColor: waterBgColor,
                   }}
                 >
                   <Text
@@ -197,7 +267,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     style={ContainerCardStyle.itemTextDetails}
                   >
                     Water Level:{" "}
-                    {sensorWaterLevel ? sensorWaterLevel + " L" : `N/A`}
+                    {sensorWaterLevel ? sensorWaterLevel + " %" : `N/A`}
                   </Text>
                 </Surface>
               </View>
