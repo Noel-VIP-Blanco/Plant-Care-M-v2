@@ -19,6 +19,9 @@ import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { UpdateContainerProps } from "@interface/DataProps/ContainerItemProps";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import { PlantProps } from "@interface/DataProps/PlantItemProps";
+import { ref, update } from "firebase/database";
+import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
 
 const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   visible,
@@ -60,6 +63,15 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
     value: name,
   }));
 
+  const [plantDTO, setPlantDTO] = useState<PlantProps>();
+  useEffect(() => {
+    const plant = plants.find((plantItem) => {
+      return plantItem.id === parseInt(selectPlant);
+    });
+    setPlantDTO(plant);
+    console.log(plantDTO);
+  }, [selectPlant, plantDTO]);
+
   //function for Edit container
   const handleEditContainer = () => {
     const updateContainer: UpdateContainerProps = {
@@ -71,7 +83,22 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
         id: parseInt(selectPlant),
       },
     };
+
     if (farmIdFromLocal) {
+      if (selectPlant) {
+        update(
+          ref(
+            FIREBASE_DATABASE,
+            `farm/${farmIdFromLocal}/arduinoBoard/${dataForEditInitial.arduinoBoardObj?.id}/`
+          ),
+          {
+            minpH: plantDTO?.minimumPh,
+            maxTDS: plantDTO?.maximumEc,
+            maxpH: plantDTO?.maximumPh,
+            minTDS: plantDTO?.minimumEc,
+          }
+        );
+      }
       dispatch(
         UpdateContainerAPI({
           updatedContainer: updateContainer,
