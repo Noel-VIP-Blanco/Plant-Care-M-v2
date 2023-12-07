@@ -20,6 +20,27 @@ interface SensorWaterLevelProps {
   setSensorWaterLevel: (value: string) => void;
 }
 
+interface MinpHProps {
+  farmId: string | null | undefined;
+  arduinoBoardId: number | undefined;
+  setMinpH: (value: string) => void;
+}
+interface MaxpHProps {
+  farmId: string | null | undefined;
+  arduinoBoardId: number | undefined;
+  setMaxpH: (value: string) => void;
+}
+interface MinTDSProps {
+  farmId: string | null | undefined;
+  arduinoBoardId: number | undefined;
+  setMinTDS: (value: string) => void;
+}
+interface MaxTDSProps {
+  farmId: string | null | undefined;
+  arduinoBoardId: number | undefined;
+  setMaxTDS: (value: string) => void;
+}
+
 export const getCurrentTDS = ({
   farmId,
   arduinoBoardId,
@@ -65,5 +86,69 @@ export const getCurrentWaterLevel = ({
     const waterLevel = snapshot.val();
     setSensorWaterLevel(waterLevel);
     console.log(waterLevel);
+  });
+};
+
+export const getMinpH = ({
+  farmId,
+  arduinoBoardId,
+  setMinpH,
+}: MinpHProps): void => {
+  const currentpHRef = ref(
+    FIREBASE_DATABASE,
+    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/minpH`
+  );
+  onValue(currentpHRef, (snapshot) => {
+    const ph = snapshot.val();
+    setMinpH(ph);
+    console.log(ph);
+  });
+};
+
+export const getMaxpH = ({
+  farmId,
+  arduinoBoardId,
+  setMaxpH,
+}: MaxpHProps): void => {
+  const currentpHRef = ref(
+    FIREBASE_DATABASE,
+    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/maxpH`
+  );
+  onValue(currentpHRef, (snapshot) => {
+    const ph = snapshot.val();
+    setMaxpH(ph);
+    console.log(ph);
+  });
+};
+
+export const getMinTDS = ({
+  farmId,
+  arduinoBoardId,
+  setMinTDS,
+}: MinTDSProps): void => {
+  const currentTDSRef = ref(
+    FIREBASE_DATABASE,
+    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/minTDS`
+  );
+  onValue(currentTDSRef, (snapshot) => {
+    const TDS = snapshot.val();
+    setMinTDS(TDS);
+    console.log(TDS);
+  });
+};
+
+export const getMaxTDS = ({
+  farmId,
+  arduinoBoardId,
+  setMaxTDS,
+}: MaxTDSProps): void => {
+  const currentTDSRef = ref(
+    FIREBASE_DATABASE,
+    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/maxTDS`
+  );
+  onValue(currentTDSRef, (snapshot) => {
+    const TDS = snapshot.val();
+    setMaxTDS(TDS);
+    console.log(TDS);
   });
 };

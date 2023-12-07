@@ -10,6 +10,10 @@ import {
   getCurrentTDS,
   getCurrentWaterLevel,
   getCurrentpH,
+  getMaxTDS,
+  getMaxpH,
+  getMinTDS,
+  getMinpH,
 } from "@root/utilities/shared/RealtineDatabase";
 //interface
 import { PlantStatus } from "@interface/DataProps/TaskItemProps";
@@ -53,7 +57,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
       setCompleteTasksID((prevTasks) => prevTasks.filter((id) => id !== id));
     }
   };
-
+  //const [bgColor, setBgColor] = useState<ColorValue>("#9DC08B");
   let bgColor: ColorValue = "#9DC08B";
   //get the plant object based on the plant ID from the task to get data like plant name
   const plantObj = plants.find((plant) => plant.id === plantId);
@@ -78,20 +82,75 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   const [sensorWaterAcidity, setSensorWaterAcidity] = useState("");
   const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
   const [sensorWaterLevel, setSensorWaterLevel] = useState("");
+  const [minTDS, setMinTDS] = useState("");
+  const [maxTDS, setMaxTDS] = useState("");
+  const [minpH, setMinpH] = useState("");
+  const [maxpH, setMaxpH] = useState("");
+
+  const [pHBgColor, setpHBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
+  const [tdsBgColor, setTdsBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
+  const [waterBgColor, setWaterBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
   const arduinoBoardId = containerObj?.arduinoBoardDto.id;
-  // useEffect(()=>{
-  //   const currentTDSRef = ref(
-  //     FIREBASE_DATABASE,
-  //     //`farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTDS`
-  //     `farm/1/arduinoBoard/1/currentTDS`
-  //   );
-  //   onValue(currentTDSRef, (snapshot) => {
-  //     const tds = snapshot.val();
-  //     setSensorWaterNutrient(tds);
-  //   });
-  // },[sensorWaterNutrient])
+
   console.log("farm id from local", farmIdFromLocal);
   console.log("arduinoboard id from local", arduinoBoardId);
+
+  useEffect(() => {
+    if (sensorWaterAcidity > maxpH || sensorWaterAcidity < minpH) {
+      setpHBgColor(COLORS.BACKGROUNDCRITICALVALUE);
+    } else {
+      setpHBgColor(COLORS.BACKGROUNDGOODVALUE);
+    }
+  }, [minpH, maxpH, sensorWaterAcidity]);
+
+  useEffect(() => {
+    if (sensorWaterNutrient > maxTDS || sensorWaterNutrient < minTDS) {
+      setTdsBgColor(COLORS.BACKGROUNDCRITICALVALUE);
+    } else {
+      setTdsBgColor(COLORS.BACKGROUNDGOODVALUE);
+    }
+  }, [minTDS, maxTDS, sensorWaterNutrient]);
+
+  useEffect(() => {
+    if (sensorWaterLevel < "20") {
+      setWaterBgColor(COLORS.BACKGROUNDCRITICALVALUE);
+    } else {
+      setWaterBgColor(COLORS.BACKGROUNDGOODVALUE);
+    }
+  }, [sensorWaterLevel]);
+
+  useEffect(() => {
+    getMinpH({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMinpH,
+    });
+  }, [minpH, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getMaxpH({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMaxpH,
+    });
+  }, [maxpH, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getMinTDS({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMinTDS,
+    });
+  }, [minTDS, farmIdFromLocal, arduinoBoardId]);
+
+  useEffect(() => {
+    getMaxTDS({
+      farmId: farmIdFromLocal,
+      arduinoBoardId,
+      setMaxTDS,
+    });
+  }, [maxTDS, farmIdFromLocal, arduinoBoardId]);
+
   useEffect(() => {
     getCurrentTDS({
       farmId: farmIdFromLocal,
@@ -117,12 +176,15 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
 
   if (status === PlantStatus.Grow) {
+    //setBgColor("#b8e6a1");
     bgColor = "#b8e6a1";
   } else if (status === PlantStatus.Harvest) {
+    //setBgColor("#ebd68d");
     bgColor = "#ebd68d";
   }
   //check if container is remove or deleted while the task is still not harvested
   if (!containerObj) {
+    //setBgColor("#e69898");
     bgColor = "#e69898";
   }
   //if cancel or complete task button pressed, uncheck all checkboxes
@@ -191,7 +253,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                     elevation={1}
                     style={[
                       TaskCardStyle.dataSurface,
-                      { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
+                      { backgroundColor: pHBgColor },
                     ]}
                   >
                     <Text
@@ -207,7 +269,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                     elevation={1}
                     style={[
                       TaskCardStyle.dataSurface,
-                      { backgroundColor: COLORS.BACKGROUNDGOODVALUE },
+                      { backgroundColor: tdsBgColor },
                     ]}
                   >
                     <Text
@@ -225,7 +287,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                     elevation={1}
                     style={[
                       TaskCardStyle.dataSurface,
-                      { backgroundColor: COLORS.BACKGROUNDCRITICALVALUE },
+                      { backgroundColor: waterBgColor },
                     ]}
                   >
                     <Text
