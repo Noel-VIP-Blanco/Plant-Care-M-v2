@@ -197,7 +197,7 @@ const TaskScreen = () => {
           <Button
             mode="elevated"
             elevation={2}
-            labelStyle={{ fontSize: sp(45) }}
+            labelStyle={{ fontSize: sp(40) }}
             contentStyle={{ height: dp(120) }}
             style={{ marginHorizontal: dp(15) }}
             onPress={() => {
@@ -210,7 +210,7 @@ const TaskScreen = () => {
             mode="elevated"
             elevation={2}
             textColor="black"
-            labelStyle={{ fontSize: sp(45) }}
+            labelStyle={{ fontSize: sp(40) }}
             contentStyle={{ backgroundColor: "red", height: dp(120) }}
             style={{ marginHorizontal: dp(15) }}
             onPress={() => {
@@ -224,7 +224,7 @@ const TaskScreen = () => {
             mode="elevated"
             elevation={2}
             textColor="black"
-            labelStyle={{ fontSize: sp(45) }}
+            labelStyle={{ fontSize: sp(40) }}
             contentStyle={{ backgroundColor: "#44f321", height: dp(120) }}
             style={{ marginHorizontal: dp(15) }}
             onPress={() => {
