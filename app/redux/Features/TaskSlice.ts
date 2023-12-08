@@ -1,21 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
-import { useAppSelector } from "@reduxToolkit/Hooks";
-import { selectPlants } from "./PlantSlice";
 
 //interface
 import {
   AddTaskSerializableProps,
-  TaskItemProps,
-  TaskItemSerializableProps,
   TaskSerializableProps,
   UpdateTaskProps,
 } from "@interface/DataProps/TaskItemProps";
 import { PlantProps } from "@interface/DataProps/PlantItemProps";
 import { baseURL } from "@root/utilities/shared/BaseURL";
-import { getAllContainers } from "./ContainerSlice";
 import { dataForEditInitialProps } from "@interface/EditTaskDetailModal/EditTaskDetailModalProps";
+import { getAllHarvestLog } from "./HarvestLogSlice";
 
 interface initialStateProps {
   value: TaskSerializableProps[];
@@ -132,11 +128,14 @@ export const DeleteTasksAPI = createAsyncThunk(
 
 export const HarvestTaskAPI = createAsyncThunk(
   "api/harvestTasksAPI",
-  async (harvestTasks: { tasksIds: number[]; farmId: number }, { dispatch }) => {
+  async (
+    harvestTasks: { tasksIds: number[]; farmId: number },
+    { dispatch }
+  ) => {
     const ids = harvestTasks.tasksIds;
 
     const response = await fetch(
-      `${baseURL}/api/v1/farms/${harvestTasks.farmId}/containers/0/tasks/harvest`, // container id is not used
+      `${baseURL}/api/v1/farms/${harvestTasks.farmId}/tasks/harvest`, // container id is not used
       {
         method: "POST",
         headers: {
@@ -150,6 +149,7 @@ export const HarvestTaskAPI = createAsyncThunk(
           // Request was successful
           console.log("Tasks harvested successfully");
           dispatch(getAllTasks(harvestTasks.farmId.toString()));
+          dispatch(getAllHarvestLog(harvestTasks.farmId.toString()));
         } else {
           // Server returned an error response
           return response.json().then((errorData) => {

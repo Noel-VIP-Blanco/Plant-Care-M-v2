@@ -14,14 +14,19 @@
     "slug": "plant-care-m-v2",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/PlantCareImages/PCLogo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/PlantCareImages/PlantCareSplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
+    "notification": {
+      "icon": "assets/PlantCareImages/PCLogo.png",
+      "color": "#000000",
+      "androidMode": "default"
+    },
     "ios": {
       "supportsTablet": true
     },

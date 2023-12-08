@@ -3,7 +3,7 @@ import { Text } from "react-native-paper";
 import React, { useEffect } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
-import { selectFarms } from "@reduxToolkit/Features/FarmSlice";
+import { getFarmById, selectFarms } from "@reduxToolkit/Features/FarmSlice";
 import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
 import { getAllContainers } from "@reduxToolkit/Features/ContainerSlice";
 import { getAllArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
@@ -30,6 +30,7 @@ const LoadingScreenForFetchData = ({ navigation }: any) => {
             await dispatch(getAllPlant(farms[0].id.toString()));
             await dispatch(getAllTasks(farms[0].id.toString()));
             await dispatch(getAllHarvestLog(farms[0].id.toString()))
+            await dispatch(getFarmById(farms[0].id.toString()))
             navigation.reset({
               index: 0,
               routes: [{ name: "BottomTabContainer" }],
@@ -43,6 +44,7 @@ const LoadingScreenForFetchData = ({ navigation }: any) => {
           await dispatch(getAllPlant(fetchedFarmId));
           await dispatch(getAllTasks(fetchedFarmId));
           await dispatch(getAllHarvestLog(fetchedFarmId))
+          await dispatch(getFarmById(fetchedFarmId))
           //navigation.navigate("BottomTabContainer");
           navigation.reset({
             index: 0,

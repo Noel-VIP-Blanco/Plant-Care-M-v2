@@ -9,6 +9,8 @@ import { SettingScreenStyle } from "@stylesheets/Setting/SettingScreenStyle";
 //components
 import SwitchFarmModal from "./SettingScreenModals/SwitchFarmModal";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectOneFarm } from "@reduxToolkit/Features/FarmSlice";
 
 const MyFarmItem = ({ navigation }: any) => {
   //swtich farm modal
@@ -17,6 +19,7 @@ const MyFarmItem = ({ navigation }: any) => {
   const closeSwitchFarmModal = () => setSwitchFarmModalVisible(false);
   const [selectedFarmId, setSelectedFarmId] = useState("");
 
+  const oneFarm = useAppSelector(selectOneFarm);
   //get farmid from local storage
   useEffect(() => {
     const getFarmFromLocal = async () => {
@@ -27,6 +30,9 @@ const MyFarmItem = ({ navigation }: any) => {
     };
     getFarmFromLocal();
   }, [selectedFarmId]);
+
+
+  
 
   return (
     <>
@@ -45,7 +51,7 @@ const MyFarmItem = ({ navigation }: any) => {
           <View style={SettingScreenStyle.acountBox2Items}>
             {/* change on the current farm used by user */}
             <Text style={SettingScreenStyle.itemTitleText}>
-              {selectedFarmId}
+              {oneFarm?.name}
             </Text>
             <TouchableOpacity
               onPress={() => {

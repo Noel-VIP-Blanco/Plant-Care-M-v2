@@ -127,7 +127,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setSensorWaterNutrient,
     });
-  }, [sensorWaterNutrient, farmIdFromLocal]);
+  }, [sensorWaterNutrient, farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getCurrentpH({
@@ -135,7 +135,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setSensorWaterAcidity,
     });
-  }, [sensorWaterAcidity, farmIdFromLocal]);
+  }, [sensorWaterAcidity, farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getCurrentWaterLevel({
@@ -143,7 +143,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setSensorWaterLevel,
     });
-  }, [sensorWaterLevel, farmIdFromLocal]);
+  }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
 
   const [checkedContainer, setCheckedContainer] = useState(false);
 
