@@ -12,13 +12,15 @@ import ProfileEditDetailItems from "@components/SettingScreen/ProfileEditDetailI
 //iinterface
 import { IEditProfile } from "@interface/Settings/IEditProfile";
 import { useNavigation } from "@react-navigation/native";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 const EditProfileScreen: React.FC<IEditProfile> = ({
   handleCancel,
   handleSave,
   tempDetailObject,
   tempDetailFunctionObject,
 }) => {
-  const profileImage = "../../assets/PlantCareImages/PlantCareLogo.png";
+  const profileImage = "../../assets/PlantCareImages/HydroponicLogo.png";
+  console.log("role from edit profile", tempDetailObject.tempRole)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.BACKGROUNDCOLOR }}>
       <View style={ShowProfileStyle.backArrowContiner}>
@@ -41,7 +43,7 @@ const EditProfileScreen: React.FC<IEditProfile> = ({
             {/* <Ionicons name="person" color="white" size={90} /> */}
             <Image
               source={require(profileImage)}
-              style={{ height: 120, width: 120, borderRadius: 60 }}
+              style={{ height: dp(300), width: dp(300), borderRadius: 60 }}
             />
           </View>
         </View>
@@ -54,18 +56,18 @@ const EditProfileScreen: React.FC<IEditProfile> = ({
             marginTop: -30,
           }}
         >
-          <TouchableRipple
+          {/* <TouchableRipple
             onPress={() => {
               console.log("Change Profile Image Pressed");
             }}
             style={{ backgroundColor: "white", borderRadius: 50 }}
           >
             <Ionicons name="camera" color="black" size={35} />
-          </TouchableRipple>
+          </TouchableRipple> */}
         </View>
 
-        <Text style={{ fontSize: 20, textAlign: "center" }}>
-          {tempDetailObject.tempRole === "ROLE_FARMER" ? "FARMER" : "ADMIN"}
+        <Text style={{ marginTop:dp(40),fontSize: sp(60), color:"black", textAlign: "center" }}>
+          {tempDetailObject.tempRole === "ROLE_FARMER" ? "FARMER" : ""}
         </Text>
 
         <View style={{ flex: 1 }}>
@@ -88,7 +90,9 @@ const EditProfileScreen: React.FC<IEditProfile> = ({
             textColor="green"
             style={{ margin: 10, flex: 1 }}
             mode="elevated"
-            onPress={() => {}}
+            onPress={() => {
+              
+            }}
             labelStyle={{ fontSize: 20 }}
             contentStyle={{ height: 50 }}
           >

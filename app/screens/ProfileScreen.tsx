@@ -12,16 +12,28 @@
     const [currentUSer, setCurrentUser] = useState<currentUserProps>({
       email: "",
       firstName: "",
+      allowNotifications:true,
       id: 0,
       lastName: "",
       role: "",
       username: "",
     });
-    
+        //initial profile details
+        const [firstName, setFirstName] = useState(currentUSer.firstName);
+        const [lastName, setLastName] = useState(currentUSer.lastName);
+        const [role, setRole] = useState(currentUSer.role);
+        const [username, setUserName] = useState(currentUSer.username);
+        const [email, setEmail] = useState(currentUSer.email);
+        //temp profile detailss
+        const [tempFirstName, setTempFirstName] = useState(firstName);
+        const [tempLastName, setTempLastName] = useState(lastName);
+        const [tempRole, setTempRole] = useState(role);
+        const [tempUsername, setTempUsername] = useState(username);
+        const [tempEmail, setTempEmail] = useState(email);
+        const [isEditShown, setIsEditShown] = useState(true);
 
     //get current User from local storage
     useEffect(() => {
-      
       const getCurrentUserFromLocal = async () => {
         const fetchedCurrentUser = await getCurrentUser();
         if (fetchedCurrentUser) {
@@ -37,20 +49,18 @@
       getCurrentUserFromLocal();
     }, []);
 
-    //initial profile details
-    const [firstName, setFirstName] = useState(currentUSer.firstName);
-    const [lastName, setLastName] = useState(currentUSer.lastName);
-    const [role, setRole] = useState(currentUSer.role);
-    const [username, setUserName] = useState(currentUSer.username);
-    const [email, setEmail] = useState(currentUSer.email);
-    //temp profile detailss
-    const [tempFirstName, setTempFirstName] = useState(firstName);
-    const [tempLastName, setTempLastName] = useState(lastName);
-    const [tempRole, setTempRole] = useState(role);
-    const [tempUsername, setTempUsername] = useState(username);
-    const [tempEmail, setTempEmail] = useState(email);
+    useEffect(() => {
+      const setTempData = async () => {
+        setTempEmail(email)
+        setTempRole(role)
+        setTempFirstName(firstName)
+        setTempLastName(lastName)
+        setTempUsername(username)
+      };
+      setTempData();
+    }, [email, role, firstName, lastName, username]);
 
-    const [isEditShown, setIsEditShown] = useState(true);
+
 
     const handleEdit = () => {
       setIsEditShown(false);

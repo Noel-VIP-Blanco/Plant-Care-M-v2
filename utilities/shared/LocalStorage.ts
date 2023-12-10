@@ -56,6 +56,24 @@ export const getRememberMe = async () => {
   }
 };
 
+//handle post notification
+export const setNotification = async (notification: boolean) => {
+  try {
+    await AsyncStorage.setItem("ASYNC_NOTIFICATION", notification.toString());
+  } catch (e) {
+    console.log("LocalStorage.ts line 64 error", e);
+  }
+};
+
+export const getNotification = async () => {
+  try {
+    const token = await AsyncStorage.getItem("ASYNC_NOTIFICATION");
+    return !!(token === "true");
+  } catch (e) {
+    console.log("LocalStorage.ts line 73 error", e);
+  }
+};
+
 //handle farm/s per user
 export const setFarm = async (farm: number) => {
   try {

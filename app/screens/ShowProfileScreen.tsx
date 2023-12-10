@@ -12,12 +12,13 @@ import { ShowProfileStyle } from '@stylesheets/ShowProfile/ShowProfileStyle'
 import ProfileDetailItems from '@components/SettingScreen/ProfileDetailItems'
 //interface
 import { IShowProfile } from '@interface/Settings/IShowProfile'
+import { dp, sp } from "@root/utilities/shared/SpDp";
 const ShowProfileScreen: React.FC<IShowProfile> = ({
     handleEdit,
     initialDetailObject,
   }) =>  {
     const navigation = useNavigation();
-    const profileImage = "../../assets/PlantCareImages/PlantCareLogo.png";
+    const profileImage = "../../assets/PlantCareImages/HydroponicLogo.png";
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.BACKGROUNDCOLOR }}>
@@ -43,7 +44,9 @@ const ShowProfileScreen: React.FC<IShowProfile> = ({
             style={{ height: 120, width: 120, borderRadius: 60 }}
           />
         </View>
-        <Text style={{ fontSize: 20 }}>{initialDetailObject.role}</Text>
+        <Text style={{ marginTop:dp(40),fontSize: sp(60), color:"black", textAlign: "center" }}>
+          {initialDetailObject.role === "ROLE_FARMER" ? "FARMER" : "ADMIN"}
+        </Text>
       </View>
 
       <View style={{ flex: 1 }}>

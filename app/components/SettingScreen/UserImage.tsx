@@ -22,8 +22,8 @@ const UserImage: React.FC<UserImageProps> = ({ photoURL }) => {
       >
         {/* <Ionicons name="person" color="white" size={90} /> */}
         <Image
-          source={require(userImage)}
-          //   source={{ uri: photoURL }}
+          //source={require(photoURL)}
+            source={{ uri: photoURL }}
           style={{ height: 120, width: 120, borderRadius: 60 }}
         />
       </View>

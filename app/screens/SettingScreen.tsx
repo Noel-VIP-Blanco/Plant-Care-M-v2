@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View,Image } from "react-native";
 import { Button, Text } from "react-native-paper";
 import React, { useState } from "react";
 
@@ -18,9 +18,10 @@ import MyFarmItem from "@components/SettingScreen/MyFarmItem";
 import MyAccountItemContainers from "@components/SettingScreen/MyAccountItemContainers";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 import { getCurrentUser } from "@root/utilities/shared/LocalStorage";
+import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const SettingScreen = ({ navigation }: any) => {
-  const userImage = "../../../assets/PlantCareImages/PlantCareLogo.png";
+  const userImage = "../../assets/PlantCareImages/HydroponicLogo.png";
 
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
     null
@@ -41,13 +42,17 @@ const SettingScreen = ({ navigation }: any) => {
         className="bg-white dark:bg-slate-800"
         style={{
           flex: 5,
-          borderTopLeftRadius: 50,
-          borderTopRightRadius: 50,
+          borderTopLeftRadius: dp(100),
+          borderTopRightRadius: dp(100),
         }}
       >
         <View style={{ alignItems: "center" }}>
-          <UserImage photoURL={userImage} />
-          <Text style={{ fontSize: 20 }}>
+          {/* <UserImage photoURL={userImage} /> */}
+          <Image
+              source={require(userImage)}
+              style={{ height: dp(300), width: dp(300), marginTop:dp(-120),borderRadius: 60 }}
+            />
+          <Text style={{ fontSize: sp(40) }}>
             {currentUser?.role === "ROLE_FARMER" ? "FARMER" : "ADMIN"}
           </Text>
         </View>

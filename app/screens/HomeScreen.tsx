@@ -30,6 +30,7 @@ import { dummyNotifications } from "../dummyData/DummyNotification";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 import {
   getCurrentUser,
+  getNotification,
   getRememberMe,
 } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
@@ -58,7 +59,7 @@ const HomeScreen = ({ navigation }: any) => {
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
     null
   );
-  const [rememberMe, setRememberMe] = React.useState<boolean>();
+  const [notification, setNotification] = React.useState<boolean>();
   React.useEffect(() => {
     getCurrentUser()
       .then((user) => {
@@ -68,17 +69,17 @@ const HomeScreen = ({ navigation }: any) => {
         console.log("Error getting current user:", error);
       });
 
-    getRememberMe()
-      .then((rememberMeFromLocal) => {
-        setRememberMe(rememberMeFromLocal);
+    getNotification()
+      .then((notifFromLocal) => {
+        setNotification(notifFromLocal);
       })
       .catch((error) => {
-        console.log("Error getting current remembeme:", error);
+        console.log("Error getting current notification:", error);
       });
   }, []);
 
   console.log("Error getting current remembeme:", currentUser?.id);
-  if (rememberMe) {
+  if (notification) {
     registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
   } else {
     unregisterIndieDevice(

@@ -23,7 +23,7 @@ const LoginScreen = ({ navigation }: any) => {
   const { colorScheme } = useColorScheme();
 
   console.log("Pixel Ratio", PixelRatio.getFontScale());
-  const plantCareLogo = "../../assets/PlantCareImages/PlantCareLogo.png";
+  const plantCareLogo = "../../assets/PlantCareImages/HydroponicLogo.png";
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

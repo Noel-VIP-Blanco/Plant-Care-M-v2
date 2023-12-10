@@ -5,6 +5,7 @@ export type currentUserProps = {
   lastName: string;
   role: string;
   username: string;
+  allowNotifications: boolean;
   message?: string;
 };
 
