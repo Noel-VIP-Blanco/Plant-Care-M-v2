@@ -1,5 +1,5 @@
 // firebaseUtils.ts
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 import { FIREBASE_DATABASE } from "@root/FirebaseConfig"; // Import your Firebase constants here
 
 interface SensorWaterNutrientProps {
@@ -40,6 +40,51 @@ interface MaxTDSProps {
   arduinoBoardId: number | undefined;
   setMaxTDS: (value: string) => void;
 }
+
+interface HumidityProps {
+  farmId: string | null | undefined;
+  arduinoBoardId: number | undefined;
+  setHumidity: (value: string) => void;
+}
+
+interface TemperatureProps {
+  farmId: string | null | undefined;
+  arduinoBoardId: number | undefined;
+  setTemperature: (value: string) => void;
+}
+
+
+export const getTemperature = ({
+  farmId,
+  arduinoBoardId,
+  setTemperature,
+}: TemperatureProps): void => {
+  const currentTemperature = ref(
+    FIREBASE_DATABASE,
+    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTemperature`
+  );
+  onValue(currentTemperature, (snapshot) => {
+    const temperature = snapshot.val();
+    setTemperature(temperature);
+    console.log(temperature);
+  });
+};
+
+export const getHumidity = ({
+  farmId,
+  arduinoBoardId,
+  setHumidity,
+}: HumidityProps): void => {
+  const currentHumidity = ref(
+    FIREBASE_DATABASE,
+    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentHumidity`
+  );
+  onValue(currentHumidity, (snapshot) => {
+    const humidity = snapshot.val();
+    setHumidity(humidity);
+    console.log(humidity);
+  });
+};
 
 export const getCurrentTDS = ({
   farmId,

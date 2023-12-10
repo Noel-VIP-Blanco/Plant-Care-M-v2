@@ -30,6 +30,7 @@ import { dummyNotifications } from "../dummyData/DummyNotification";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 import {
   getCurrentUser,
+  getFarm,
   getNotification,
   getRememberMe,
 } from "@root/utilities/shared/LocalStorage";
@@ -40,26 +41,20 @@ import { selectHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
 
 import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
 import { onValue, ref } from "firebase/database";
+import axios from "axios";
 
 const HomeScreen = ({ navigation }: any) => {
-  // const [ph, setph] = useState("None");
-
-  // console.log("Entered ph useeffect");
-  // const db = FIREBASE_DATABASE;
-  // const starCountRef = ref(db, "farm/1/arduinoBoard/1/currentpH");
-  // onValue(starCountRef, (snapshot) => {
-  //   if (!snapshot) {
-  //     console.log("Snapshot is empty");
-  //   }
-  //   setph(snapshot.val());
-  //   console.log(snapshot.val());
-  // });
-  // console.log("Exited ph useeffect");
 
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
     null
   );
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+  string | null | undefined
+>(null);
   const [notification, setNotification] = React.useState<boolean>();
+
+  const [sensorHumidity, setSensorHumidity] = useState("");
+  const [sensorTemperature, setSensorTemperature] = useState("");
   React.useEffect(() => {
     getCurrentUser()
       .then((user) => {
@@ -69,6 +64,11 @@ const HomeScreen = ({ navigation }: any) => {
         console.log("Error getting current user:", error);
       });
 
+      getFarm().then((farmId)=>{
+        setFarmIdFromLocal(farmId)
+      }).catch((error)=>{
+        console.log("Error getting current farm:", error);
+      })
     getNotification()
       .then((notifFromLocal) => {
         setNotification(notifFromLocal);
@@ -82,11 +82,12 @@ const HomeScreen = ({ navigation }: any) => {
   if (notification) {
     registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
   } else {
-    unregisterIndieDevice(
-      `${currentUser?.id}`,
-      13240,
-      "JgacDlBDrMg8qvQWalJuRM"
-    );
+    axios.delete(`https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`)
+    // unregisterIndieDevice(
+    //   `${currentUser?.id}`,
+    //   13240,
+    //   "JgacDlBDrMg8qvQWalJuRM"
+    // );
   }
   //filtered notification that has not yet read
   const unreadNotification = dummyNotifications.filter(
