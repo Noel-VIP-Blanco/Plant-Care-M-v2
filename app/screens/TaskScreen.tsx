@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, FAB, Menu, Text } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -28,11 +28,20 @@ import {
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { HarvestOrRemove } from "@interface/HarvestTaskModal/HarvestTaskModalProps";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import {
+  getAllIdFromFarm,
+  getSubscribedId,
+} from "@root/utilities/shared/GetSubscribedId";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const TaskScreen = () => {
   //complete tasks
   const [checkboxVisible, setCheckboxVisible] = useState(false);
-  const showCheckbox = () => setCheckboxVisible(true);
+  const showCheckbox = () => {
+    setCheckboxVisible(true);
+    getSubscribedId(setSubIdFromNotify);
+    getAllIdFromFarm(farmIdFromLocal, setIdFromFarm);
+  };
   const hideCheckbox = () => {
     setCheckboxVisible(false);
     setHarvestTasksID([]);
@@ -41,10 +50,29 @@ const TaskScreen = () => {
   const [harvestOrRemove, setHarvestOrRemove] = useState<HarvestOrRemove>(
     HarvestOrRemove.Harvest
   );
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
+  //get the subscribed ids from native notify
+  const [subIdFromNotify, setSubIdFromNotify] = useState([]);
+  //get all the id from the farm
+  const [idFromFarm, setIdFromFarm] = useState([]);
 
   //menu
   const [addMenuVisible, setAddMenuVisible] = useState(false);
-  const openMenu = () => setAddMenuVisible(true);
+  const openMenu = () => {
+    setAddMenuVisible(true);
+    getSubscribedId(setSubIdFromNotify);
+    getAllIdFromFarm(farmIdFromLocal, setIdFromFarm);
+  };
   const closeMenu = () => setAddMenuVisible(false);
 
   //tasks data // redux
@@ -123,7 +151,6 @@ const TaskScreen = () => {
           />
         </Menu>
       </View>
-
       <View
         className="bg-white dark:bg-slate-800"
         style={TaskScreeenStyle.contentMainContainer}
@@ -158,12 +185,21 @@ const TaskScreen = () => {
       </View>
 
       {/* Modals */}
-      <AddTaskModal visible={addTaskModalVisible} onClose={closeAddTaskModal} />
+      <AddTaskModal
+        idFromFarm={idFromFarm}
+        subIdFromNotify={subIdFromNotify}
+        visible={addTaskModalVisible}
+        onClose={closeAddTaskModal}
+      />
       <AddContainerModal
+        idFromFarm={idFromFarm}
+        subIdFromNotify={subIdFromNotify}
         visible={addContainerModalVisible}
         onClose={closeAddContainerModal}
       />
       <HarvestTaskModal
+        idFromFarm={idFromFarm}
+        subIdFromNotify={subIdFromNotify}
         harvestOrRemove={harvestOrRemove}
         visible={harvestTaskModalVisible}
         onClose={closeHarvestTaskModal}

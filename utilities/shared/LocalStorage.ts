@@ -57,9 +57,13 @@ export const getRememberMe = async () => {
 };
 
 //handle post notification
-export const setNotification = async (notification: boolean) => {
+export const setNotification = async (notification: boolean | undefined) => {
   try {
-    await AsyncStorage.setItem("ASYNC_NOTIFICATION", notification.toString());
+    if (notification) {
+      await AsyncStorage.setItem("ASYNC_NOTIFICATION", notification.toString());
+    } else {
+      await AsyncStorage.setItem("ASYNC_NOTIFICATION", "true");
+    }
   } catch (e) {
     console.log("LocalStorage.ts line 64 error", e);
   }

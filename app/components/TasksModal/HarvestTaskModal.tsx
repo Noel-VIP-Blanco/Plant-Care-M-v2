@@ -4,7 +4,10 @@ import { Text, Modal, Portal, Button } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 
 //redux toolkit
-import { DeleteTasksAPI, HarvestTaskAPI } from "@reduxToolkit/Features/TaskSlice";
+import {
+  DeleteTasksAPI,
+  HarvestTaskAPI,
+} from "@reduxToolkit/Features/TaskSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 
 //interface
@@ -13,12 +16,15 @@ import {
   HarvestTaskModalProps,
 } from "@interface/HarvestTaskModal/HarvestTaskModalProps";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
+import axios from "axios";
 
 const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
   visible,
   onClose,
   harvestTasksID,
   harvestOrRemove,
+  subIdFromNotify,
+  idFromFarm,
 }) => {
   //get farmId from local
   const [farmIdFromLocal, setFarmIdFromLocal] = useState<
@@ -35,6 +41,11 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
   //redux dispatch
   const dispatch = useAppDispatch();
 
+  let subIds = subIdFromNotify.map((item) => item.sub_id);
+  let filteredA = idFromFarm.filter((item) =>
+    subIds.includes(item.id.toString())
+  );
+  let result = filteredA.map((item) => item.id.toString());
   return (
     <Portal>
       <Modal visible={visible} onDismiss={onClose}>
@@ -94,6 +105,22 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
                     );
                     return;
                   }
+                  if (result.length > 0) {
+                    axios
+                      .post(
+                        `https://app.nativenotify.com/api/indie/group/notification`,
+                        {
+                          subIDs: result,
+                          appId: 13240,
+                          appToken: "JgacDlBDrMg8qvQWalJuRM",
+                          title: "Task Notification",
+                          message: "Tasks are removed",
+                        }
+                      )
+                      .catch((e) => {
+                        console.log("Error from add task modal line 128", e);
+                      });
+                  }
                 } else {
                   //should be harvest dispatch
                   if (farmIdFromLocal) {
@@ -110,6 +137,22 @@ const HarvestTaskModal: React.FC<HarvestTaskModalProps> = ({
                     );
                     onClose();
                     return;
+                  }
+                  if (result.length > 0) {
+                    axios
+                      .post(
+                        `https://app.nativenotify.com/api/indie/group/notification`,
+                        {
+                          subIDs: result,
+                          appId: 13240,
+                          appToken: "JgacDlBDrMg8qvQWalJuRM",
+                          title: "Task Notification",
+                          message: "Tasks are harvested",
+                        }
+                      )
+                      .catch((e) => {
+                        console.log("Error from add task modal line 128", e);
+                      });
                   }
                 }
                 //remove tasks with list of id by using the redux action

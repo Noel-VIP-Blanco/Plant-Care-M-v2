@@ -7,4 +7,6 @@ export enum HarvestOrRemove {
 export type HarvestTaskModalProps = ModalType & {
   harvestTasksID: number[];
   harvestOrRemove: HarvestOrRemove;
+  subIdFromNotify: any;
+  idFromFarm: any;
 };

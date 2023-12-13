@@ -6,6 +6,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import { useColorScheme } from "nativewind";
+import axios from "axios";
 
 //interface
 import { ModalType } from "@interface/Modals/ModalType";
@@ -25,7 +26,16 @@ import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 
-const AddTaskModal = ({ visible, onClose }: ModalType) => {
+type AddTaskModalType = ModalType & {
+  subIdFromNotify: any;
+  idFromFarm: any;
+};
+const AddTaskModal = ({
+  visible,
+  onClose,
+  subIdFromNotify,
+  idFromFarm,
+}: AddTaskModalType) => {
   const { colorScheme } = useColorScheme();
   //get farmId from local
   const [farmIdFromLocal, setFarmIdFromLocal] = useState<
@@ -107,7 +117,11 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
       harvestDate: expectedHarvestDate,
       numberOfTasks: parseInt(numberOfTask),
     };
-
+    let subIds = subIdFromNotify.map((item) => item.sub_id);
+    let filteredA = idFromFarm.filter((item) =>
+      subIds.includes(item.id.toString())
+    );
+    let result = filteredA.map((item) => item.id.toString());
     if (farmIdFromLocal) {
       dispatch(
         AddTaskAPI({
@@ -128,6 +142,20 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
 
     // dispatch(addTask(addTasks));
     Alert.alert("New Task", "You have successfully added the tasks ");
+    if (result.length > 0) {
+      axios
+        .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+          subIDs: result,
+          appId: 13240,
+          appToken: "JgacDlBDrMg8qvQWalJuRM",
+          title: "Task Notification",
+          message: "New Task is Added",
+        })
+        .catch((e) => {
+          console.log("Error from add task modal line 128", e);
+        });
+    }
+
     reset();
     onClose();
   };
@@ -215,7 +243,21 @@ const AddTaskModal = ({ visible, onClose }: ModalType) => {
             mode="outlined"
             style={{ width: dp(500) }}
           />
-
+          {/* Testing purposed */}
+          <Button
+            onPress={() => {
+              let subIds = subIdFromNotify.map((item) => item.sub_id);
+              let filteredA = idFromFarm.filter((item) =>
+                subIds.includes(item.id.toString())
+              );
+              let result = filteredA.map((item) => item.id.toString());
+              console.log(subIdFromNotify);
+              console.log(idFromFarm);
+              console.log(result);
+            }}
+          >
+            Check List of Id{" "}
+          </Button>
           <ModalButtons
             onSave={handleAddTask}
             onClose={onClose}

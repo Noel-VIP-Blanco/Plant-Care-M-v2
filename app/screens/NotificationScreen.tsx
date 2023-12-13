@@ -1,5 +1,5 @@
 import { View, Image } from "react-native";
-import axios from 'axios';
+import axios from "axios";
 import {
   Text,
   TouchableRipple,
@@ -12,12 +12,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 //shared
-import { COLORS } from "@root/utilities/shared/Colors"; 
+import { COLORS } from "@root/utilities/shared/Colors";
 //stylesheet
 import { ShowProfileStyle } from "@stylesheets/ShowProfile/ShowProfileStyle";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
-import { getCurrentUser, getNotification, getRememberMe, setRememberMe } from "@root/utilities/shared/LocalStorage";
+import {
+  getCurrentUser,
+  getNotification,
+  getRememberMe,
+  setNotification,
+  setRememberMe,
+} from "@root/utilities/shared/LocalStorage";
 import { registerIndieID, unregisterIndieDevice } from "native-notify";
 import { baseURL } from "@root/utilities/shared/BaseURL";
 const NotificationScreen = () => {
@@ -26,7 +32,9 @@ const NotificationScreen = () => {
     null
   );
   //handle switched
-  const [notification, setNotification] = React.useState<boolean | undefined>(currentUser?.allowNotifications);
+  const [notification, setNotificationn] = React.useState<boolean | undefined>(
+    true
+  );
   React.useEffect(() => {
     getCurrentUser()
       .then((user) => {
@@ -35,28 +43,29 @@ const NotificationScreen = () => {
       .catch((error) => {
         console.log("Error getting current user:", error);
       });
-
   }, []);
 
   React.useEffect(() => {
     getNotification()
       .then((notifFromLocal) => {
-        console.log("NOTIFICATION FROM LOCAL",notifFromLocal)
-        setNotification(notifFromLocal);
+        console.log("NOTIFICATION FROM LOCAL", notifFromLocal);
+        setNotificationn(notifFromLocal);
       })
       .catch((error) => {
         console.log("Error getting current notification:", error);
       });
   }, [currentUser]);
-  console.log("Notification Screen current user" + currentUser?.allowNotifications)
-  console.log("Notification Screen " + currentUser?.id)
-  console.log("Notification Screen notification" + notification)
-  const onTogglePushNotifSwitch = () => 
-     setNotification(!notification);
-  
+  console.log(
+    "Notification Screen current user" + currentUser?.allowNotifications
+  );
+  console.log("Notification Screen " + currentUser?.id);
+  console.log("Notification Screen notification" + notification);
+  const onTogglePushNotifSwitch = () => {
+    setNotificationn(!notification);
+  };
+
   const profileImage = "../../assets/PlantCareImages/HydroponicLogo.png";
 
-  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.BACKGROUNDCOLOR }}>
       <View style={ShowProfileStyle.backArrowContiner}>
@@ -82,9 +91,16 @@ const NotificationScreen = () => {
               style={{ height: dp(300), width: dp(300), borderRadius: 60 }}
             />
           </View>
-          <Text style={{ marginTop:dp(20),fontSize: sp(50), color:"black", textAlign: "center" }}>
-          {currentUser?.role === "ROLE_FARMER" ? "FARMER" : ""}
-        </Text>
+          <Text
+            style={{
+              marginTop: dp(20),
+              fontSize: sp(50),
+              color: "black",
+              textAlign: "center",
+            }}
+          >
+            {currentUser?.role === "ROLE_FARMER" ? "FARMER" : ""}
+          </Text>
         </View>
 
         <View style={{ flex: 1 }}>
@@ -103,7 +119,7 @@ const NotificationScreen = () => {
               Notification Setting
             </Text>
           </View>
-          
+
           <Surface
             elevation={1}
             style={{
@@ -157,12 +173,19 @@ const NotificationScreen = () => {
             contentStyle={{ height: 50 }}
             mode="elevated"
             onPress={() => {
+              setNotification(notification);
               // handleEdit();
-              if(notification){
-                registerIndieID(`${currentUser?.id}`, 13240, 'JgacDlBDrMg8qvQWalJuRM');
-              }else{
-                axios.patch(`${baseURL}/api/v1/users/notification-toggle`)
-                axios.delete(`https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`)
+              if (notification) {
+                registerIndieID(
+                  `${currentUser?.id}`,
+                  13240,
+                  "JgacDlBDrMg8qvQWalJuRM"
+                );
+              } else {
+                axios.patch(`${baseURL}/api/v1/users/notification-toggle`);
+                axios.delete(
+                  `https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`
+                );
               }
               navigation.goBack();
             }}
@@ -172,7 +195,7 @@ const NotificationScreen = () => {
         </View>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default NotificationScreen
+export default NotificationScreen;

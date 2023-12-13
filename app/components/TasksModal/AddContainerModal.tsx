@@ -21,8 +21,17 @@ import { dp, sp } from "@root/utilities/shared/SpDp";
 import { PlantProps } from "@interface/DataProps/PlantItemProps";
 import { ref, update } from "firebase/database";
 import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
-
-const AddContainerModal = ({ visible, onClose }: ModalType) => {
+import axios from "axios";
+type AddContainerModalType = ModalType & {
+  subIdFromNotify: any;
+  idFromFarm: any;
+};
+const AddContainerModal = ({
+  visible,
+  onClose,
+  subIdFromNotify,
+  idFromFarm,
+}: AddContainerModalType) => {
   const dispatch = useAppDispatch();
 
   const arduinoBoards = useAppSelector(selectArduinoBoards);
@@ -88,6 +97,15 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
       },
       farmId: 1,
     };
+
+    //filter the id from list of id from from based on the
+    // id opened their notification at native notify
+    let subIds = subIdFromNotify.map((item) => item.sub_id);
+    let filteredA = idFromFarm.filter((item) =>
+      subIds.includes(item.id.toString())
+    );
+    let result = filteredA.map((item) => item.id.toString());
+    console.log("Result from addcontainermodal", result);
     if (farmIdFromLocal) {
       dispatch(
         AddContainerAPI({
@@ -117,6 +135,19 @@ const AddContainerModal = ({ visible, onClose }: ModalType) => {
 
     //dispatch(addContainer(newContainer));
     Alert.alert("New Container", "You have successfully added the container ");
+    if (result.length > 0) {
+      axios
+        .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+          subIDs: result,
+          appId: 13240,
+          appToken: "JgacDlBDrMg8qvQWalJuRM",
+          title: "Container Notification",
+          message: "New Container is Added",
+        })
+        .catch((e) => {
+          console.log("Error from add container modal line 146", e);
+        });
+    }
     reset();
     onClose();
   };

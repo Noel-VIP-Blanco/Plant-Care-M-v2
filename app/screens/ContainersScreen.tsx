@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Alert } from "react-native";
 import { TouchableRipple, FAB, Button, Text } from "react-native-paper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 //utilities
@@ -23,15 +23,41 @@ import CustomSearchBar from "@components/Shared/CustomSearchBar";
 import AddContainerModal from "@components/TasksModal/AddContainerModal";
 import ContainerCardList from "@components/Container/ContainerCardList";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import { getFarm } from "@root/utilities/shared/LocalStorage";
+import {
+  getAllIdFromFarm,
+  getSubscribedId,
+} from "@root/utilities/shared/GetSubscribedId";
+import axios from "axios";
 
 const ContainersScreen = ({ navigation }: any) => {
   //redux
   const filteredContainer = useAppSelector(selectFilteredContainer);
   const dispatch = useAppDispatch();
 
+  //get farmId from local
+  const [farmIdFromLocal, setFarmIdFromLocal] = useState<
+    string | null | undefined
+  >(null);
+  useEffect(() => {
+    const getFarmIdFromLocal = async () => {
+      const fetchedFarmId = await getFarm();
+      setFarmIdFromLocal(fetchedFarmId);
+    };
+    getFarmIdFromLocal();
+  }, []);
+  //get the subscribed ids from native notify
+  const [subIdFromNotify, setSubIdFromNotify] = useState([]);
+  //get all the id from the farm
+  const [idFromFarm, setIdFromFarm] = useState([]);
+
   //removeContainer
   const [checkboxVisible, setCheckboxVisible] = useState(false);
-  const showCheckbox = () => setCheckboxVisible(true);
+  const showCheckbox = () => {
+    setCheckboxVisible(true);
+    getSubscribedId(setSubIdFromNotify);
+    getAllIdFromFarm(farmIdFromLocal, setIdFromFarm);
+  };
   const hideCheckbox = () => {
     setCheckboxVisible(false);
     console.log(removeContainerID);
@@ -40,12 +66,30 @@ const ContainersScreen = ({ navigation }: any) => {
   const handleRemoveContainers = () => {
     dispatch(
       // removeContainers(removeContainerID)
-
       DeleteContainerAPI({
         containerIds: removeContainerID,
         farmId: 1, //farm id should be get to the tocalStorage
       })
     );
+
+    let subIds = subIdFromNotify.map((item) => item.sub_id);
+    let filteredA = idFromFarm.filter((item) =>
+      subIds.includes(item.id.toString())
+    );
+    let result = filteredA.map((item) => item.id.toString());
+    if (result.length > 0) {
+      axios
+        .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+          subIDs: result,
+          appId: 13240,
+          appToken: "JgacDlBDrMg8qvQWalJuRM",
+          title: "Container Notification",
+          message: "Containers are deleted",
+        })
+        .catch((e) => {
+          console.log("Error from add container modal line 146", e);
+        });
+    }
     hideCheckbox();
   };
 
@@ -54,7 +98,11 @@ const ContainersScreen = ({ navigation }: any) => {
   //add container modal
   const [addContainerModalVisible, setAddContainerModalVisible] =
     useState(false);
-  const openAddContainerModal = () => setAddContainerModalVisible(true);
+  const openAddContainerModal = () => {
+    setAddContainerModalVisible(true);
+    getSubscribedId(setSubIdFromNotify);
+    getAllIdFromFarm(farmIdFromLocal, setIdFromFarm);
+  };
   const closeAddContainerModal = () => setAddContainerModalVisible(false);
   const onSearch = (text: string) => {
     dispatch(searchContainerByName(text));
@@ -125,6 +173,8 @@ const ContainersScreen = ({ navigation }: any) => {
           setRemoveContainerID={setRemoveContainerID}
         />
         <AddContainerModal
+          idFromFarm={idFromFarm}
+          subIdFromNotify={subIdFromNotify}
           visible={addContainerModalVisible}
           onClose={closeAddContainerModal}
         />
