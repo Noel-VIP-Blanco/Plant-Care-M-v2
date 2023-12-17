@@ -63,15 +63,21 @@ export const Login = ({
         //save to local storage
         setCurrentUser({ currentUser: data });
         setRememberMe(rememberMe);
-        console.log("Allow notification saving to local from login ",data.allowNotifications)
-        setNotification(data.allowNotifications)
+        console.log(
+          "Allow notification saving to local from login ",
+          data.allowNotifications
+        );
+        setNotification(data.allowNotifications);
         navigation.navigate("ChangePasswordScreen");
       } else {
         //save to local storage
         setCurrentUser({ currentUser: data });
         setRememberMe(rememberMe);
-        console.log("Allow notification saving to local from login ",data.allowNotifications)
-        setNotification(data.allowNotifications)
+        console.log(
+          "Allow notification saving to local from login ",
+          data.allowNotifications
+        );
+        setNotification(data.allowNotifications);
         navigation.navigate("LoadingScreenForSetupFarm");
       }
     })

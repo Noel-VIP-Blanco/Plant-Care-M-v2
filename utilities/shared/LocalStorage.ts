@@ -103,6 +103,7 @@ export const removeAllLocalStorage = async () => {
     "ASYNC_REMEMBERME",
     "ASYNC_CURRENTUSER",
     "ASYNC_TOKEN",
+    "ASYNC_NOTIFICATION",
   ];
   try {
     await AsyncStorage.multiRemove(keys);

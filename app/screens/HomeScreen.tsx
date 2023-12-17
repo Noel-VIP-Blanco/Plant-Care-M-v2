@@ -73,16 +73,14 @@ const HomeScreen = ({ navigation }: any) => {
       .catch((error) => {
         console.log("Error getting current farm:", error);
       });
-    getNotification()
-      .then((notifFromLocal) => {
-        setNotification(notifFromLocal);
-      })
-      .catch((error) => {
-        console.log("Error getting current notification:", error);
-      });
   }, []);
 
+  useEffect(() => {
+    setNotification(currentUser?.allowNotifications);
+  }, [currentUser]);
+
   console.log("Error getting current remembeme:", currentUser?.id);
+  console.log("Notif from local homescreen", notification);
 
   const oneFarm = useAppSelector(selectOneFarm);
   const mainArduinoBoard = oneFarm?.mainArduinoBoardId;
@@ -105,30 +103,11 @@ const HomeScreen = ({ navigation }: any) => {
     });
   }, [sensorHumidity, farmIdFromLocal, mainArduinoBoard]);
   // console.log("One farm object", oneFarm);
-  if (notification) {
-    registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
-    // registerIndieID(`${currentUser?.id}`, 16867, "PWEmCyU340w68O32FbbIK6");
-  } else {
-    // axios.delete(
-    //   `https://app.nativenotify.com/api/app/indie/sub/16867/PWEmCyU340w68O32FbbIK6/${currentUser?.id}`
-    // );
-    axios.delete(
-      `https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`
-    );
-
-    // ();
-    // unregisterIndieDevice(
-    //   `${currentUser?.id}`,
-    //   13240,
-    //   "JgacDlBDrMg8qvQWalJuRM"
-    // );
-  }
 
   const allNotifications = useAppSelector(selectNotifications);
-  console.log("All notification from database", allNotifications);
   //filtered notification that has not yet read
   const unreadNotification = allNotifications.filter(
-    (notification) => notification.readNotification === false
+    (notifications) => notifications.readNotification === false
   );
 
   //all notifications modal
@@ -151,6 +130,17 @@ const HomeScreen = ({ navigation }: any) => {
   const openeventModal = () => setEventModalVisible(true);
   const closeEventModal = () => setEventModalVisible(false);
 
+  if (notification) {
+    registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
+    // registerIndieID(`${currentUser?.id}`, 16867, "PWEmCyU340w68O32FbbIK6");
+  } else {
+    // axios.delete(
+    //   `https://app.nativenotify.com/api/app/indie/sub/16867/PWEmCyU340w68O32FbbIK6/${currentUser?.id}`
+    // );
+    axios.delete(
+      `https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`
+    );
+  }
   return (
     <View style={HomeStyle.pageContainer}>
       <LinearGradient
@@ -242,13 +232,13 @@ const HomeScreen = ({ navigation }: any) => {
             />
           </ScrollView>
 
-          {/* <Button
+          <Button
             onPress={() => {
-              console.log("CURRENT PH", ph);
+              console.log("CURRENT USER", notification);
             }}
           >
             For RealtimeDatabase Test
-          </Button> */}
+          </Button>
         </View>
 
         {/* Modals */}

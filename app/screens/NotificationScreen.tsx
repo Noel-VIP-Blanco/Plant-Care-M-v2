@@ -21,6 +21,7 @@ import {
   getCurrentUser,
   getNotification,
   getRememberMe,
+  setCurrentUser,
   setNotification,
   setRememberMe,
 } from "@root/utilities/shared/LocalStorage";
@@ -28,17 +29,18 @@ import { registerIndieID, unregisterIndieDevice } from "native-notify";
 import { baseURL } from "@root/utilities/shared/BaseURL";
 const NotificationScreen = () => {
   const navigation = useNavigation();
-  const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
-    null
-  );
+  const [currentUser, setCurrentUserr] =
+    React.useState<currentUserProps | null>(null);
+
   //handle switched
-  const [notification, setNotificationn] = React.useState<boolean | undefined>(
+  const [switchNotif, setSwitchNotif] = React.useState<boolean | undefined>(
     true
   );
   React.useEffect(() => {
     getCurrentUser()
       .then((user) => {
-        setCurrentUser(user);
+        setCurrentUserr(user);
+        setSwitchNotif(currentUser?.allowNotifications);
       })
       .catch((error) => {
         console.log("Error getting current user:", error);
@@ -46,22 +48,14 @@ const NotificationScreen = () => {
   }, []);
 
   React.useEffect(() => {
-    getNotification()
-      .then((notifFromLocal) => {
-        console.log("NOTIFICATION FROM LOCAL", notifFromLocal);
-        setNotificationn(notifFromLocal);
-      })
-      .catch((error) => {
-        console.log("Error getting current notification:", error);
-      });
+    setSwitchNotif(currentUser?.allowNotifications);
   }, [currentUser]);
+
   console.log(
     "Notification Screen current user" + currentUser?.allowNotifications
   );
-  console.log("Notification Screen " + currentUser?.id);
-  console.log("Notification Screen notification" + notification);
   const onTogglePushNotifSwitch = () => {
-    setNotificationn(!notification);
+    setSwitchNotif((prevState) => !prevState);
   };
 
   const profileImage = "../../assets/PlantCareImages/HydroponicLogo.png";
@@ -149,7 +143,7 @@ const NotificationScreen = () => {
               </Text>
 
               <Switch
-                value={notification}
+                value={switchNotif ?? false}
                 onValueChange={onTogglePushNotifSwitch}
               />
             </View>
@@ -173,16 +167,30 @@ const NotificationScreen = () => {
             contentStyle={{ height: 50 }}
             mode="elevated"
             onPress={() => {
-              setNotification(notification);
               // handleEdit();
-              if (notification) {
+              if (switchNotif === true) {
                 registerIndieID(
                   `${currentUser?.id}`,
                   13240,
                   "JgacDlBDrMg8qvQWalJuRM"
                 );
+                axios.patch(`${baseURL}/api/v1/users/notification-toggle`, {
+                  allowNotifications: true,
+                });
+                const updatedUser: currentUserProps = {
+                  ...(currentUser as currentUserProps), // Use type assertion to currentUserProps
+                  allowNotifications: true,
+                };
+                setCurrentUser({ currentUser: updatedUser });
               } else {
-                axios.patch(`${baseURL}/api/v1/users/notification-toggle`);
+                axios.patch(`${baseURL}/api/v1/users/notification-toggle`, {
+                  allowNotifications: switchNotif,
+                });
+                const updatedUser: currentUserProps = {
+                  ...(currentUser as currentUserProps), // Use type assertion to currentUserProps
+                  allowNotifications: false,
+                };
+                setCurrentUser({ currentUser: updatedUser });
                 axios.delete(
                   `https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`
                 );

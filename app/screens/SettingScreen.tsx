@@ -1,4 +1,4 @@
-import { View,Image } from "react-native";
+import { View, Image } from "react-native";
 import { Button, Text } from "react-native-paper";
 import React, { useState } from "react";
 
@@ -17,7 +17,10 @@ import UserImage from "@components/SettingScreen/UserImage";
 import MyFarmItem from "@components/SettingScreen/MyFarmItem";
 import MyAccountItemContainers from "@components/SettingScreen/MyAccountItemContainers";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
-import { getCurrentUser } from "@root/utilities/shared/LocalStorage";
+import {
+  getCurrentUser,
+  getNotification,
+} from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const SettingScreen = ({ navigation }: any) => {
@@ -49,9 +52,14 @@ const SettingScreen = ({ navigation }: any) => {
         <View style={{ alignItems: "center" }}>
           {/* <UserImage photoURL={userImage} /> */}
           <Image
-              source={require(userImage)}
-              style={{ height: dp(300), width: dp(300), marginTop:dp(-120),borderRadius: 60 }}
-            />
+            source={require(userImage)}
+            style={{
+              height: dp(300),
+              width: dp(300),
+              marginTop: dp(-120),
+              borderRadius: 60,
+            }}
+          />
           <Text style={{ fontSize: sp(40) }}>
             {currentUser?.role === "ROLE_FARMER" ? "FARMER" : "ADMIN"}
           </Text>
