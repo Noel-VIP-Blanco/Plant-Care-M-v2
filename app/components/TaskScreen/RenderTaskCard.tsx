@@ -277,8 +277,8 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                     >
                       Nutrient:{" "}
                       {sensorWaterNutrient
-                        ? sensorWaterNutrient + " ec"
-                        : `600' ec`}
+                        ? sensorWaterNutrient + " ppm"
+                        : `600' ppm`}
                     </Text>
                   </Surface>
 

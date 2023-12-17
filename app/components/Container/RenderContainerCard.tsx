@@ -70,7 +70,6 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   const [tdsBgColor, setTdsBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
   const [waterBgColor, setWaterBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
   const arduinoBoardId = container.arduinoBoardDto.id;
-
   useEffect(() => {
     if (sensorWaterAcidity > maxpH || sensorWaterAcidity < minpH) {
       if (result.length > 0) {
@@ -87,7 +86,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
           });
       }
     }
-  }, [sensorWaterAcidity, result]);
+  }, [sensorWaterAcidity]);
 
   useEffect(() => {
     if (sensorWaterNutrient > maxTDS || sensorWaterNutrient < minTDS) {
@@ -105,7 +104,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
           });
       }
     }
-  }, [sensorWaterNutrient, result]);
+  }, [sensorWaterNutrient]);
 
   useEffect(() => {
     if (sensorWaterLevel < "20") {
@@ -123,7 +122,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
           });
       }
     }
-  }, [sensorWaterLevel, result]);
+  }, [sensorWaterLevel]);
 
   useEffect(() => {
     if (sensorWaterAcidity > maxpH || sensorWaterAcidity < minpH) {
@@ -131,7 +130,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
     } else {
       setpHBgColor(COLORS.BACKGROUNDGOODVALUE);
     }
-  }, [minpH, maxpH, sensorWaterAcidity]);
+  }, [minpH, maxpH, sensorWaterAcidity, result, container.name]);
 
   useEffect(() => {
     if (sensorWaterNutrient > maxTDS || sensorWaterNutrient < minTDS) {
@@ -139,7 +138,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
     } else {
       setTdsBgColor(COLORS.BACKGROUNDGOODVALUE);
     }
-  }, [minTDS, maxTDS, sensorWaterNutrient]);
+  }, [minTDS, maxTDS, sensorWaterNutrient, result, container.name]);
 
   useEffect(() => {
     if (sensorWaterLevel < "20") {
@@ -147,7 +146,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
     } else {
       setWaterBgColor(COLORS.BACKGROUNDGOODVALUE);
     }
-  }, [sensorWaterLevel]);
+  }, [sensorWaterLevel, result, container.name]);
 
   useEffect(() => {
     getMinpH({
@@ -155,7 +154,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setMinpH,
     });
-  }, [minpH, farmIdFromLocal, arduinoBoardId]);
+  }, [farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getMaxpH({
@@ -163,7 +162,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setMaxpH,
     });
-  }, [maxpH, farmIdFromLocal, arduinoBoardId]);
+  }, [farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getMinTDS({
@@ -171,7 +170,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setMinTDS,
     });
-  }, [minTDS, farmIdFromLocal, arduinoBoardId]);
+  }, [farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getMaxTDS({
@@ -179,7 +178,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setMaxTDS,
     });
-  }, [maxTDS, farmIdFromLocal, arduinoBoardId]);
+  }, [farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getCurrentTDS({
@@ -187,7 +186,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setSensorWaterNutrient,
     });
-  }, [sensorWaterNutrient, farmIdFromLocal, arduinoBoardId]);
+  }, [farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getCurrentpH({
@@ -195,7 +194,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setSensorWaterAcidity,
     });
-  }, [sensorWaterAcidity, farmIdFromLocal, arduinoBoardId]);
+  }, [farmIdFromLocal, arduinoBoardId]);
 
   useEffect(() => {
     getCurrentWaterLevel({
@@ -203,7 +202,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
       arduinoBoardId,
       setSensorWaterLevel,
     });
-  }, [sensorWaterLevel, farmIdFromLocal, arduinoBoardId]);
+  }, [farmIdFromLocal, arduinoBoardId]);
 
   const [checkedContainer, setCheckedContainer] = useState(false);
 
@@ -236,6 +235,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
 
   //check the sensor data if it is outside the range
   const [isValueGood, setIsValueGood] = useState(true);
+
   return (
     <Surface elevation={4} style={ContainerCardStyle.surface}>
       <LinearGradient
@@ -305,7 +305,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
                     style={ContainerCardStyle.itemTextDetails}
                   >
                     Nutrient:{" "}
-                    {sensorWaterNutrient ? sensorWaterNutrient + " ec" : `N/A`}
+                    {sensorWaterNutrient ? sensorWaterNutrient + " ppm" : `N/A`}
                   </Text>
                 </Surface>
               </View>

@@ -20,7 +20,7 @@ const EditProfileScreen: React.FC<IEditProfile> = ({
   tempDetailFunctionObject,
 }) => {
   const profileImage = "../../assets/PlantCareImages/HydroponicLogo.png";
-  console.log("role from edit profile", tempDetailObject.tempRole)
+  console.log("role from edit profile", tempDetailObject.tempRole);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.BACKGROUNDCOLOR }}>
       <View style={ShowProfileStyle.backArrowContiner}>
@@ -66,7 +66,14 @@ const EditProfileScreen: React.FC<IEditProfile> = ({
           </TouchableRipple> */}
         </View>
 
-        <Text style={{ marginTop:dp(40),fontSize: sp(60), color:"black", textAlign: "center" }}>
+        <Text
+          style={{
+            marginTop: dp(40),
+            fontSize: sp(60),
+            color: "black",
+            textAlign: "center",
+          }}
+        >
           {tempDetailObject.tempRole === "ROLE_FARMER" ? "FARMER" : ""}
         </Text>
 
@@ -90,9 +97,7 @@ const EditProfileScreen: React.FC<IEditProfile> = ({
             textColor="green"
             style={{ margin: 10, flex: 1 }}
             mode="elevated"
-            onPress={() => {
-              
-            }}
+            onPress={() => {}}
             labelStyle={{ fontSize: 20 }}
             contentStyle={{ height: 50 }}
           >
@@ -102,7 +107,9 @@ const EditProfileScreen: React.FC<IEditProfile> = ({
             textColor="black"
             style={{ margin: 10, flex: 1 }}
             mode="elevated"
-            onPress={async () => {}}
+            onPress={() => {
+              handleSave();
+            }}
             labelStyle={{ fontSize: 20 }}
             contentStyle={{ backgroundColor: "#a2ff8f", height: 50 }}
           >
