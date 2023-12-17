@@ -12,3 +12,11 @@ export type currentUserProps = {
 export type setCurrentUserProps = {
   currentUser: currentUserProps;
 };
+
+export type subscribedIdFromNotify = {
+  android_fcm_token: string[];
+  expo_android_token: string[];
+  expo_ios_token: null | string[];
+  ios_apn_token: null | string[];
+  sub_id: string;
+};

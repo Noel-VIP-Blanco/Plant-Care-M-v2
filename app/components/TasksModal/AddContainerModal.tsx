@@ -22,9 +22,13 @@ import { PlantProps } from "@interface/DataProps/PlantItemProps";
 import { ref, update } from "firebase/database";
 import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
 import axios from "axios";
+import {
+  currentUserProps,
+  subscribedIdFromNotify,
+} from "@interface/Auth/CurrentUserProps";
 type AddContainerModalType = ModalType & {
-  subIdFromNotify: any;
-  idFromFarm: any;
+  subIdFromNotify: subscribedIdFromNotify[];
+  idFromFarm: currentUserProps[];
 };
 const AddContainerModal = ({
   visible,
@@ -101,7 +105,7 @@ const AddContainerModal = ({
     //filter the id from list of id from from based on the
     // id opened their notification at native notify
     let subIds = subIdFromNotify.map((item) => item.sub_id);
-    let filteredA = idFromFarm.filter((item) =>
+    let filteredA = idFromFarm.filter((item: currentUserProps) =>
       subIds.includes(item.id.toString())
     );
     let result = filteredA.map((item) => item.id.toString());

@@ -14,8 +14,7 @@ const OneNotificationModal: FC<OneNotificationModalProps> = ({
   item,
 }) => {
   //format date to string
-  const date = new Date(item.notifDate);
-  const formattedDate = date.toISOString().split("T")[0];
+  const formattedDate = item.date.split("T")[0];
   return (
     <Portal>
       <Modal visible={visible} onDismiss={onClose}>
@@ -25,11 +24,9 @@ const OneNotificationModal: FC<OneNotificationModalProps> = ({
           </Text>
 
           <View style={OneNotificationModalStyle.contentContainer}>
-            <Text style={OneNotificationModalStyle.title}>
-              {item.notifTitle}
-            </Text>
+            <Text style={OneNotificationModalStyle.title}>{item.title}</Text>
             <Text style={OneNotificationModalStyle.subTitle}>
-              {item.notifSubTitle}
+              {item.content}
             </Text>
             <Text style={OneNotificationModalStyle.date}>{formattedDate}</Text>
           </View>

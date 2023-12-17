@@ -35,22 +35,20 @@ import {
   getRememberMe,
 } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
-import { registerIndieID, unregisterIndieDevice } from "native-notify";
-import { useAppSelector } from "@reduxToolkit/Hooks";
-import { selectHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
+import { registerIndieID } from "native-notify";
 
-import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
-import { onValue, ref } from "firebase/database";
 import axios from "axios";
+import AllNotificationModal from "@components/Notification/AllNotificationModal";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectNotifications } from "@reduxToolkit/Features/NotificationSlice";
 
 const HomeScreen = ({ navigation }: any) => {
-
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
     null
   );
   const [farmIdFromLocal, setFarmIdFromLocal] = useState<
-  string | null | undefined
->(null);
+    string | null | undefined
+  >(null);
   const [notification, setNotification] = React.useState<boolean>();
 
   const [sensorHumidity, setSensorHumidity] = useState("");
@@ -64,11 +62,13 @@ const HomeScreen = ({ navigation }: any) => {
         console.log("Error getting current user:", error);
       });
 
-      getFarm().then((farmId)=>{
-        setFarmIdFromLocal(farmId)
-      }).catch((error)=>{
-        console.log("Error getting current farm:", error);
+    getFarm()
+      .then((farmId) => {
+        setFarmIdFromLocal(farmId);
       })
+      .catch((error) => {
+        console.log("Error getting current farm:", error);
+      });
     getNotification()
       .then((notifFromLocal) => {
         setNotification(notifFromLocal);
@@ -82,16 +82,21 @@ const HomeScreen = ({ navigation }: any) => {
   if (notification) {
     registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
   } else {
-    axios.delete(`https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`)
+    axios.delete(
+      `https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`
+    );
     // unregisterIndieDevice(
     //   `${currentUser?.id}`,
     //   13240,
     //   "JgacDlBDrMg8qvQWalJuRM"
     // );
   }
+
+  const allNotifications = useAppSelector(selectNotifications);
+  console.log("All notification from database", allNotifications);
   //filtered notification that has not yet read
-  const unreadNotification = dummyNotifications.filter(
-    (notification) => notification.notifHasRead === false
+  const unreadNotification = allNotifications.filter(
+    (notification) => notification.readNotification === false
   );
 
   //all notifications modal
@@ -154,7 +159,7 @@ const HomeScreen = ({ navigation }: any) => {
                   <Divider bold={true} />
                 </>
               )}
-              keyExtractor={(item) => item.notifId.toString()}
+              keyExtractor={(item) => item.id.toString()}
             />
             <Surface style={{ width: "100%" }}>
               <TouchableRipple
@@ -201,6 +206,11 @@ const HomeScreen = ({ navigation }: any) => {
           visible={eventModalVisible}
           onClose={closeEventModal}
           selectedDate={selectedDate}
+        />
+
+        <AllNotificationModal
+          visible={allNotifModalVisible}
+          onClose={closeAllNotifModal}
         />
       </LinearGradient>
     </View>

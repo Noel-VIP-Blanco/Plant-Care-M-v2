@@ -16,8 +16,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
 }) => {
   const profileImage = "../../../assets/PlantCareImages/PlantCareLogo.png";
-  const date = new Date(notification.notifDate);
-  const formattedDate = date.toISOString().split("T")[0];
+  const date = notification.date;
+  const formattedDate = date.split("T")[0];
 
   //one notifications modal
   const [notifModalVisible, setNotifModalVisible] = useState(false);
@@ -26,7 +26,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   return (
     <TouchableRipple
-      key={notification.notifId}
+      key={notification.id}
       rippleColor="#babffd"
       onPress={() => {
         openNotifModal();
@@ -52,14 +52,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               numberOfLines={1}
               ellipsizeMode="tail"
             >
-              {notification.notifTitle}
+              {notification.title}
             </Text>
             <Text
               numberOfLines={2}
               ellipsizeMode="tail"
               style={NotificationItemStyle.notificationSubtitle}
             >
-              {notification.notifSubTitle}
+              {notification.content}
             </Text>
             <Text style={NotificationItemStyle.notificationDate}>
               {formattedDate}

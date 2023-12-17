@@ -24,7 +24,7 @@
     "assetBundlePatterns": ["**/*"],
     "notification": {
       "icon": "assets/PlantCareImages/HydroponicLogo.png",
-      "color": "#000000",
+      "color": "#ffffff",
       "androidMode": "default"
     },
     "ios": {
@@ -35,7 +35,8 @@
         "foregroundImage": "assets/PlantCareImages/PCIcon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.noel.vip.blanco.plantcarem"
+      "package": "com.noel.vip.blanco.plantcarem",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

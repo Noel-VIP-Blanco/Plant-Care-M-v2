@@ -6,6 +6,7 @@ import user from "./Features/UserSlice";
 import arduinoBoard from "./Features/ArduinoBoardSlice";
 import plants from "./Features/PlantSlice";
 import farms from "./Features/FarmSlice";
+import notifications from "./Features/NotificationSlice";
 export const store = configureStore({
   reducer: {
     containers: containerReducer,
@@ -15,6 +16,7 @@ export const store = configureStore({
     arduinoBoards: arduinoBoard,
     plants: plants,
     farms: farms,
+    notifications: notifications,
   },
 });
 

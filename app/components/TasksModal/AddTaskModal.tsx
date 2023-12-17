@@ -25,10 +25,14 @@ import { AddTaskModalStyle } from "@stylesheets/AddTaskModal/AddTaskModalStyle";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import {
+  currentUserProps,
+  subscribedIdFromNotify,
+} from "@interface/Auth/CurrentUserProps";
 
 type AddTaskModalType = ModalType & {
-  subIdFromNotify: any;
-  idFromFarm: any;
+  subIdFromNotify: subscribedIdFromNotify[];
+  idFromFarm: currentUserProps[];
 };
 const AddTaskModal = ({
   visible,

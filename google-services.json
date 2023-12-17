@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "234786594498",
+    "firebase_url": "https://plantcare-4b96e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "plantcare-4b96e",
+    "storage_bucket": "plantcare-4b96e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234786594498:android:d8e8cc2d1379ff8074255b",
+        "android_client_info": {
+          "package_name": "com.noel.vip.blanco.plantcarem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG981yH7uIvyZ9UUKACGUJ-5XPmNF4Ako"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

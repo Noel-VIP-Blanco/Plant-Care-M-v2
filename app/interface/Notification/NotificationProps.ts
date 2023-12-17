@@ -7,5 +7,13 @@ export type INotificationItem = {
 };
 
 export type NotificationItemProps = {
-  notification: INotificationItem;
+  notification: NotificationType;
+};
+
+export type NotificationType = {
+  id: number;
+  date: string;
+  content: string;
+  title: string;
+  readNotification: boolean;
 };

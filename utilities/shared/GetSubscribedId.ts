@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "./BaseURL";
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 export const getSubscribedId = (
   setSubIdFromNotify: React.Dispatch<React.SetStateAction<never[]>>
 ) => {
@@ -19,7 +20,7 @@ export const getSubscribedId = (
 
 export const getAllIdFromFarm = (
   farmId: string | null | undefined,
-  setIdFromFarm: React.Dispatch<React.SetStateAction<never[]>>
+  setIdFromFarm: React.Dispatch<React.SetStateAction<currentUserProps[]>>
 ) => {
   axios
     .get(`${baseURL}/api/v1/farms/${farmId}/all-users`)

@@ -22,7 +22,6 @@ import { dp, sp } from "@root/utilities/shared/SpDp";
 const LoginScreen = ({ navigation }: any) => {
   const { colorScheme } = useColorScheme();
 
-  console.log("Pixel Ratio", PixelRatio.getFontScale());
   const plantCareLogo = "../../assets/PlantCareImages/HydroponicLogo.png";
 
   const [username, setUsername] = useState("");
