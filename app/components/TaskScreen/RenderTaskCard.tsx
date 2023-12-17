@@ -31,7 +31,6 @@ import TaskDetailModal from "@components/TasksModal/TaskDetailModal";
 
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { dp } from "@root/utilities/shared/SpDp";
-import { onValue, ref } from "firebase/database";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const RenderTaskCard: React.FC<RenderTaskCardProps> = ({

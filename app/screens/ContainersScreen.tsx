@@ -29,6 +29,10 @@ import {
   getSubscribedId,
 } from "@root/utilities/shared/GetSubscribedId";
 import axios from "axios";
+import {
+  currentUserProps,
+  subscribedIdFromNotify,
+} from "@interface/Auth/CurrentUserProps";
 
 const ContainersScreen = ({ navigation }: any) => {
   //redux
@@ -47,9 +51,11 @@ const ContainersScreen = ({ navigation }: any) => {
     getFarmIdFromLocal();
   }, []);
   //get the subscribed ids from native notify
-  const [subIdFromNotify, setSubIdFromNotify] = useState([]);
+  const [subIdFromNotify, setSubIdFromNotify] = useState<
+    subscribedIdFromNotify[]
+  >([]);
   //get all the id from the farm
-  const [idFromFarm, setIdFromFarm] = useState([]);
+  const [idFromFarm, setIdFromFarm] = useState<currentUserProps[]>([]);
 
   //removeContainer
   const [checkboxVisible, setCheckboxVisible] = useState(false);
@@ -190,7 +196,7 @@ const ContainersScreen = ({ navigation }: any) => {
           <View style={ContainerScreenStyle.buttonContainer}>
             <Button
               mode="elevated"
-              labelStyle={{ fontSize: sp(50) }}
+              labelStyle={{ fontSize: sp(40) }}
               contentStyle={{ height: dp(130) }}
               style={ContainerScreenStyle.button}
               onPress={() => {
@@ -201,7 +207,7 @@ const ContainersScreen = ({ navigation }: any) => {
             </Button>
             <Button
               mode="elevated"
-              labelStyle={{ fontSize: sp(50) }}
+              labelStyle={{ fontSize: sp(40) }}
               contentStyle={{ backgroundColor: "#44f321", height: dp(130) }}
               style={ContainerScreenStyle.button}
               onPress={() => {

@@ -1,8 +1,13 @@
 import axios from "axios";
 import { baseURL } from "./BaseURL";
-import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import {
+  currentUserProps,
+  subscribedIdFromNotify,
+} from "@interface/Auth/CurrentUserProps";
 export const getSubscribedId = (
-  setSubIdFromNotify: React.Dispatch<React.SetStateAction<never[]>>
+  setSubIdFromNotify: React.Dispatch<
+    React.SetStateAction<subscribedIdFromNotify[]>
+  >
 ) => {
   axios
     .get(

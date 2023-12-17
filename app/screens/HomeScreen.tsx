@@ -41,6 +41,11 @@ import axios from "axios";
 import AllNotificationModal from "@components/Notification/AllNotificationModal";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectNotifications } from "@reduxToolkit/Features/NotificationSlice";
+import { selectOneFarm } from "@reduxToolkit/Features/FarmSlice";
+import {
+  getHumidity,
+  getTemperature,
+} from "@root/utilities/shared/RealtineDatabase";
 
 const HomeScreen = ({ navigation }: any) => {
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
@@ -49,10 +54,9 @@ const HomeScreen = ({ navigation }: any) => {
   const [farmIdFromLocal, setFarmIdFromLocal] = useState<
     string | null | undefined
   >(null);
+
   const [notification, setNotification] = React.useState<boolean>();
 
-  const [sensorHumidity, setSensorHumidity] = useState("");
-  const [sensorTemperature, setSensorTemperature] = useState("");
   React.useEffect(() => {
     getCurrentUser()
       .then((user) => {
@@ -79,6 +83,28 @@ const HomeScreen = ({ navigation }: any) => {
   }, []);
 
   console.log("Error getting current remembeme:", currentUser?.id);
+
+  const oneFarm = useAppSelector(selectOneFarm);
+  const mainArduinoBoard = oneFarm?.mainArduinoBoardId;
+  const [sensorHumidity, setSensorHumidity] = useState("");
+  const [sensorTemperature, setSensorTemperature] = useState("");
+
+  useEffect(() => {
+    getTemperature({
+      farmId: farmIdFromLocal,
+      mainArduinoBoard,
+      setSensorTemperature,
+    });
+  }, [sensorTemperature, farmIdFromLocal, mainArduinoBoard]);
+
+  useEffect(() => {
+    getHumidity({
+      farmId: farmIdFromLocal,
+      mainArduinoBoard,
+      setSensorHumidity,
+    });
+  }, [sensorHumidity, farmIdFromLocal, mainArduinoBoard]);
+  // console.log("One farm object", oneFarm);
   if (notification) {
     registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
   } else {
@@ -189,7 +215,11 @@ const HomeScreen = ({ navigation }: any) => {
           />
 
           <ScrollView>
-            <HomeItems navigation={navigation} />
+            <HomeItems
+              navigation={navigation}
+              sensorHumidity={sensorHumidity}
+              sensorTemperature={sensorTemperature}
+            />
           </ScrollView>
 
           {/* <Button

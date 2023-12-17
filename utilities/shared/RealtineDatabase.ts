@@ -43,45 +43,44 @@ interface MaxTDSProps {
 
 interface HumidityProps {
   farmId: string | null | undefined;
-  arduinoBoardId: number | undefined;
-  setHumidity: (value: string) => void;
+  mainArduinoBoard: number | undefined;
+  setSensorHumidity: (value: string) => void;
 }
 
 interface TemperatureProps {
   farmId: string | null | undefined;
-  arduinoBoardId: number | undefined;
-  setTemperature: (value: string) => void;
+  mainArduinoBoard: number | undefined;
+  setSensorTemperature: (value: string) => void;
 }
-
 
 export const getTemperature = ({
   farmId,
-  arduinoBoardId,
-  setTemperature,
+  mainArduinoBoard,
+  setSensorTemperature,
 }: TemperatureProps): void => {
   const currentTemperature = ref(
     FIREBASE_DATABASE,
-    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentTemperature`
+    `farm/${farmId}/arduinoBoard/${mainArduinoBoard}/currentTemperature`
   );
   onValue(currentTemperature, (snapshot) => {
     const temperature = snapshot.val();
-    setTemperature(temperature);
+    setSensorTemperature(temperature);
     console.log(temperature);
   });
 };
 
 export const getHumidity = ({
   farmId,
-  arduinoBoardId,
-  setHumidity,
+  mainArduinoBoard,
+  setSensorHumidity,
 }: HumidityProps): void => {
   const currentHumidity = ref(
     FIREBASE_DATABASE,
-    `farm/${farmId}/arduinoBoard/${arduinoBoardId}/currentHumidity`
+    `farm/${farmId}/arduinoBoard/${mainArduinoBoard}/currentHumidity`
   );
   onValue(currentHumidity, (snapshot) => {
     const humidity = snapshot.val();
-    setHumidity(humidity);
+    setSensorHumidity(humidity);
     console.log(humidity);
   });
 };

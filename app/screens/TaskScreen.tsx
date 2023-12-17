@@ -33,7 +33,10 @@ import {
   getSubscribedId,
 } from "@root/utilities/shared/GetSubscribedId";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
-import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import {
+  currentUserProps,
+  subscribedIdFromNotify,
+} from "@interface/Auth/CurrentUserProps";
 
 const TaskScreen = () => {
   //complete tasks
@@ -63,7 +66,9 @@ const TaskScreen = () => {
     getFarmIdFromLocal();
   }, []);
   //get the subscribed ids from native notify
-  const [subIdFromNotify, setSubIdFromNotify] = useState([]);
+  const [subIdFromNotify, setSubIdFromNotify] = useState<
+    subscribedIdFromNotify[]
+  >([]);
   //get all the id from the farm
   const [idFromFarm, setIdFromFarm] = useState<currentUserProps[]>([]);
 

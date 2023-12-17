@@ -16,9 +16,15 @@ import { dp, sp } from "@root/utilities/shared/SpDp";
 //type
 type IHomeScreenItems = {
   navigation: any;
+  sensorHumidity: string;
+  sensorTemperature: string;
 };
 
-const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
+const HomeItems: React.FC<IHomeScreenItems> = ({
+  navigation,
+  sensorHumidity,
+  sensorTemperature,
+}) => {
   return (
     <View style={HomeScreenItemStyle.HomeScreenItemContainer}>
       <Surface style={HomeScreenItemStyle.surface}>
@@ -42,8 +48,8 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
               Room Temperature
             </Text>
             <View></View>
-            <Text className="dark:text-white" style={{ fontSize: sp(80) }}>
-              30°C
+            <Text className="dark:text-white" style={{ fontSize: sp(60) }}>
+              {sensorTemperature ? sensorTemperature + " °C" : `35°C'`}
             </Text>
           </View>
         </LinearGradient>
@@ -69,8 +75,8 @@ const HomeItems: React.FC<IHomeScreenItems> = ({ navigation }) => {
             >
               Air Humidity
             </Text>
-            <Text className="dark:text-white" style={{ fontSize: sp(80) }}>
-              300
+            <Text className="dark:text-white" style={{ fontSize: sp(60) }}>
+              {sensorHumidity ? sensorHumidity + " %" : `65%'`}
             </Text>
           </View>
         </LinearGradient>
