@@ -13,6 +13,8 @@ const ContainerCardList: React.FC<ContainerCardListProps> = ({
   filteredData,
   checkboxVisible,
   setRemoveContainerID,
+  idFromFarm,
+  subIdFromNotify,
 }) => {
   return (
     <View style={{ height: "95%" }}>
@@ -35,6 +37,8 @@ const ContainerCardList: React.FC<ContainerCardListProps> = ({
             { item } // Destructure 'item' from the 'renderItem' function argument
           ) => (
             <RenderContainerCard
+              idFromFarm={idFromFarm}
+              subIdFromNotify={subIdFromNotify}
               container={item}
               checkboxVisible={checkboxVisible}
               setRemoveContainerID={setRemoveContainerID}

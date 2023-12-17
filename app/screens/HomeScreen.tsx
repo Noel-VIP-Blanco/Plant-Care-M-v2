@@ -11,7 +11,7 @@ import {
 } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 //utilities
 import { COLORS } from "@root/utilities/shared/Colors";
@@ -168,8 +168,22 @@ const HomeScreen = ({ navigation }: any) => {
               >
                 <Ionicons
                   name="notifications-circle"
-                  style={HeaderRightIconStyle.headerRightIcon}
+                  style={{
+                    fontSize: dp(140),
+                    color: "#ffffff",
+                  }}
+                  // style={HeaderRightIconStyle.headerRightIcon}
                 />
+                {unreadNotification.length !== 0 ? (
+                  <FontAwesome
+                    name="circle"
+                    style={{ marginTop: dp(-40), marginLeft: dp(80) }}
+                    size={dp(40)}
+                    color="red"
+                  />
+                ) : (
+                  ""
+                )}
               </TouchableOpacity>
             }
           >

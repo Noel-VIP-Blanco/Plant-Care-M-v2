@@ -57,6 +57,10 @@ const ContainersScreen = ({ navigation }: any) => {
   //get all the id from the farm
   const [idFromFarm, setIdFromFarm] = useState<currentUserProps[]>([]);
 
+  useEffect(() => {
+    getSubscribedId(setSubIdFromNotify);
+    getAllIdFromFarm(farmIdFromLocal, setIdFromFarm);
+  }, [farmIdFromLocal]);
   //removeContainer
   const [checkboxVisible, setCheckboxVisible] = useState(false);
   const showCheckbox = () => {
@@ -174,6 +178,8 @@ const ContainersScreen = ({ navigation }: any) => {
         </Text>
         {/* <Filter Containers /> */}
         <ContainerCardList
+          idFromFarm={idFromFarm}
+          subIdFromNotify={subIdFromNotify}
           filteredData={filteredContainer}
           checkboxVisible={checkboxVisible}
           setRemoveContainerID={setRemoveContainerID}

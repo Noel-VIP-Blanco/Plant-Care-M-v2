@@ -11,6 +11,10 @@ import OneNotificationModal from "@components/Notification/OneNotificationModal"
 //interface
 import { NotificationItemProps } from "@interface/Notification/NotificationProps";
 import { dp } from "@root/utilities/shared/SpDp";
+import axios from "axios";
+import { baseURL } from "@root/utilities/shared/BaseURL";
+import { useAppDispatch } from "@reduxToolkit/Hooks";
+import { getAllNotification } from "@reduxToolkit/Features/NotificationSlice";
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
@@ -23,12 +27,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const [notifModalVisible, setNotifModalVisible] = useState(false);
   const openNotifModal = () => setNotifModalVisible(true);
   const closeNotifModal = () => setNotifModalVisible(false);
-
+  const dispatch = useAppDispatch();
   return (
     <TouchableRipple
       key={notification.id}
       rippleColor="#babffd"
       onPress={() => {
+        axios.patch(
+          `${baseURL}/api/v1/notifications/${notification.id}/toggle-is-read-notification`,
+          {
+            readNotification: true,
+          }
+        );
+        dispatch(getAllNotification());
         openNotifModal();
       }}
       style={NotificationItemStyle.touchRipple}

@@ -27,13 +27,15 @@ import {
   getMinTDS,
   getMinpH,
 } from "@root/utilities/shared/RealtineDatabase";
+import axios from "axios";
 const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
+  idFromFarm,
+  subIdFromNotify,
   container,
   checkboxVisible,
   setRemoveContainerID,
 }) => {
   // const { contId, contName, arduinoBoardId } = item;
-
   const arduinoBoards = useAppSelector(selectArduinoBoards);
 
   //get farmId from local
@@ -48,8 +50,12 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
     getFarmIdFromLocal();
   }, []);
 
-  //get the sensor id from the arduinoboardID
-
+  let subIds = subIdFromNotify.map((item) => item.sub_id);
+  let filteredA = idFromFarm.filter((item) =>
+    subIds.includes(item.id.toString())
+  );
+  let result = filteredA.map((item) => item.id.toString());
+  console.log("Result from Render Container Card", result);
   //get the sensor value for every sensor type connected on the arduino
   const [sensorWaterAcidity, setSensorWaterAcidity] = useState("");
   const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
@@ -64,6 +70,60 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   const [tdsBgColor, setTdsBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
   const [waterBgColor, setWaterBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
   const arduinoBoardId = container.arduinoBoardDto.id;
+
+  useEffect(() => {
+    if (sensorWaterAcidity > maxpH || sensorWaterAcidity < minpH) {
+      if (result.length > 0) {
+        axios
+          .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+            subIDs: result,
+            appId: 13240,
+            appToken: "JgacDlBDrMg8qvQWalJuRM",
+            title: "pH Notification",
+            message: `pH in reservoir ${container.name} is in critical value, check your pH container if empty!`,
+          })
+          .catch((e) => {
+            console.log("Error from Render Container Card line 95", e);
+          });
+      }
+    }
+  }, [sensorWaterAcidity, result]);
+
+  useEffect(() => {
+    if (sensorWaterNutrient > maxTDS || sensorWaterNutrient < minTDS) {
+      if (result.length > 0) {
+        axios
+          .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+            subIDs: result,
+            appId: 13240,
+            appToken: "JgacDlBDrMg8qvQWalJuRM",
+            title: "TDS Notification",
+            message: `TDS in reservoir ${container.name} is in critical value, check your nutrient container if empty!`,
+          })
+          .catch((e) => {
+            console.log("Error from Render Container Card line 95", e);
+          });
+      }
+    }
+  }, [sensorWaterNutrient, result]);
+
+  useEffect(() => {
+    if (sensorWaterLevel < "20") {
+      if (result.length > 0) {
+        axios
+          .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+            subIDs: result,
+            appId: 13240,
+            appToken: "JgacDlBDrMg8qvQWalJuRM",
+            title: "Water Notification",
+            message: `Water in reservoir ${container.name} is in critical value, check your water container if empty!`,
+          })
+          .catch((e) => {
+            console.log("Error from Render Container Card line 95", e);
+          });
+      }
+    }
+  }, [sensorWaterLevel, result]);
 
   useEffect(() => {
     if (sensorWaterAcidity > maxpH || sensorWaterAcidity < minpH) {

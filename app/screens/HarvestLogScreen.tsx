@@ -31,6 +31,10 @@ const HarvestLogScreen = ({ navigation }: any) => {
   //use redux toolkits and data
   const dispatch = useAppDispatch();
   const harvestLogs = useAppSelector(selectHarvestLog);
+  const sortedHarvestLogs = [...harvestLogs].sort(
+    (a, b) =>
+      new Date(b.harvestedDate).getTime() - new Date(a.harvestedDate).getTime()
+  );
   //data for row in table
   const listOfRowData = useAppSelector(selectListOfRowData);
   const filterListOfRowData = useAppSelector(selectFilteredListOfRowData);
@@ -38,13 +42,17 @@ const HarvestLogScreen = ({ navigation }: any) => {
   const tableHead = ["Plant Name", "Date Harvested", "Harvester"];
 
   useEffect(() => {
-    console.log("Enteres use effect from harvest log screen")
+    console.log("Enteres use effect from harvest log screen");
 
-    console.log("Harvest log from harvest log screen line 45", harvestLogs)
-    const newList: rowType[] = harvestLogs.map((logItem) => {
-      return [logItem.plantName, logItem.harvestedDate.split("T")[0], logItem.farmerLastName]
+    console.log("Harvest log from harvest log screen line 45", harvestLogs);
+    const newList: rowType[] = sortedHarvestLogs.map((logItem) => {
+      return [
+        logItem.plantName,
+        logItem.harvestedDate.split("T")[0],
+        logItem.farmerLastName,
+      ];
     });
-    console.log("NEW LIST",newList)
+    console.log("NEW LIST", newList);
     dispatch(addListOfRowData(newList));
     dispatch(addFilteredListOfRowData(newList));
   }, [harvestLogs]);

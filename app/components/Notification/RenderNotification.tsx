@@ -6,6 +6,10 @@ import {
   NotificationType,
 } from "@interface/Notification/NotificationProps";
 import OneNotificationModal from "./OneNotificationModal";
+import axios from "axios";
+import { baseURL } from "@root/utilities/shared/BaseURL";
+import { useAppDispatch } from "@reduxToolkit/Hooks";
+import { getAllNotification } from "@reduxToolkit/Features/NotificationSlice";
 
 interface IRenderNotification {
   item: NotificationType;
@@ -20,11 +24,19 @@ const RenderNotification: FC<IRenderNotification> = ({ item }) => {
   //format date to string
   const date = item.date;
   const formattedDate = date.split("T")[0];
+  const dispatch = useAppDispatch();
   return (
     <TouchableRipple
       key={item.id}
       rippleColor={item.readNotification ? "#afafaf" : "#babffd"}
       onPress={() => {
+        axios.patch(
+          `${baseURL}/api/v1/notifications/${item.id}/toggle-is-read-notification`,
+          {
+            readNotification: true,
+          }
+        );
+        dispatch(getAllNotification());
         openNotifModal();
       }}
       style={{
