@@ -107,10 +107,16 @@ const HomeScreen = ({ navigation }: any) => {
   // console.log("One farm object", oneFarm);
   if (notification) {
     registerIndieID(`${currentUser?.id}`, 13240, "JgacDlBDrMg8qvQWalJuRM");
+    // registerIndieID(`${currentUser?.id}`, 16867, "PWEmCyU340w68O32FbbIK6");
   } else {
+    // axios.delete(
+    //   `https://app.nativenotify.com/api/app/indie/sub/16867/PWEmCyU340w68O32FbbIK6/${currentUser?.id}`
+    // );
     axios.delete(
       `https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`
     );
+
+    // ();
     // unregisterIndieDevice(
     //   `${currentUser?.id}`,
     //   13240,
