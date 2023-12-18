@@ -2,6 +2,13 @@
   "expo": {
     "plugins": [
       [
+        "expo-notifications",
+        {
+          "icon": "assets/PlantCareImages/PCLogo.png",
+          "colo": "#ffffff"
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {
@@ -23,7 +30,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "notification": {
-      "icon": "assets/PlantCareImages/HydroponicLogo.png",
+      "icon": "assets/PlantCareImages/PCLogo.png",
       "color": "#ffffff",
       "androidMode": "default"
     },
