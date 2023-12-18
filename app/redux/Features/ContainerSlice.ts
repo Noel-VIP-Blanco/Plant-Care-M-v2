@@ -13,6 +13,7 @@ import {
 } from "@interface/DataProps/ContainerItemProps";
 import { baseURL } from "@root/utilities/shared/BaseURL";
 import { getAllArduinoBoards } from "./ArduinoBoardSlice";
+import { getAllNotification } from "./NotificationSlice";
 
 interface initialStateProps {
   value: ContainerProps[];
@@ -65,6 +66,7 @@ export const AddContainerAPI = createAsyncThunk(
       const container: ContainerProps = await response.json();
       await dispatch(addContainer(container));
       await dispatch(getAllArduinoBoards(addNewContainer.farmId.toString()));
+      await dispatch(getAllNotification());
       return container;
     } catch (e) {
       throw e;
@@ -102,6 +104,7 @@ export const UpdateContainerAPI = createAsyncThunk(
           await dispatch(
             getAllContainers(updateContainerObject.farmId.toString())
           );
+          await dispatch(getAllNotification());
         } else {
           // Server returned an error response
           return response.json().then((errorData) => {
@@ -142,6 +145,7 @@ export const DeleteContainerAPI = createAsyncThunk(
             getAllArduinoBoards(deleteContainer.farmId.toString())
           );
           await dispatch(getAllContainers(deleteContainer.farmId.toString()));
+          await dispatch(getAllNotification());
         } else {
           // Server returned an error response
           return response.json().then((errorData) => {

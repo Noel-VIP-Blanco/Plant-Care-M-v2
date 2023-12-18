@@ -8,22 +8,38 @@ import {
   Divider,
 } from "react-native-paper";
 import React from "react";
-//interface
-
-//dummydata
-import { dummyNotifications } from "@root/app/dummyData/DummyNotification";
 
 import RenderNotification from "./RenderNotification";
 import { ModalType } from "@interface/Modals/ModalType";
 import { useAppSelector } from "@reduxToolkit/Hooks";
 import { selectNotifications } from "@reduxToolkit/Features/NotificationSlice";
+import { NotificationType } from "@interface/Notification/NotificationProps";
 
 const AllNotificationModal = ({ visible, onClose }: ModalType) => {
   const allNotifications = useAppSelector(selectNotifications);
-  const rearrangeNoticiation = [...allNotifications].sort(
-    (a, b) => Number(a.readNotification) - Number(b.readNotification)
+
+  const readNotifications = allNotifications.filter(
+    (notification) => notification.readNotification
+  );
+  const unreadNotifications = allNotifications.filter(
+    (notification) => !notification.readNotification
   );
 
+  // Sort each group by the "date" field in descending order
+  const sortGroupByDate = (group: NotificationType[]) =>
+    group.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
+  // Sort and merge read and unread notifications
+  const sortedReadNotifications = sortGroupByDate(readNotifications);
+  const sortedUnreadNotifications = sortGroupByDate(unreadNotifications);
+  // Merge the two arrays
+  const mergedNotifications = sortedUnreadNotifications.concat(
+    sortedReadNotifications
+  );
+  console.log("Merged Notifications:", mergedNotifications);
   return (
     <Portal>
       <Modal visible={visible} onDismiss={onClose}>
@@ -52,7 +68,7 @@ const AllNotificationModal = ({ visible, onClose }: ModalType) => {
           <View style={{ flex: 9 }}>
             <FlatList
               style={{ marginTop: 15, flex: 1 }}
-              data={rearrangeNoticiation}
+              data={mergedNotifications}
               renderItem={(
                 { item } // Destructure 'item' from the 'renderItem' function argument
               ) => <RenderNotification item={item} />}

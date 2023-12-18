@@ -26,7 +26,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   //one notifications modal
   const [notifModalVisible, setNotifModalVisible] = useState(false);
   const openNotifModal = () => setNotifModalVisible(true);
-  const closeNotifModal = () => setNotifModalVisible(false);
+  const closeNotifModal = () => {
+    setNotifModalVisible(false);
+    dispatch(getAllNotification());
+  };
   const dispatch = useAppDispatch();
   return (
     <TouchableRipple
@@ -39,7 +42,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             readNotification: true,
           }
         );
-        dispatch(getAllNotification());
+
         openNotifModal();
       }}
       style={NotificationItemStyle.touchRipple}

@@ -18,7 +18,10 @@ const RenderNotification: FC<IRenderNotification> = ({ item }) => {
   //one notifications modal
   const [notifModalVisible, setNotifModalVisible] = useState(false);
   const openNotifModal = () => setNotifModalVisible(true);
-  const closeNotifModal = () => setNotifModalVisible(false);
+  const closeNotifModal = () => {
+    setNotifModalVisible(false);
+    dispatch(getAllNotification());
+  };
   //profile image
   const profileImage = "../../../assets/PlantCareImages/HydroponicLogo.png";
   //format date to string
@@ -36,7 +39,6 @@ const RenderNotification: FC<IRenderNotification> = ({ item }) => {
             readNotification: true,
           }
         );
-        dispatch(getAllNotification());
         openNotifModal();
       }}
       style={{

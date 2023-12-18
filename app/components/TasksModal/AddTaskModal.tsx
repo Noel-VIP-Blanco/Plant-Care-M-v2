@@ -248,7 +248,7 @@ const AddTaskModal = ({
             style={{ width: dp(500) }}
           />
           {/* Testing purposed */}
-          <Button
+          {/* <Button
             onPress={() => {
               let subIds = subIdFromNotify.map((item) => item.sub_id);
               let filteredA = idFromFarm.filter((item) =>
@@ -261,7 +261,7 @@ const AddTaskModal = ({
             }}
           >
             Check List of Id{" "}
-          </Button>
+          </Button> */}
           <ModalButtons
             onSave={handleAddTask}
             onClose={onClose}

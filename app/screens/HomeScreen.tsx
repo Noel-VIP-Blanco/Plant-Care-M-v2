@@ -109,6 +109,12 @@ const HomeScreen = ({ navigation }: any) => {
   const unreadNotification = allNotifications.filter(
     (notifications) => notifications.readNotification === false
   );
+  console.log("All unread notification", unreadNotification);
+  const sortedUnreadNotification = [...unreadNotification].sort((a, b) => {
+    let dateA = new Date(a.date);
+    let dateB = new Date(b.date);
+    return dateB.getTime() - dateA.getTime(); // sort in descending order
+  });
 
   //all notifications modal
   const [allNotifModalVisible, setAllNotifModalVisible] = useState(false);
@@ -170,7 +176,7 @@ const HomeScreen = ({ navigation }: any) => {
                   }}
                   // style={HeaderRightIconStyle.headerRightIcon}
                 />
-                {unreadNotification.length !== 0 ? (
+                {sortedUnreadNotification.length !== 0 ? (
                   <FontAwesome
                     name="circle"
                     style={{ marginTop: dp(-40), marginLeft: dp(80) }}
@@ -188,7 +194,7 @@ const HomeScreen = ({ navigation }: any) => {
             {/* render the notifications  */}
             <FlatList
               style={{ height: dp(600), width: "100%" }}
-              data={unreadNotification}
+              data={sortedUnreadNotification}
               renderItem={({ item }) => (
                 <>
                   <NotificationItem notification={item} />
@@ -232,13 +238,13 @@ const HomeScreen = ({ navigation }: any) => {
             />
           </ScrollView>
 
-          <Button
+          {/* <Button
             onPress={() => {
               console.log("CURRENT USER", notification);
             }}
           >
             For RealtimeDatabase Test
-          </Button>
+          </Button> */}
         </View>
 
         {/* Modals */}

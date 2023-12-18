@@ -12,6 +12,7 @@ import { PlantProps } from "@interface/DataProps/PlantItemProps";
 import { baseURL } from "@root/utilities/shared/BaseURL";
 import { dataForEditInitialProps } from "@interface/EditTaskDetailModal/EditTaskDetailModalProps";
 import { getAllHarvestLog } from "./HarvestLogSlice";
+import { getAllNotification } from "./NotificationSlice";
 
 interface initialStateProps {
   value: TaskSerializableProps[];
@@ -78,6 +79,7 @@ export const UpdateTaskAPI = createAsyncThunk(
           // Request was successful
           console.log("Tasks Updated");
           await dispatch(getAllTasks(updateTaskObject.farmId.toString()));
+          await dispatch(getAllNotification());
         } else {
           // Server returned an error response
           return response.json().then((errorData) => {
@@ -112,6 +114,7 @@ export const DeleteTasksAPI = createAsyncThunk(
           // Request was successful
           console.log("Tasks deleted successfully");
           dispatch(getAllTasks(deleteTasks.farmId.toString()));
+          dispatch(getAllNotification());
         } else {
           // Server returned an error response
           return response.json().then((errorData) => {
@@ -148,8 +151,9 @@ export const HarvestTaskAPI = createAsyncThunk(
         if (response.ok) {
           // Request was successful
           console.log("Tasks harvested successfully");
-          dispatch(getAllTasks(harvestTasks.farmId.toString()));
-          dispatch(getAllHarvestLog(harvestTasks.farmId.toString()));
+          await dispatch(getAllTasks(harvestTasks.farmId.toString()));
+          await dispatch(getAllHarvestLog(harvestTasks.farmId.toString()));
+          await dispatch(getAllNotification());
         } else {
           // Server returned an error response
           return response.json().then((errorData) => {
@@ -190,6 +194,7 @@ export const AddTaskAPI = createAsyncThunk(
       }
       const tasks: TaskSerializableProps[] = await response.json();
       dispatch(addTask(tasks));
+      await dispatch(getAllNotification());
       return tasks;
     } catch (e) {
       throw e;
