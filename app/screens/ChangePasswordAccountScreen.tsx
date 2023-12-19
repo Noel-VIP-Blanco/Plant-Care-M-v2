@@ -36,7 +36,7 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
         navigation.navigate("LoadingScreenForSetupFarm");
       })
       .catch((err) => {
-        Alert.alert("Error resetting password", err);
+        Alert.alert("Error resetting password", err.response.data.message);
       });
   };
   return (
