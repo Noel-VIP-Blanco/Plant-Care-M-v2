@@ -7,7 +7,6 @@ import { resetContainer } from "@reduxToolkit/Features/ContainerSlice";
 import { resetFarm } from "@reduxToolkit/Features/FarmSlice";
 import { resetPlant } from "@reduxToolkit/Features/PlantSlice";
 import { resetTasks } from "@reduxToolkit/Features/TaskSlice";
-import { resetUser } from "@reduxToolkit/Features/UserSlice";
 import { useAppDispatch } from "@reduxToolkit/Hooks";
 import { ActivityIndicator } from "react-native-paper";
 import { Logout } from "@backend/Auth/auth";
@@ -22,7 +21,6 @@ const LoadingScreenForLogout = ({ navigation }: any) => {
       dispatch(resetFarm());
       dispatch(resetPlant());
       dispatch(resetTasks());
-      dispatch(resetUser());
       await removeAllLocalStorage();
       Logout();
       navigation.reset({

@@ -1,7 +1,7 @@
 import { ScrollView, View, Image } from "react-native";
 import { Text, Button, TouchableRipple } from "react-native-paper";
-import React, { useState } from "react";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@root/utilities/shared/Colors";
 
@@ -11,7 +11,6 @@ import { ShowProfileStyle } from "@stylesheets/ShowProfile/ShowProfileStyle";
 import ProfileEditDetailItems from "@components/SettingScreen/ProfileEditDetailItems";
 //iinterface
 import { IEditProfile } from "@interface/Settings/IEditProfile";
-import { useNavigation } from "@react-navigation/native";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 const EditProfileScreen: React.FC<IEditProfile> = ({
   handleCancel,

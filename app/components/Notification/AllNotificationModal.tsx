@@ -39,7 +39,6 @@ const AllNotificationModal = ({ visible, onClose }: ModalType) => {
   const mergedNotifications = sortedUnreadNotifications.concat(
     sortedReadNotifications
   );
-  console.log("Merged Notifications:", mergedNotifications);
   return (
     <Portal>
       <Modal visible={visible} onDismiss={onClose}>

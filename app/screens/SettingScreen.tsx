@@ -8,10 +8,6 @@ import { COLORS } from "@root/utilities/shared/Colors";
 //stylesheets
 import { SettingScreenStyle } from "@stylesheets/Setting/SettingScreenStyle";
 
-//reduxtoolkit
-import { useAppSelector } from "@reduxToolkit/Hooks";
-import { selectUser } from "@reduxToolkit/Features/UserSlice";
-
 //components
 import UserImage from "@components/SettingScreen/UserImage";
 import MyFarmItem from "@components/SettingScreen/MyFarmItem";
@@ -22,10 +18,13 @@ import {
   getNotification,
 } from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectUser } from "@reduxToolkit/Features/UserSlice";
 
 const SettingScreen = ({ navigation }: any) => {
   const userImage = "../../assets/PlantCareImages/HydroponicLogo.png";
 
+  const userFromRedux = useAppSelector(selectUser);
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
     null
   );
@@ -41,6 +40,7 @@ const SettingScreen = ({ navigation }: any) => {
   return (
     <View style={{ backgroundColor: COLORS.BACKGROUNDCOLOR, flex: 1 }}>
       <View style={{ flex: 1 }}></View>
+
       <View
         className="bg-white dark:bg-slate-800"
         style={{

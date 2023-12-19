@@ -4,7 +4,11 @@ import React, { useEffect } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { useAppDispatch, useAppSelector } from "@reduxToolkit/Hooks";
 import { getFarmById, selectFarms } from "@reduxToolkit/Features/FarmSlice";
-import { getFarm, setFarm } from "@root/utilities/shared/LocalStorage";
+import {
+  getCurrentUser,
+  getFarm,
+  setFarm,
+} from "@root/utilities/shared/LocalStorage";
 import { getAllContainers } from "@reduxToolkit/Features/ContainerSlice";
 import { getAllArduinoBoards } from "@reduxToolkit/Features/ArduinoBoardSlice";
 import { getAllPlant } from "@reduxToolkit/Features/PlantSlice";
@@ -12,10 +16,25 @@ import { getAllTasks } from "@reduxToolkit/Features/TaskSlice";
 import { sp } from "@root/utilities/shared/SpDp";
 import { getAllHarvestLog } from "@reduxToolkit/Features/HarvestLogSlice";
 import { getAllNotification } from "@reduxToolkit/Features/NotificationSlice";
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+import { setUserFromRedux } from "@reduxToolkit/Features/UserSlice";
 
 const LoadingScreenForFetchData = ({ navigation }: any) => {
   //get all data from aws database
   const dispatch = useAppDispatch();
+
+  const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
+    null
+  );
+  useEffect(() => {
+    getCurrentUser()
+      .then((user) => {
+        dispatch(setUserFromRedux(user));
+      })
+      .catch((error) => {
+        console.log("Error getting current user:", error);
+      });
+  }, []);
 
   const farms = useAppSelector(selectFarms);
   useEffect(() => {

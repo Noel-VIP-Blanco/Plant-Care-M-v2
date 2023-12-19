@@ -4,6 +4,8 @@ import React, { useState } from "react";
 
 //interface
 import { ModalType } from "@interface/Modals/ModalType";
+import axios from "axios";
+import { baseURL } from "@root/utilities/shared/BaseURL";
 
 const ForgotPasswordModal: React.FC<ModalType> = ({ visible, onClose }) => {
   const [email, setEmail] = useState("");
@@ -65,12 +67,24 @@ const ForgotPasswordModal: React.FC<ModalType> = ({ visible, onClose }) => {
             </Button>
             <Button
               mode="elevated"
-              onPress={() => {
-                Alert.alert(
-                  "Reset Password",
-                  "Check your Gmail to reset your password"
-                );
-                onClose();
+              onPress={async () => {
+                await axios
+                  .post(`${baseURL}/api/v1/auth/forgot-password`, {
+                    email: email,
+                  })
+                  .then(() => {
+                    Alert.alert(
+                      "Reset Password",
+                      "Check your Gmail to reset your password"
+                    );
+                    onClose();
+                  })
+                  .catch((err) => {
+                    Alert.alert(
+                      "Reset Password",
+                      `User with the given email does not exist.`
+                    );
+                  });
               }}
               textColor="black"
               labelStyle={{ fontSize: 24 }}

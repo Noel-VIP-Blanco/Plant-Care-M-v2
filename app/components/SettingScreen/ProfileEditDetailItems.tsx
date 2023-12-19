@@ -1,27 +1,17 @@
-import { View, Platform } from "react-native";
+import { View } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import React, { useState } from "react";
 import { IProfileEditDetailItem } from "../../interface/Settings/IProfileEditDetailItem";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
 import { ProfileEditDetailStyle } from "../../stylesheets/Setting/ProfileEditDetailStyle";
 
 const ProfileEditDetailItems: React.FC<IProfileEditDetailItem> = ({
   tempDetailObject,
   tempDetailFunctionObject,
 }) => {
-  // const [showCalendar, setShowCalendar] = useState(false);
-
-  const { tempEmail, tempFirstName, tempLastName, tempRole, tempUsername } =
+  const { tempEmail, tempFirstName, tempLastName, tempUsername } =
     tempDetailObject;
-  const {
-    setTempEmail,
-    setTempFirstName,
-    setTempLastName,
-    setTempRole,
-    setTempUsername,
-  } = tempDetailFunctionObject;
+  const { setTempEmail, setTempFirstName, setTempLastName, setTempUsername } =
+    tempDetailFunctionObject;
   return (
     <View>
       <TextInput
@@ -53,7 +43,7 @@ const ProfileEditDetailItems: React.FC<IProfileEditDetailItem> = ({
         label="Email Address"
         mode="outlined"
         value={tempEmail}
-        editable={true}
+        editable={false}
         onChangeText={(text) => {
           setTempEmail(text);
         }}
@@ -65,7 +55,7 @@ const ProfileEditDetailItems: React.FC<IProfileEditDetailItem> = ({
         label="Username"
         mode="outlined"
         value={tempUsername}
-        editable={true}
+        editable={false}
         onChangeText={(text) => {
           setTempUsername(text);
         }}

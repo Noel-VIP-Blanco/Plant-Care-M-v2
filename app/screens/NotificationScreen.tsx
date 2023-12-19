@@ -7,7 +7,7 @@ import {
   Switch,
   Surface,
 } from "react-native-paper";
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,11 +19,7 @@ import { dp, sp } from "@root/utilities/shared/SpDp";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 import {
   getCurrentUser,
-  getNotification,
-  getRememberMe,
   setCurrentUser,
-  setNotification,
-  setRememberMe,
 } from "@root/utilities/shared/LocalStorage";
 import { registerIndieID, unregisterIndieDevice } from "native-notify";
 import { baseURL } from "@root/utilities/shared/BaseURL";

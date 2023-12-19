@@ -26,14 +26,8 @@ import NotificationItem from "@components/Notification/NotificationItem";
 import { HeaderRightIconStyle } from "@stylesheets/HeaderNavigation/HeaderRightIconStyle";
 import { HomeStyle } from "@stylesheets/Home/HomeStyle";
 
-import { dummyNotifications } from "../dummyData/DummyNotification";
 import { dp, sp } from "@root/utilities/shared/SpDp";
-import {
-  getCurrentUser,
-  getFarm,
-  getNotification,
-  getRememberMe,
-} from "@root/utilities/shared/LocalStorage";
+import { getCurrentUser, getFarm } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 import { registerIndieID } from "native-notify";
 
@@ -109,7 +103,6 @@ const HomeScreen = ({ navigation }: any) => {
   const unreadNotification = allNotifications.filter(
     (notifications) => notifications.readNotification === false
   );
-  console.log("All unread notification", unreadNotification);
   const sortedUnreadNotification = [...unreadNotification].sort((a, b) => {
     let dateA = new Date(a.date);
     let dateB = new Date(b.date);

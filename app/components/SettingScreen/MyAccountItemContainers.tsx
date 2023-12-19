@@ -2,7 +2,7 @@ import { View, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import axios from "axios"
+import axios from "axios";
 
 //stylesheets
 import { SettingScreenStyle } from "@stylesheets/Setting/SettingScreenStyle";
@@ -13,6 +13,8 @@ import {
 } from "@root/utilities/shared/LocalStorage";
 import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 import { sp } from "@root/utilities/shared/SpDp";
+import { useAppSelector } from "@reduxToolkit/Hooks";
+import { selectUser } from "@reduxToolkit/Features/UserSlice";
 
 const MyAccountItemContainers = ({ navigation }: any) => {
   const [currentUser, setCurrentUser] = React.useState<currentUserProps | null>(
@@ -22,6 +24,8 @@ const MyAccountItemContainers = ({ navigation }: any) => {
   //for testing purposes
   const [token, setToken] = React.useState<string>();
   const [rememberMe, setRememberMe] = React.useState<boolean>();
+
+  const userFromRedux = useAppSelector(selectUser);
   React.useEffect(() => {
     getCurrentUser()
       .then((user) => {
@@ -73,7 +77,9 @@ const MyAccountItemContainers = ({ navigation }: any) => {
         </View>
         <View style={SettingScreenStyle.accountBox2}>
           <View style={SettingScreenStyle.acountBox2Items}>
-            <Text style={{ fontSize: sp(35) }}>{currentUser?.firstName}</Text>
+            <Text style={{ fontSize: sp(35) }}>
+              {userFromRedux?.firstName} {userFromRedux?.lastName}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("ProfileScreen");
@@ -163,7 +169,9 @@ const MyAccountItemContainers = ({ navigation }: any) => {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
-                axios.delete(`https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`)
+                axios.delete(
+                  `https://app.nativenotify.com/api/app/indie/sub/13240/JgacDlBDrMg8qvQWalJuRM/${currentUser?.id}`
+                );
                 navigation.navigate("LoadingScreenForLogout");
               }}
             >

@@ -62,6 +62,8 @@ export const Login = ({
       if (password === "pass123") {
         //save to local storage
         setCurrentUser({ currentUser: data });
+
+        console.log("Current user after log in", data);
         setRememberMe(rememberMe);
         console.log(
           "Allow notification saving to local from login ",
@@ -72,6 +74,7 @@ export const Login = ({
       } else {
         //save to local storage
         setCurrentUser({ currentUser: data });
+
         setRememberMe(rememberMe);
         console.log(
           "Allow notification saving to local from login ",

@@ -1,50 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
 
-const initialState = {
-  value: {
-    photoURL: "",
-  },
-  tempValue: {
-    photoURL: "",
-  },
+type initialStateProps = {
+  userFromRedux: currentUserProps | null;
 };
-
+const initialState: initialStateProps = {
+  userFromRedux: null,
+};
 export const userSlice = createSlice({
   name: "user",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    resetUser: (state) => {
-      state = initialState;
-    },
-    updateAfterLoggedin: (state, action: PayloadAction<string>) => {
-      state.value.photoURL = action.payload;
-      state.tempValue.photoURL = action.payload;
-    },
-    temporaryEditImage: (state, action: PayloadAction<string>) => {
-      state.tempValue.photoURL = action.payload;
-    },
-    undoEditImage: (state) => {
-      state.tempValue.photoURL = state.value.photoURL;
-    },
-    saveEditImage: (state) => {
-      state.value.photoURL = state.tempValue.photoURL;
+    setUserFromRedux: (state, action: PayloadAction<currentUserProps>) => {
+      state.userFromRedux = action.payload;
     },
   },
 });
 
-export const {
-  updateAfterLoggedin,
-  temporaryEditImage,
-  undoEditImage,
-  saveEditImage,
-  resetUser,
-} = userSlice.actions;
+export const { setUserFromRedux } = userSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectUser = (state: RootState) => state.user.value;
-export const selectTempUser = (state: RootState) => state.user.tempValue;
-
+export const selectUser = (state: RootState) => state.user.userFromRedux;
 export default userSlice.reducer;
