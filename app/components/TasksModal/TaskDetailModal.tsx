@@ -19,6 +19,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   visible,
   onClose,
   taskItem,
+  result,
 }) => {
   //data from redux
   const containers = useAppSelector(selectContainer);
@@ -177,6 +178,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
             </View>
 
             <EditTaskDetailModal
+              result={result}
               visible={editTaskDetailModalVisible}
               onClose={closeEditTaskDetailModal}
               closeTaskDetailModal={onClose}

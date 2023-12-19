@@ -16,6 +16,7 @@ export type EditContainerDetailModalProps = {
   visible: boolean;
   onClose: () => void;
   closeContainerDetailModal: () => void;
+  result: string[];
   dataForEditInitial: {
     containerObj: ContainerProps;
     arduinoBoardObj: ArduinoBoardProps | undefined;

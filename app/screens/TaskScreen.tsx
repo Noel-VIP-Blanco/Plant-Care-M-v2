@@ -184,6 +184,8 @@ const TaskScreen = () => {
           List of Plant Tubes
         </Text>
         <TaskCardList
+          idFromFarm={idFromFarm}
+          subIdFromNotify={subIdFromNotify}
           checkboxVisible={checkboxVisible}
           setHarvestTasksID={setHarvestTasksID}
           filteredData={filteredTask}

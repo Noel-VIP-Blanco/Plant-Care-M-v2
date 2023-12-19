@@ -34,6 +34,8 @@ import { dp } from "@root/utilities/shared/SpDp";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
 
 const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
+  idFromFarm,
+  subIdFromNotify,
   item,
   checkboxVisible,
   setCompleteTasksID,
@@ -44,6 +46,13 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
   const { containerId, id, plantId, status } = item;
   //handle checkbox
   const [checkedTask, setCheckedTask] = useState(false);
+
+  //filter the sub id based on the subscribed id from native notify
+  let subIds = subIdFromNotify.map((item) => item.sub_id);
+  let filteredA = idFromFarm.filter((item) =>
+    subIds.includes(item.id.toString())
+  );
+  let result = filteredA.map((item) => item.id.toString());
 
   const handleCheckboxPress = () => {
     setCheckedTask(!checkedTask);
@@ -300,6 +309,7 @@ const RenderTaskCard: React.FC<RenderTaskCardProps> = ({
                 </View>
 
                 <TaskDetailModal
+                  result={result}
                   taskItem={item}
                   visible={taskDetailModalVisible}
                   onClose={closeTaskDetailModal}

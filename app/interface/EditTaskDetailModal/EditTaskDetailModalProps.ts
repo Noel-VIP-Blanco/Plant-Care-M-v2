@@ -19,6 +19,7 @@ export type dataForEditInitialProps = {
 
 export type EditTaskDetailModalProps = {
   visible: boolean;
+  result: string[];
   onClose: () => void;
   closeTaskDetailModal: () => void;
   dataForEditInitial: dataForEditInitialProps;

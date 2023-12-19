@@ -18,24 +18,27 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const plantCareLogo = "../../assets/PlantCareImages/HydroponicLogo.png";
 
-  const handleChangePassword = () =>{
-    if(oldPassword==="" || newPassword === "" || confirmNewPassword === ""){
+  const handleChangePassword = () => {
+    if (oldPassword === "" || newPassword === "" || confirmNewPassword === "") {
       Alert.alert("Missing Fields", "Fill up the necessary fields");
       return;
     }
-    if(newPassword !== confirmNewPassword){
+    if (newPassword !== confirmNewPassword) {
       Alert.alert("New Password do not match", "Check your new password");
       return;
     }
-    axios.post(`${baseURL}/api/v1/auth/update-password`,{
-      "currentPassword" : oldPassword,
-      "newPassword" : confirmNewPassword
-    }).then(()=>{
-      navigation.navigate("LoadingScreenForSetupFarm");
-    }).catch((err)=>{
-      Alert.alert("Error", err);
-    })
-  }
+    axios
+      .post(`${baseURL}/api/v1/auth/update-password`, {
+        currentPassword: oldPassword,
+        newPassword: confirmNewPassword,
+      })
+      .then(() => {
+        navigation.navigate("LoadingScreenForSetupFarm");
+      })
+      .catch((err) => {
+        Alert.alert("Error resetting password", err);
+      });
+  };
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.BACKGROUNDCOLOR, flex: 1 }}>
       <View style={ChangePasswordAccountStyle.backButtonContainer}>
@@ -111,7 +114,6 @@ const ChangePasswordAccountScreen = ({ navigation }: any) => {
               mode="contained"
               onPress={() => {
                 handleChangePassword();
-                
               }}
               style={LoginStyle.logInButton}
               labelStyle={{ fontSize: sp(40) }}

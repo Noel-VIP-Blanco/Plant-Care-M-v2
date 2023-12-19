@@ -20,6 +20,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
   visible,
   onClose,
   containerItem,
+  result,
 }) => {
   //data from redux
   const containers = useAppSelector(selectContainer);
@@ -153,6 +154,7 @@ const ContainerDetailModal: React.FC<ContainerDetailModalProps> = ({
               onClose={closeEditContainerDetailModal}
               closeContainerDetailModal={onClose}
               dataForEditInitial={dataForEditInitial}
+              result={result}
             />
           </View>
         </View>

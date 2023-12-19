@@ -7,5 +7,6 @@ import {
 export type ContainerDetailModalProps = {
   visible: boolean;
   onClose: () => void;
+  result: string[];
   containerItem: ContainerProps;
 };

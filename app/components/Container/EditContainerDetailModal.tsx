@@ -22,12 +22,14 @@ import { dp, sp } from "@root/utilities/shared/SpDp";
 import { PlantProps } from "@interface/DataProps/PlantItemProps";
 import { ref, update } from "firebase/database";
 import { FIREBASE_DATABASE } from "@root/FirebaseConfig";
+import axios from "axios";
 
 const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   visible,
   onClose,
   closeContainerDetailModal,
   dataForEditInitial,
+  result,
 }) => {
   const [containerName, setContainerName] = useState("");
   const [selectArduinoBoard, setSelectArduinoBoard] = useState("");
@@ -73,7 +75,7 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
   }, [selectPlant, plantDTO]);
 
   //function for Edit container
-  const handleEditContainer = () => {
+  const handleEditContainer = async () => {
     const updateContainer: UpdateContainerProps = {
       name: containerName,
       arduinoBoardDto: {
@@ -106,6 +108,19 @@ const EditContainerDetailModal: React.FC<EditContainerDetailModalProps> = ({
           farmId: parseInt(farmIdFromLocal), //should be get from local storage
         })
       );
+      if (result.length > 0) {
+        await axios
+          .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+            subIDs: result,
+            appId: 13240,
+            appToken: "JgacDlBDrMg8qvQWalJuRM",
+            title: "Container Notification",
+            message: `Container ${dataForEditInitial.containerObj.name} has successfuly edited!`,
+          })
+          .catch((e) => {
+            console.log("Error from Render Container Card line 95", e);
+          });
+      }
     } else {
       Alert.alert(
         "Edit Container Failed",

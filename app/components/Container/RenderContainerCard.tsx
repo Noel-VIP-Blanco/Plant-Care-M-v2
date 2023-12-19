@@ -334,6 +334,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
 
               {/* Show the container detail when card is pressed */}
               <ContainerDetailModal
+                result={result}
                 containerItem={container}
                 visible={containerDetailModalVisible}
                 onClose={closeContainerDetailModal}

@@ -9,6 +9,8 @@ import { TaskCardListProps } from "@interface/TaskCardList/TaskCardListProps";
 import { dp, sp } from "@root/utilities/shared/SpDp";
 
 const TaskCardList: React.FC<TaskCardListProps> = ({
+  idFromFarm,
+  subIdFromNotify,
   filteredData,
   checkboxVisible,
   setHarvestTasksID,
@@ -34,6 +36,8 @@ const TaskCardList: React.FC<TaskCardListProps> = ({
             { item } // Destructure 'item' from the 'renderItem' function argument
           ) => (
             <RenderTaskCard
+              idFromFarm={idFromFarm}
+              subIdFromNotify={subIdFromNotify}
               item={item} // Pass the 'item' directly to the RenderTaskCard component
               checkboxVisible={checkboxVisible}
               setCompleteTasksID={setHarvestTasksID}

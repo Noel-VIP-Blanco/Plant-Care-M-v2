@@ -17,12 +17,14 @@ import { UpdateTaskAPI } from "@reduxToolkit/Features/TaskSlice";
 import { selectPlants } from "@reduxToolkit/Features/PlantSlice";
 import { getFarm } from "@root/utilities/shared/LocalStorage";
 import { dp, sp } from "@root/utilities/shared/SpDp";
+import axios from "axios";
 
 const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
   visible,
   onClose,
   closeTaskDetailModal,
   dataForEditInitial,
+  result,
 }) => {
   //get farmId from local
   const [farmIdFromLocal, setFarmIdFromLocal] = useState<
@@ -59,7 +61,7 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
     value: name,
   }));
 
-  const handleEditTask = () => {
+  const handleEditTask = async () => {
     if (farmIdFromLocal) {
       Alert.alert("Edit Task", "Task Edited successfuly");
       dispatch(
@@ -69,6 +71,19 @@ const EditTaskDetailModal: React.FC<EditTaskDetailModalProps> = ({
           updatedTask: { containerId: selectContainerId, plantId: selectPlant },
         })
       );
+      if (result.length > 0) {
+        await axios
+          .post(`https://app.nativenotify.com/api/indie/group/notification`, {
+            subIDs: result,
+            appId: 13240,
+            appToken: "JgacDlBDrMg8qvQWalJuRM",
+            title: "Task Notification",
+            message: `Task in reservoir ${dataForEditInitial.containerObj?.name} has successfuly edited!`,
+          })
+          .catch((e) => {
+            console.log("Error from Render Task Card line 95", e);
+          });
+      }
     } else {
       Alert.alert("Edit Task", "You have no farm associated to your account");
       onClose();
