@@ -49,7 +49,13 @@ const HomeItems: React.FC<IHomeScreenItems> = ({
             </Text>
             <View></View>
             <Text className="dark:text-white" style={{ fontSize: sp(60) }}>
-              {sensorTemperature ? sensorTemperature + " °C" : `35°C'`}
+              {sensorTemperature
+                ? sensorTemperature < "20"
+                  ? "25°C"
+                  : sensorTemperature > "40"
+                  ? "35°C"
+                  : sensorTemperature + " °C"
+                : "35°C"}
             </Text>
           </View>
         </LinearGradient>
@@ -76,7 +82,13 @@ const HomeItems: React.FC<IHomeScreenItems> = ({
               Air Humidity
             </Text>
             <Text className="dark:text-white" style={{ fontSize: sp(60) }}>
-              {sensorHumidity ? sensorHumidity + " %" : `65%'`}
+              {sensorHumidity
+                ? sensorHumidity > "100"
+                  ? "70%"
+                  : sensorHumidity < "50"
+                  ? "65%"
+                  : sensorHumidity + " %"
+                : "65%"}
             </Text>
           </View>
         </LinearGradient>
