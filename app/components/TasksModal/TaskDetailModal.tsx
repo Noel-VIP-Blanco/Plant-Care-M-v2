@@ -159,7 +159,7 @@ const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
                   Farmer
                 </Text>
                 <Text style={{ fontSize: sp(60), marginLeft: dp(25), flex: 1 }}>
-                  To be announced
+                  {taskItem.farmer.lastName}
                 </Text>
               </View>
 

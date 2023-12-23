@@ -1,3 +1,5 @@
+import { currentUserProps } from "@interface/Auth/CurrentUserProps";
+
 export enum PlantStatus {
   Grow = "GROWING",
   Harvest = "HARVESTING",
@@ -23,6 +25,7 @@ export interface TaskProps {
   status: string;
   plantId: number;
   containerId: number;
+  farmer: currentUserProps;
   farmId: number;
   numberOfTasks: number;
 }

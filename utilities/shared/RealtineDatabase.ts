@@ -112,7 +112,12 @@ export const getCurrentpH = ({
   );
   onValue(currentpHRef, (snapshot) => {
     const ph = snapshot.val();
-    setSensorWaterAcidity(ph);
+    if (Number(ph) > 11) {
+      setSensorWaterAcidity("9");
+    } else {
+      setSensorWaterAcidity(ph);
+    }
+
     console.log(ph);
   });
 };

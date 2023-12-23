@@ -59,7 +59,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   //get the sensor value for every sensor type connected on the arduino
   const [sensorWaterAcidity, setSensorWaterAcidity] = useState("");
   const [sensorWaterNutrient, setSensorWaterNutrient] = useState("");
-  const [sensorWaterLevel, setSensorWaterLevel] = useState("");
+  const [sensorWaterLevel, setSensorWaterLevel] = useState("55");
 
   const [minTDS, setMinTDS] = useState("");
   const [maxTDS, setMaxTDS] = useState("");
@@ -71,7 +71,10 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   const [waterBgColor, setWaterBgColor] = useState(COLORS.BACKGROUNDGOODVALUE);
   const arduinoBoardId = container.arduinoBoardDto.id;
   useEffect(() => {
-    if (sensorWaterAcidity > maxpH || sensorWaterAcidity < minpH) {
+    if (
+      Number(sensorWaterAcidity) > Number(maxpH) ||
+      Number(sensorWaterAcidity) < Number(minpH)
+    ) {
       if (result.length > 0) {
         axios
           .post(`https://app.nativenotify.com/api/indie/group/notification`, {
@@ -89,7 +92,10 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   }, [sensorWaterAcidity]);
 
   useEffect(() => {
-    if (sensorWaterNutrient > maxTDS || sensorWaterNutrient < minTDS) {
+    if (
+      Number(sensorWaterNutrient) > Number(maxTDS) ||
+      Number(sensorWaterNutrient) < Number(minTDS)
+    ) {
       if (result.length > 0) {
         axios
           .post(`https://app.nativenotify.com/api/indie/group/notification`, {
@@ -107,7 +113,7 @@ const RenderContainerCard: React.FC<RenderContainerCardProps> = ({
   }, [sensorWaterNutrient]);
 
   useEffect(() => {
-    if (sensorWaterLevel < "20") {
+    if (Number(sensorWaterLevel) < 20 || Number(sensorWaterLevel) > 85) {
       if (result.length > 0) {
         axios
           .post(`https://app.nativenotify.com/api/indie/group/notification`, {
